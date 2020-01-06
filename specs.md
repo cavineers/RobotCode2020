@@ -1,0 +1,17 @@
+-   Shooter
+    -   Camera
+        -   rPi
+    -   Encoders
+-   Intake
+    -   Encoders
+    -   Camera
+        -   rPi
+-   Control
+    -   Color Sensor
+    -   Encoders
+-   Climber
+    -   navX (gyro)
+    -   Encoders
+-   DriveTrain
+    -   Encoders
+    -   navX (gyro)
