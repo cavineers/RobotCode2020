@@ -9,6 +9,11 @@ public class ControlColoring {
         ERROR
     }
 
+    /**
+     * transposeToField
+     * @param oldColor
+     * @return The transposed value
+     */
     public ControlColor transposeToField(ControlColor oldColor) {
         switch (oldColor) {
             case RED:
@@ -24,6 +29,11 @@ public class ControlColoring {
         }
     }
 
+    /**
+     * transposeFromField
+     * @param oldColor
+     * @return The transposed value
+     */
     public ControlColor transposeFromField(ControlColor oldColor) {
         switch (oldColor) {
             case RED:
