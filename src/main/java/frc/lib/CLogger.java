@@ -10,7 +10,7 @@ public class CLogger {
     }
 
     // The log type
-    public static enum cLogType {
+    public enum cLogType {
         MajorError,
         MinorError,
         Warning,
@@ -19,11 +19,11 @@ public class CLogger {
     }
 
     // Should Logs
-    private static boolean sl_majorErrors;
-    private static boolean sl_minorErrors;
-    private static boolean sl_warnings;
-    private static boolean sl_debugPrints;
-    private static boolean sl_undefinedPrints;
+    private boolean sl_majorErrors;
+    private boolean sl_minorErrors;
+    private boolean sl_warnings;
+    private boolean sl_debugPrints;
+    private boolean sl_undefinedPrints;
     
     /**
      * Constructor 
@@ -44,7 +44,7 @@ public class CLogger {
      * Initial setup called by the constructor
      * @param mode Passed by constructor
      */
-    private static void setup(cLoggerMode mode) {
+    private void setup(cLoggerMode mode) {
         switch (mode) {
             case COMPETITION:
                 sl_majorErrors     = false;
@@ -85,7 +85,7 @@ public class CLogger {
      * @param value Value to log
      * @param type What type of log is this
      */
-    public static void log(String value, cLogType type) {
+    public void log(String value, cLogType type) {
         switch (type) {
             case MajorError:
                 if (sl_majorErrors) {
@@ -124,7 +124,7 @@ public class CLogger {
      * A catch for an undefined log type
      * @param value Value to log
      */
-    public static void log(String value) {
+    public void log(String value) {
         log(value, cLogType.Undefined);
     }
 
@@ -133,7 +133,7 @@ public class CLogger {
      * @param value The value to log
      * @param type The type of value to log
      */
-    public static void logln(String value, cLogType type) {
+    public void logln(String value, cLogType type) {
         switch (type) {
             case MajorError:
                 if (sl_majorErrors) {
@@ -172,7 +172,7 @@ public class CLogger {
      * A catch for an undefined logType for logln
      * @param value The value to log
      */
-    public static void logln(String value) {
+    public void logln(String value) {
         logln(value, cLogType.Undefined);
     }
 
@@ -180,7 +180,7 @@ public class CLogger {
      * Bypasses the logging manager and goes straight to sysout
      * @param value The value to log
      */
-    public static void logBypass(String value) {
+    public void logBypass(String value) {
         System.out.print(value);
     }
 
@@ -188,7 +188,11 @@ public class CLogger {
      * Bypasses the logging manager and does a println
      * @param value The value to log
      */
-    public static void logBypassln(String value) {
+    public void logBypassln(String value) {
         System.out.println(value);
+    }
+
+    public void updateLogLevel(cLoggerMode cLogMode) {
+        setup(cLogMode);
     }
 }
