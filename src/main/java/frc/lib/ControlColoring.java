@@ -6,7 +6,8 @@ public class ControlColoring {
         GREEN,
         BLUE,
         YELLOW,
-        ERROR
+        ERROR,
+        NO_COLOR
     }
 
     /**

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
+import frc.lib.CLogger.cLogType;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
     // logger = new CLogger(CLogger.cLoggerMode.PRACTICE);
     // logger = new CLogger(CLogger.cLoggerMode.TESTING);
     // logger = new CLogger(CLogger.cLoggerMode.DEVELOPMENT);
+    logger.log("And we're off", cLogType.Debug);
   }
 
   @Override
