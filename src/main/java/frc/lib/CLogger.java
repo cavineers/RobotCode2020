@@ -85,7 +85,7 @@ public class CLogger {
      * @param value Value to log
      * @param type What type of log is this
      */
-    public void log(String value, cLogType type) {
+    public void log(Object value, cLogType type) {
         switch (type) {
             case MajorError:
                 if (sl_majorErrors) {
@@ -124,7 +124,7 @@ public class CLogger {
      * A catch for an undefined log type
      * @param value Value to log
      */
-    public void log(String value) {
+    public void log(Object value) {
         log(value, cLogType.Undefined);
     }
 
@@ -133,7 +133,7 @@ public class CLogger {
      * @param value The value to log
      * @param type The type of value to log
      */
-    public void logln(String value, cLogType type) {
+    public void logln(Object value, cLogType type) {
         switch (type) {
             case MajorError:
                 if (sl_majorErrors) {
@@ -172,7 +172,7 @@ public class CLogger {
      * A catch for an undefined logType for logln
      * @param value The value to log
      */
-    public void logln(String value) {
+    public void logln(Object value) {
         logln(value, cLogType.Undefined);
     }
 
@@ -180,7 +180,7 @@ public class CLogger {
      * Bypasses the logging manager and goes straight to sysout
      * @param value The value to log
      */
-    public void logBypass(String value) {
+    public void logBypass(Object value) {
         System.out.print(value);
     }
 
@@ -188,7 +188,7 @@ public class CLogger {
      * Bypasses the logging manager and does a println
      * @param value The value to log
      */
-    public void logBypassln(String value) {
+    public void logBypassln(Object value) {
         System.out.println(value);
     }
 
