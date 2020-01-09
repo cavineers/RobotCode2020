@@ -29,55 +29,24 @@ public class OI {
     public static JoystickButton left_stick = new JoystickButton(joy, 9);
     public static JoystickButton right_stick = new JoystickButton(joy, 10);
 
-    LEDHelper led;
+    
     public int lastDpad = -1;
-    public boolean lastRightTrig = false;
-    public boolean lastLeftTrig = false;
-
-    public enum BUTTON_MODE {
-		AUTO_ALLIGN, ELEVATOR, CLIMBER
-    }
-
-    public BUTTON_MODE currentTriggerSetting = BUTTON_MODE.AUTO_ALLIGN;
+    
     
     public OI() {
         
-        r_bump.whenPressed(new ShiftGear(DriveGear.LOW_GEAR));
-        l_bump.whenPressed(new ShiftGear(DriveGear.HIGH_GEAR));
+        /* Button inputs for commands
+        r_bump.whenPressed(new );
+        l_bump.whenPressed(new );
 
         //actual button commands
-        a_button.whenPressed(new IntakeCargo());
-        b_button.whenPressed(new ToggleGrabber());
-        x_button.whenPressed(new ToggleHatchGrabber());
-        y_button.whenPressed(new EjectBall());
+        a_button.whenPressed(new );
+        b_button.whenPressed(new );
+        x_button.whenPressed(new );
+        y_button.whenPressed(new);
 
-        left_middle.whenPressed(new HomeAll());
-        right_middle.whenPressed(new ToggleCargoIntake());
-
-        // Homing test
-        // a_button.whenPressed(new HomeElev());
-
-        // Raw % output elevator controls
-        // a_button.whileHeld(new RawMoveElevator(0.25));
-        // y_button.whileHeld(new RawMoveElevator(-0.25));
-
-        //Raw velocity control
-        // x_button.whileHeld(new RawSetElevatorVelocity(1500));
-        // b_button.whileHeld(new RawSetElevatorVelocity(-1500));
-
-        //Raw Cascading PID control
-        // x_button.whileHeld(new RawSetElevatorPosition(75));
-        // y_button.whileHeld(new RawSetElevatorPosition(150));
-
-
-        //Grabber velocity Control
-        // x_button.whileHeld(new RawSetGrabberVelocity(1000));
-        // y_button.whileHeld(new RawSetGrabberVelocity(-1000));
-        // a_button.whenPressed(new HomeGrabber());
-
-        // x_button.whileHeld(new RawSetGrabberPosition(0));
-        // y_button.whileHeld(new RawSetGrabberPosition(10));
-
+        left_middle.whenPressed(new );
+        right_middle.whenPressed(new ); */
 
     }
 
@@ -92,70 +61,60 @@ public class OI {
     }
 
     public void updatePeriodicCommands(){
-        if (lastRightTrig != isRightTriggerPressed()) {
-            // the right trigger changed state
-            lastRightTrig = isRightTriggerPressed();
-            if (lastRightTrig) {
-                // the right trigger is pressed
-                new EnterDefenseMode().start();
-            }
-        }
-
-        if (lastLeftTrig != isLeftTriggerPressed()) {
-            // the left trigger changed state
-            lastLeftTrig = isLeftTriggerPressed();
-            if (lastLeftTrig) {
-                // the left trigger is pressed
-                new MoveGrabberAndElevator(ElevatorLevel.CARGOSHIP_TOP, GrabberPosition.EXTENDED, Grabber.MotorState.OFF).start();
-
-            }
-        }
-
+       
         if (lastDpad != joy.getPOV()) {
 			switch (joy.getPOV()) {
 			case 0: {
                 // Top
-                if(Robot.grabber.hasCargo()){
-                    new MoveGrabberAndElevator(ElevatorLevel.LVL3_CARGO, GrabberPosition.EXTENDED, Grabber.MotorState.OFF).start();
+               /* if(){
+                   
                 }
-                else if(Robot.grabber.hasHatch()){
-                    new MoveGrabberAndElevator(ElevatorLevel.LVL3_HATCH, GrabberPosition.EXTENDED, Grabber.MotorState.OFF).start();
+                else if(){
+                   
                 }
                 else{
-                    new MoveGrabberAndElevator(ElevatorLevel.LVL3_HATCH, GrabberPosition.EXTENDED, Grabber.MotorState.OFF).start();
-                }
+                    
+                }*/
 				break;
 			}
 			case 90: {
 				// Right
-                if(Robot.grabber.hasCargo()){
-                    new MoveGrabberAndElevator(ElevatorLevel.LVL2_CARGO, GrabberPosition.EXTENDED, Grabber.MotorState.OFF).start();
+               /* if(){
+                    
 
                 }
-                else if(Robot.grabber.hasHatch()){
-                    new MoveGrabberAndElevator(ElevatorLevel.LVL2_HATCH, GrabberPosition.EXTENDED, Grabber.MotorState.OFF).start();
+                else if(){
+                   
                 }
                 else{
-                    new MoveGrabberAndElevator(ElevatorLevel.LVL2_HATCH, GrabberPosition.EXTENDED, Grabber.MotorState.OFF).start();
-                }
+
+                } */
 				break;
 			}
 			case 180: {
                 // Bottom
-                new MoveGrabberAndElevator(ElevatorLevel.GROUND, GrabberPosition.EXTENDED, Grabber.MotorState.OFF).start();
+                /* if()){
+
+                }
+                else if(){
+
+                }
+                else{
+ 
+                } */
                 break;
             }
 			case 270: {
 				// Left
-				if(Robot.grabber.hasCargo()){
-                    new MoveGrabberAndElevator(ElevatorLevel.LVL1_CARGO, GrabberPosition.EXTENDED, Grabber.MotorState.OFF).start();
+				/* if()){
+
                 }
-                else if(Robot.grabber.hasHatch()){
-                    new MoveGrabberAndElevator(ElevatorLevel.LVL1_HATCH, GrabberPosition.EXTENDED, Grabber.MotorState.OFF).start();
+                else if(){
+
                 }
                 else{
-                    new MoveGrabberAndElevator(ElevatorLevel.LVL1_HATCH, GrabberPosition.EXTENDED, Grabber.MotorState.OFF).start();
-                }
+ 
+                } */
 				break;
 			}
 			}
