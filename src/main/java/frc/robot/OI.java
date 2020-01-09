@@ -7,7 +7,11 @@
 
 package frc.robot;
 
+import java.util.Set;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -35,18 +39,30 @@ public class OI {
     
     public OI() {
         
-        /* Button inputs for commands
-        r_bump.whenPressed(new );
-        l_bump.whenPressed(new );
+        // Button inputs for commands
+        r_bump.whenPressed(new Command(){
+        
+            @Override
+            public void initialize() {
+                System.out.println("r bumper");
+            }
 
-        //actual button commands
-        a_button.whenPressed(new );
-        b_button.whenPressed(new );
-        x_button.whenPressed(new );
-        y_button.whenPressed(new);
+			@Override
+			public Set<Subsystem> getRequirements() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+        });
+        // l_bump.whenPressed(new );
 
-        left_middle.whenPressed(new );
-        right_middle.whenPressed(new ); */
+        // //actual button commands
+        // a_button.whenPressed(new );
+        // b_button.whenPressed(new );
+        // x_button.whenPressed(new );
+        // y_button.whenPressed(new);
+
+        // left_middle.whenPressed(new );
+        // right_middle.whenPressed(new );
 
     }
 
