@@ -1,4 +1,4 @@
-// TODO: Everything
+// TODO: DrumMotor
 
 package frc.robot.subsystems;
 
@@ -36,32 +36,32 @@ this.getIntakeMotor().setNeutralMode(NeutralMode.Brake);
   
   }
   @Override
-  public void periodic() {}
+  public void periodic() {
   
+    if (isOn){
+    
+      ballIntakeMotor.set(ControlMode.PercentOutput,2);
+      }
   
+      
+      else if (isOn==false){
+      ballIntakeMotor.set(ControlMode.PercentOutput,0);
+      }
+      else{
+  ballIntakeMotor.set(ControlMode.PercentOutput,0);
+      }
 
   
-
+  }
   
   public TalonSRX getIntakeMotor() {
       return this.ballIntakeMotor;
   }
    
-  
-    
- 
-    if (isOn){
-    
-    ballIntakeMotor.set(ControlMode.PercentOutput,2);
-    }
 
     
-    else if (isOn==false){
-    ballIntakeMotor.set(ControlMode.PercentOutput,0);
-    }
-    else{
-ballIntakeMotor.set(ControlMode.PercentOutput,0);
-    }
+ 
+   
     
 }
-}
+
