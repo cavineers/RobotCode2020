@@ -16,7 +16,7 @@ public class Intake extends SubsystemBase {
 
   private boolean isOn= false;
   private boolean drumON = false; 
-  private boolean drumOnR= false;
+  private boolean drumOnT= false;
 
   public float drumPosition=0;
   
@@ -48,13 +48,23 @@ public class Intake extends SubsystemBase {
         ballIntakeMotor.set(ControlMode.PercentOutput,0);
       
       }
-    
-      if(drumPosition<5.1&&drumON){
+      DrumMotor.getSelectedSensorPosition();
+      if(drumPosition<5.1&&drumON&&360-drumPosition*71.9>DrumMotor.getSelectedSensorPosition()){
        
         DrumMotor.set(ControlMode.Position,drumPosition*72);
-        drumOnR=true;
+        
+        drumOnT=true;
+      
+        }
+     else{
 
-      }
+       drumON=false;
+       
+     }
+        
+        
+
+      
 
   }
   
