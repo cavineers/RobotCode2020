@@ -12,14 +12,18 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 public class Intake extends SubsystemBase {
 
   public TalonSRX ballIntakeMotor = new TalonSRX(Constants.kIntakeMotorCANid);
+  public TalonSRX DrumMotor = new TalonSRX(Constants.kDrumMotorCANid);
 
-  private boolean isOn= false; 
+  private boolean isOn= false;
+  private boolean drumON = false; 
+  private boolean drumOnR= false;
 
   public float drumPosition=0;
-
+  
   public Intake() {
 
     this.getIntakeMotor().setNeutralMode(NeutralMode.Brake);
+    this.getDrumMotor().setNeutralMode(NeutralMode.Brake);
 
   }
 
@@ -44,6 +48,13 @@ public class Intake extends SubsystemBase {
         ballIntakeMotor.set(ControlMode.PercentOutput,0);
       
       }
+    
+      if(drumPosition<5.1&&drumON){
+       
+        DrumMotor.set(ControlMode.Position,drumPosition*72);
+        drumOnR=true;
+
+      }
 
   }
   
@@ -52,6 +63,12 @@ public class Intake extends SubsystemBase {
       return this.ballIntakeMotor;
 
   } 
+
+  public TalonSRX getDrumMotor(){
+
+    return this.DrumMotor;
+
+  }
     
 }
 
