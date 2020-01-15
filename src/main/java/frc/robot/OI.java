@@ -28,15 +28,20 @@ public class OI {
 
     public static JoystickButton l_bump = new JoystickButton(joy, 5);
     public static JoystickButton r_bump = new JoystickButton(joy, 6);
-    public static JoystickButton left_middle = new JoystickButton(joy, 7);
-    public static JoystickButton right_middle = new JoystickButton(joy, 8);
+    public static JoystickButton left_menu = new JoystickButton(joy, 7);
+    public static JoystickButton right_menu = new JoystickButton(joy, 8);
     public static JoystickButton left_stick = new JoystickButton(joy, 9);
     public static JoystickButton right_stick = new JoystickButton(joy, 10);
 
     
     public int lastDpad = -1;
     
-    
+    public enum BUTTON_MODE {
+		AUTO_SHOOT, CONTROL_P, CLIMB, NEUTRAL
+    }
+
+    public BUTTON_MODE currentTriggerSetting = BUTTON_MODE.NEUTRAL;
+
     public OI() {
         
         // Button inputs for commands
@@ -53,16 +58,124 @@ public class OI {
 				return null;
 			}
         });
-        // l_bump.whenPressed(new );
+        l_bump.whenPressed(new Command(){
+        
+            @Override
+            public void initialize() {
+                System.out.println("l bumper");
+            }
 
-        // //actual button commands
-        // a_button.whenPressed(new );
-        // b_button.whenPressed(new );
-        // x_button.whenPressed(new );
-        // y_button.whenPressed(new);
+			@Override
+			public Set<Subsystem> getRequirements() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+        });
+        a_button.whenPressed(new Command(){
+        
+            @Override
+            public void initialize() {
+                System.out.println("a button");
+            }
 
-        // left_middle.whenPressed(new );
-        // right_middle.whenPressed(new );
+			@Override
+			public Set<Subsystem> getRequirements() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+        });
+        b_button.whenPressed(new Command(){
+        
+            @Override
+            public void initialize() {
+                System.out.println("b button");
+            }
+
+			@Override
+			public Set<Subsystem> getRequirements() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+        });
+        x_button.whenPressed(new Command(){
+        
+            @Override
+            public void initialize() {
+                System.out.println("x button");
+            }
+
+			@Override
+			public Set<Subsystem> getRequirements() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+        });
+        y_button.whenPressed(new  Command(){
+        
+            @Override
+            public void initialize() {
+                System.out.println("y button");
+            }
+
+			@Override
+			public Set<Subsystem> getRequirements() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+        });
+
+        left_menu.whenPressed(new Command(){
+        
+            @Override
+            public void initialize() {
+                System.out.println("start menu");
+            }
+
+			@Override
+			public Set<Subsystem> getRequirements() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+        });
+        right_menu.whenPressed(new  Command(){
+        
+            @Override
+            public void initialize() {
+                System.out.println("scoreboard");
+            }
+
+			@Override
+			public Set<Subsystem> getRequirements() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+        });
+        right_stick.whenPressed(new  Command(){
+        
+            @Override
+            public void initialize() {
+                System.out.println("R3");
+            }
+
+			@Override
+			public Set<Subsystem> getRequirements() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+        });
+        left_stick.whenPressed(new  Command(){
+        
+            @Override
+            public void initialize() {
+                System.out.println("L3");
+            }
+
+			@Override
+			public Set<Subsystem> getRequirements() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+        });
 
     }
 
@@ -82,57 +195,31 @@ public class OI {
 			switch (joy.getPOV()) {
 			case 0: {
                 // Top
-               /* if(){
-                   
-                }
-                else if(){
-                   
-                }
-                else{
-                    
-                }*/
+                currentTriggerSetting =  BUTTON_MODE.CONTROL_P;
+                System.out.println("In Control Panel mode");
 				break;
 			}
 			case 90: {
 				// Right
-               /* if(){
-                    
-
-                }
-                else if(){
-                   
-                }
-                else{
-
-                } */
+                currentTriggerSetting = BUTTON_MODE.CLIMB;
+                System.out.println("In Climb mode");
 				break;
 			}
 			case 180: {
                 // Bottom
-                /* if()){
-
-                }
-                else if(){
-
-                }
-                else{
- 
-                } */
+                currentTriggerSetting = BUTTON_MODE.NEUTRAL;
+                System.out.println("In Neutral mode");
                 break;
             }
 			case 270: {
 				// Left
-				/* if()){
-
-                }
-                else if(){
-
-                }
-                else{
- 
-                } */
+                currentTriggerSetting = BUTTON_MODE.AUTO_SHOOT;
+                System.out.println("In Auto Shoot mode");
 				break;
-			}
+            }
+            default: {
+                System.out.println("Nothing is pressed, hopefully");
+            }
 			}
 		}
 		lastDpad = joy.getPOV();
