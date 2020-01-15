@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.Intake;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -33,32 +34,31 @@ public class OI {
     public static JoystickButton left_stick = new JoystickButton(joy, 9);
     public static JoystickButton right_stick = new JoystickButton(joy, 10);
 
-    
     public int lastDpad = -1;
-    
-    
+
     public OI() {
-        
+
         // Button inputs for commands
-        r_bump.whenPressed(new Command(){
-        
+        r_bump.whenPressed(new Command() {
+
             @Override
             public void initialize() {
                 System.out.println("r bumper");
             }
 
-			@Override
-			public Set<Subsystem> getRequirements() {
-				// TODO Auto-generated method stub
-				return null;
-			}
+            @Override
+            public Set<Subsystem> getRequirements() {
+                // TODO Auto-generated method stub
+                return null;
+            }
+
         });
         // l_bump.whenPressed(new );
 
         // //actual button commands
         // a_button.whenPressed(new );
         // b_button.whenPressed(new );
-        // x_button.whenPressed(new );
+        x_button.whileHeld((Command) new Intake());
         // y_button.whenPressed(new);
 
         // left_middle.whenPressed(new );
@@ -76,68 +76,68 @@ public class OI {
         return leftTrig > 0.9;
     }
 
-    public void updatePeriodicCommands(){
-       
+    public void updatePeriodicCommands() {
+
         if (lastDpad != joy.getPOV()) {
-			switch (joy.getPOV()) {
-			case 0: {
+            switch (joy.getPOV()) {
+            case 0: {
                 // Top
-               /* if(){
-                   
-                }
-                else if(){
-                   
-                }
-                else{
-                    
-                }*/
-				break;
-			}
-			case 90: {
-				// Right
-               /* if(){
-                    
-
-                }
-                else if(){
-                   
-                }
-                else{
-
-                } */
-				break;
-			}
-			case 180: {
-                // Bottom
-                /* if()){
-
-                }
-                else if(){
-
-                }
-                else{
- 
-                } */
+                /*
+                 * if(){
+                 * 
+                 * } else if(){
+                 * 
+                 * } else{
+                 * 
+                 * }
+                 */
                 break;
             }
-			case 270: {
-				// Left
-				/* if()){
-
-                }
-                else if(){
-
-                }
-                else{
- 
-                } */
-				break;
-			}
-			}
-		}
-		lastDpad = joy.getPOV();
+            case 90: {
+                // Right
+                /*
+                 * if(){
+                 * 
+                 * 
+                 * } else if(){
+                 * 
+                 * } else{
+                 * 
+                 * }
+                 */
+                break;
+            }
+            case 180: {
+                // Bottom
+                /*
+                 * if()){
+                 * 
+                 * } else if(){
+                 * 
+                 * } else{
+                 * 
+                 * }
+                 */
+                break;
+            }
+            case 270: {
+                // Left
+                /*
+                 * if()){
+                 * 
+                 * } else if(){
+                 * 
+                 * } else{
+                 * 
+                 * }
+                 */
+                break;
+            }
+            }
+        }
+        lastDpad = joy.getPOV();
     }
-       
+
     public Joystick getJoystick() {
         return joy;
     }
