@@ -29,7 +29,7 @@ public final class Constants {
     public static int kClimberMotorCANid           = 7;  // Climber motor
     public static int kControlPanelMotorCANid      = 8;  // Control Panel rotator
     public static int kShooterVerticalPitchCANid   = 9;  // Shooter's vertical pitch
+    public static int kDrumMotorCANid              = 10; // Intakes drum motor
     public static int kPneumaticsControlCANid      = 20; // Pneumatic Control Module (PCM)
     public static int kPowerDistributionPanelCANid = 30; // Power distribution panel (PDP)
-
 }
