@@ -31,5 +31,4 @@ public final class Constants {
     public static int kShooterVerticalPitchCANid   = 9;  // Shooter's vertical pitch
     public static int kPneumaticsControlCANid      = 20; // Pneumatic Control Module (PCM)
     public static int kPowerDistributionPanelCANid = 30; // Power distribution panel (PDP)
-
 }
