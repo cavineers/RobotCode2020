@@ -32,5 +32,4 @@ public final class Constants {
     public static int kDrumMotorCANid              = 10; // Intakes drum motor
     public static int kPneumaticsControlCANid      = 20; // Pneumatic Control Module (PCM)
     public static int kPowerDistributionPanelCANid = 30; // Power distribution panel (PDP)
-
 }
