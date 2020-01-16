@@ -23,6 +23,14 @@ public final class Constants {
     public static int kDriveTrainMotor2CANid       = 1;  // Drive train's second motor
     public static int kDriveTrainMotor3CANid       = 2;  // Drive train's third motor
     public static int kDriveTrainMotor4CANid       = 3;  // Drive train's fourth motor
+    public static final double kDriveWheelDiameter = 6; // in inches
+    public static final double kDriveSensorUnitsPerInch = 4096 / (kDriveWheelDiameter * Math.PI);
+    public static final int kTimeoutMs = 10;
+    public static final int kPIDLoopIdx = 0;
+    public static final double kDefaultDt = 0.01;
+    public static final double kAVelocity = 0.001;
+    public static final double kDriveVoltageRampRate = 0;
+  
     public static int kTurretRotationMotorCANid    = 4;  // Turret rotation motor
     public static int kFlyWheelMotorCANid          = 5;  // The shooter's fly wheel motor
     public static int kIntakeMotorCANid            = 6;  // Intake motor
@@ -32,4 +40,6 @@ public final class Constants {
     public static int kPneumaticsControlCANid      = 20; // Pneumatic Control Module (PCM)
     public static int kPowerDistributionPanelCANid = 30; // Power distribution panel (PDP)
 
+    public static int kDriveShifter1 = 3;
+    public static int kDriveShifter2 = 4;
 }
