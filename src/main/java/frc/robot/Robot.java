@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
-import frc.robot.subsystems.Intake;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -23,18 +22,14 @@ public class Robot extends TimedRobot {
   // Subsystems
   public static Intake intake;
 
+  // Subsystems
   @Override
   public void robotInit() {
-    // initlize subsytems
     intake = new Intake();
-
-    // Instantiate our RobotContainer. This will perform all our button bindings,
-    // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    // ! THE LOG LEVEL SHOULD ALWAYS BE SET. UNCOMMENT EACH OF THE FOLLOWING LINE
-    // AFTER COMMENTING ALL
+    oi = new OI();
     logger = new CLogger(CLogger.cLoggerMode.COMPETITION);
     // logger = new CLogger(CLogger.cLoggerMode.PRACTICE);
     // logger = new CLogger(CLogger.cLoggerMode.TESTING);
