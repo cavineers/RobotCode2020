@@ -37,13 +37,11 @@ public class OI {
 
     public int lastDpad = -1;
 
-
     public enum BUTTON_MODE {
         AUTO_SHOOT, CONTROL_P, CLIMB, NEUTRAL
     }
 
     public BUTTON_MODE currentTriggerSetting = BUTTON_MODE.NEUTRAL;
-
 
     public OI() {
 
@@ -64,7 +62,6 @@ public class OI {
         });
         l_bump.whenPressed(new Command() {
 
-        x_button.whenHeld(new turnIntakeOn());
             @Override
             public void initialize() {
                 System.out.println("l bumper");
@@ -76,6 +73,7 @@ public class OI {
                 return null;
             }
         });
+        x_button.whenHeld(new turnIntakeOn());
         a_button.whenPressed(new Command() {
 
             @Override
@@ -102,18 +100,10 @@ public class OI {
                 return null;
             }
 
-       
         });
-=
-        x_button.whileHeld((Command) new Intake());
-        
 
-            @Override
-            public Set<Subsystem> getRequirements() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        });
+        x_button.whileHeld(new turnIntakeOn());
+
         y_button.whenPressed(new Command() {
 
             @Override
@@ -218,9 +208,6 @@ public class OI {
 
                 currentTriggerSetting = BUTTON_MODE.NEUTRAL;
                 System.out.println("In Neutral mode");
-
-              
-
 
                 currentTriggerSetting = BUTTON_MODE.AUTO_SHOOT;
                 System.out.println("In Auto Shoot mode");

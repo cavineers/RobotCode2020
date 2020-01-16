@@ -2,6 +2,7 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.Intake;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
@@ -25,27 +26,31 @@ public class turnIntakeOn extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    Robot.intake.numberStopper = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.intake.getIntakeMotor();
-    Robot.intake.isOn = true;
+
+    while (Robot.intake.numberStopper == 0) {
+      Robot.intake.isOn = !Robot.intake.isOn;
+      Robot.intake.numberStopper = 1;
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    Robot.intake.isOn = false;
+    Robot.intake.isOnEnd = !Robot.intake.isOnEnd;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    Robot.intake.isOn=false;
+
     return false;
+
   }
 
 }

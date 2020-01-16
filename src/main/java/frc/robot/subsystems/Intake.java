@@ -6,6 +6,7 @@ import edu.wpi.first.hal.sim.mockdata.DriverStationDataJNI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.OI;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -18,8 +19,11 @@ public class Intake extends SubsystemBase {
   public boolean isOn = false;
   public boolean drumON = false;
   public boolean drumOnT = false;
+  public boolean isOnEnd = false;
 
   public float drumPosition = 0;
+  public int numberStopper = 0;
+  public double intakeVoltage = 0;
 
   public Intake() {
 
@@ -32,7 +36,13 @@ public class Intake extends SubsystemBase {
 
   public void periodic() {
 
-    if (isOn == true) {
+    intakeVoltage = this.getIntakeMotor().getMotorOutputVoltage();
+
+    if (intakeVoltage > 60) {
+      isOn = false;
+      ballIntakeMotor.set(ControlMode.PercentOutput, -2);
+
+    } else if (isOn == true) {
       ballIntakeMotor.set(ControlMode.PercentOutput, 2);
     }
 
@@ -47,6 +57,7 @@ public class Intake extends SubsystemBase {
       ballIntakeMotor.set(ControlMode.PercentOutput, 0);
 
     }
+
     rotatingDrumMotor.getSelectedSensorPosition();
     if (drumPosition < 5.1 && drumON && 360 - drumPosition * 72 > rotatingDrumMotor.getSelectedSensorPosition() + .1) {
 

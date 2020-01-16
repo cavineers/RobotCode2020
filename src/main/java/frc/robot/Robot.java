@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
+import frc.robot.subsystems.Intake;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -19,6 +20,7 @@ public class Robot extends TimedRobot {
 
   public static CLogger logger;
 
+  public static OI oi;
   // Subsystems
   public static Intake intake;
 
