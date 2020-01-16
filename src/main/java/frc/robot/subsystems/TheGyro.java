@@ -25,6 +25,7 @@ public class TheGyro extends SubsystemBase {
 
   public Gyro gyro =new Gyro(){
   
+
     @Override
     public void close() throws Exception {
       // TODO Auto-generated method stub
@@ -71,6 +72,7 @@ public class TheGyro extends SubsystemBase {
   TheGyro_y=gyroUpdate.gyro_y;
   TheGyro_z=gyroUpdate.gyro_z;
 
+  System.out.print(TheGyro_x);
     
   }
   
