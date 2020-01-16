@@ -33,148 +33,147 @@ public class OI {
     public static JoystickButton left_stick = new JoystickButton(joy, 9);
     public static JoystickButton right_stick = new JoystickButton(joy, 10);
 
-    
     public int lastDpad = -1;
-    
+
     public enum BUTTON_MODE {
-		AUTO_SHOOT, CONTROL_P, CLIMB, NEUTRAL
+        AUTO_SHOOT, CONTROL_P, CLIMB, NEUTRAL
     }
 
     public BUTTON_MODE currentTriggerSetting = BUTTON_MODE.NEUTRAL;
 
     public OI() {
-        
+
         // Button inputs for commands
-        r_bump.whenPressed(new Command(){
-        
+        r_bump.whenPressed(new Command() {
+
             @Override
             public void initialize() {
                 System.out.println("r bumper");
             }
 
-			@Override
-			public Set<Subsystem> getRequirements() {
-				// TODO Auto-generated method stub
-				return null;
-			}
+            @Override
+            public Set<Subsystem> getRequirements() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         });
-        l_bump.whenPressed(new Command(){
-        
+        l_bump.whenPressed(new Command() {
+
             @Override
             public void initialize() {
                 System.out.println("l bumper");
             }
 
-			@Override
-			public Set<Subsystem> getRequirements() {
-				// TODO Auto-generated method stub
-				return null;
-			}
+            @Override
+            public Set<Subsystem> getRequirements() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         });
-        a_button.whenPressed(new Command(){
-        
+        a_button.whenPressed(new Command() {
+
             @Override
             public void initialize() {
                 System.out.println("a button");
             }
 
-			@Override
-			public Set<Subsystem> getRequirements() {
-				// TODO Auto-generated method stub
-				return null;
-			}
+            @Override
+            public Set<Subsystem> getRequirements() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         });
-        b_button.whenPressed(new Command(){
-        
+        b_button.whenPressed(new Command() {
+
             @Override
             public void initialize() {
                 System.out.println("b button");
             }
 
-			@Override
-			public Set<Subsystem> getRequirements() {
-				// TODO Auto-generated method stub
-				return null;
-			}
+            @Override
+            public Set<Subsystem> getRequirements() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         });
-        x_button.whenPressed(new Command(){
-        
+        x_button.whenPressed(new Command() {
+
             @Override
             public void initialize() {
                 System.out.println("x button");
             }
 
-			@Override
-			public Set<Subsystem> getRequirements() {
-				// TODO Auto-generated method stub
-				return null;
-			}
+            @Override
+            public Set<Subsystem> getRequirements() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         });
-        y_button.whenPressed(new  Command(){
-        
+        y_button.whenPressed(new Command() {
+
             @Override
             public void initialize() {
                 System.out.println("y button");
             }
 
-			@Override
-			public Set<Subsystem> getRequirements() {
-				// TODO Auto-generated method stub
-				return null;
-			}
+            @Override
+            public Set<Subsystem> getRequirements() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         });
 
-        left_menu.whenPressed(new Command(){
-        
+        left_menu.whenPressed(new Command() {
+
             @Override
             public void initialize() {
                 System.out.println("start menu");
             }
 
-			@Override
-			public Set<Subsystem> getRequirements() {
-				// TODO Auto-generated method stub
-				return null;
-			}
+            @Override
+            public Set<Subsystem> getRequirements() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         });
-        right_menu.whenPressed(new  Command(){
-        
+        right_menu.whenPressed(new Command() {
+
             @Override
             public void initialize() {
                 System.out.println("scoreboard");
             }
 
-			@Override
-			public Set<Subsystem> getRequirements() {
-				// TODO Auto-generated method stub
-				return null;
-			}
+            @Override
+            public Set<Subsystem> getRequirements() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         });
-        right_stick.whenPressed(new  Command(){
-        
+        right_stick.whenPressed(new Command() {
+
             @Override
             public void initialize() {
                 System.out.println("R3");
             }
 
-			@Override
-			public Set<Subsystem> getRequirements() {
-				// TODO Auto-generated method stub
-				return null;
-			}
+            @Override
+            public Set<Subsystem> getRequirements() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         });
-        left_stick.whenPressed(new  Command(){
-        
+        left_stick.whenPressed(new Command() {
+
             @Override
             public void initialize() {
                 System.out.println("L3");
             }
 
-			@Override
-			public Set<Subsystem> getRequirements() {
-				// TODO Auto-generated method stub
-				return null;
-			}
+            @Override
+            public Set<Subsystem> getRequirements() {
+                // TODO Auto-generated method stub
+                return null;
+            }
         });
 
     }
@@ -189,42 +188,42 @@ public class OI {
         return leftTrig > 0.9;
     }
 
-    public void updatePeriodicCommands(){
-       
+    public void updatePeriodicCommands() {
+
         if (lastDpad != joy.getPOV()) {
-			switch (joy.getPOV()) {
-			case 0: {
+            switch (joy.getPOV()) {
+            case 0: {
                 // Top
-                currentTriggerSetting =  BUTTON_MODE.CONTROL_P;
+                currentTriggerSetting = BUTTON_MODE.CONTROL_P;
                 System.out.println("In Control Panel mode");
-				break;
-			}
-			case 90: {
-				// Right
+                break;
+            }
+            case 90: {
+                // Right
                 currentTriggerSetting = BUTTON_MODE.CLIMB;
                 System.out.println("In Climb mode");
-				break;
-			}
-			case 180: {
+                break;
+            }
+            case 180: {
                 // Bottom
                 currentTriggerSetting = BUTTON_MODE.NEUTRAL;
                 System.out.println("In Neutral mode");
                 break;
             }
-			case 270: {
-				// Left
+            case 270: {
+                // Left
                 currentTriggerSetting = BUTTON_MODE.AUTO_SHOOT;
                 System.out.println("In Auto Shoot mode");
-				break;
+                break;
             }
             default: {
                 System.out.println("Nothing is pressed, hopefully");
             }
-			}
-		}
-		lastDpad = joy.getPOV();
+            }
+        }
+        lastDpad = joy.getPOV();
     }
-       
+
     public Joystick getJoystick() {
         return joy;
     }
