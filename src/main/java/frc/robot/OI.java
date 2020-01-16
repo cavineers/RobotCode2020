@@ -34,6 +34,8 @@ public class OI {
     public static JoystickButton right_stick = new JoystickButton(joy, 10);
 
     public int lastDpad = -1;
+    public boolean lastRightTrig = false;
+    public boolean lastLeftTrig = false;
 
     public enum BUTTON_MODE {
         AUTO_SHOOT, CONTROL_P, CLIMB, NEUTRAL
@@ -189,6 +191,41 @@ public class OI {
     }
 
     public void updatePeriodicCommands() {
+
+        if (lastRightTrig != isRightTriggerPressed()) {
+            // the right trigger changed state
+            lastRightTrig = isRightTriggerPressed();
+            if (lastRightTrig && currentTriggerSetting == BUTTON_MODE.CONTROL_P) {
+                // the right trigger is pressed and we are in Control Panel mode
+
+            } else if (lastRightTrig && currentTriggerSetting == BUTTON_MODE.CLIMB) {
+                // the right trigger is pressed and we are in Climb mode
+            } else if (lastRightTrig && currentTriggerSetting == BUTTON_MODE.NEUTRAL) {
+                // the right trigger is pressed and we are in Neutral
+
+            } else if (lastRightTrig && currentTriggerSetting == BUTTON_MODE.AUTO_SHOOT) {
+                // the right trigger is pressed and we are in Auto Shoot mode
+
+            }
+
+        }
+
+        if (lastLeftTrig != isLeftTriggerPressed()) {
+            // the left trigger changed state
+            lastLeftTrig = isLeftTriggerPressed();
+            if (lastLeftTrig && currentTriggerSetting == BUTTON_MODE.CONTROL_P) {
+                // the left trigger is pressed and we are in Control Panel mode
+
+            } else if (lastLeftTrig && currentTriggerSetting == BUTTON_MODE.CLIMB) {
+                // the left trigger is pressed and we are in Climb mode
+            } else if (lastLeftTrig && currentTriggerSetting == BUTTON_MODE.NEUTRAL) {
+                // the left trigger is pressed and we are in Neutral mode
+
+            } else if (lastLeftTrig && currentTriggerSetting == BUTTON_MODE.AUTO_SHOOT) {
+                // the left trigger is pressed and we are in Auto Shoot mode
+
+            }
+        }
 
         if (lastDpad != joy.getPOV()) {
             switch (joy.getPOV()) {

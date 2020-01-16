@@ -65,6 +65,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
+    oi.updatePeriodicCommands();
   }
 
   @Override
@@ -76,7 +77,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-
+    oi.updatePeriodicCommands();
   }
 
   @Override
