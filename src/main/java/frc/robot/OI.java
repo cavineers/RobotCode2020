@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.subsystems.Intake;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -38,13 +37,11 @@ public class OI {
     public boolean lastRightTrig = false;
     public boolean lastLeftTrig = false;
 
-
     public enum BUTTON_MODE {
         AUTO_SHOOT, CONTROL_P, CLIMB, NEUTRAL
     }
 
     public BUTTON_MODE currentTriggerSetting = BUTTON_MODE.NEUTRAL;
-
 
     public OI() {
 
@@ -103,16 +100,19 @@ public class OI {
             }
 
         });
-       
-=
-        x_button.whileHeld((Command) new Intake());
-        
+        x_button.whenPressed(new Command() {
+
+            @Override
+            public void initialize() {
+                System.out.println("x button");
+            }
 
             @Override
             public Set<Subsystem> getRequirements() {
                 // TODO Auto-generated method stub
                 return null;
             }
+
         });
         y_button.whenPressed(new Command() {
 
@@ -253,9 +253,6 @@ public class OI {
 
                 currentTriggerSetting = BUTTON_MODE.NEUTRAL;
                 System.out.println("In Neutral mode");
-
-              
-
 
                 currentTriggerSetting = BUTTON_MODE.AUTO_SHOOT;
                 System.out.println("In Auto Shoot mode");
