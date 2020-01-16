@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.Intake;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -37,11 +38,13 @@ public class OI {
     public boolean lastRightTrig = false;
     public boolean lastLeftTrig = false;
 
+
     public enum BUTTON_MODE {
         AUTO_SHOOT, CONTROL_P, CLIMB, NEUTRAL
     }
 
     public BUTTON_MODE currentTriggerSetting = BUTTON_MODE.NEUTRAL;
+
 
     public OI() {
 
@@ -58,6 +61,7 @@ public class OI {
                 // TODO Auto-generated method stub
                 return null;
             }
+
         });
         l_bump.whenPressed(new Command() {
 
@@ -97,13 +101,12 @@ public class OI {
                 // TODO Auto-generated method stub
                 return null;
             }
-        });
-        x_button.whenPressed(new Command() {
 
-            @Override
-            public void initialize() {
-                System.out.println("x button");
-            }
+        });
+       
+=
+        x_button.whileHeld((Command) new Intake());
+        
 
             @Override
             public Set<Subsystem> getRequirements() {
@@ -231,24 +234,29 @@ public class OI {
             switch (joy.getPOV()) {
             case 0: {
                 // Top
+
                 currentTriggerSetting = BUTTON_MODE.CONTROL_P;
                 System.out.println("In Control Panel mode");
+
                 break;
             }
             case 90: {
                 // Right
+
                 currentTriggerSetting = BUTTON_MODE.CLIMB;
                 System.out.println("In Climb mode");
+
                 break;
             }
             case 180: {
                 // Bottom
+
                 currentTriggerSetting = BUTTON_MODE.NEUTRAL;
                 System.out.println("In Neutral mode");
-                break;
-            }
-            case 270: {
-                // Left
+
+              
+
+
                 currentTriggerSetting = BUTTON_MODE.AUTO_SHOOT;
                 System.out.println("In Auto Shoot mode");
                 break;
@@ -256,6 +264,7 @@ public class OI {
             default: {
                 System.out.println("Nothing is pressed, hopefully");
             }
+
             }
         }
         lastDpad = joy.getPOV();
