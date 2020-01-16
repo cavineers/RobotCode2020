@@ -17,22 +17,24 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  
+
   public static CLogger logger;
 
-//Subsystems
-public static Intake intake; 
+  // Subsystems
+  public static Intake intake;
 
   @Override
   public void robotInit() {
-    //initlize subsytems
-    intake=new Intake();
-    
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // initlize subsytems
+    intake = new Intake();
+
+    // Instantiate our RobotContainer. This will perform all our button bindings,
+    // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    //! THE LOG LEVEL SHOULD ALWAYS BE SET. UNCOMMENT EACH OF THE FOLLOWING LINE AFTER COMMENTING ALL
+    // ! THE LOG LEVEL SHOULD ALWAYS BE SET. UNCOMMENT EACH OF THE FOLLOWING LINE
+    // AFTER COMMENTING ALL
     logger = new CLogger(CLogger.cLoggerMode.COMPETITION);
     // logger = new CLogger(CLogger.cLoggerMode.PRACTICE);
     // logger = new CLogger(CLogger.cLoggerMode.TESTING);
@@ -58,7 +60,7 @@ public static Intake intake;
 
     // // schedule the autonomous command (example)
     // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.schedule();
+    // m_autonomousCommand.schedule();
     // }
   }
 
@@ -69,7 +71,7 @@ public static Intake intake;
   @Override
   public void teleopInit() {
     // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.cancel();
+    // m_autonomousCommand.cancel();
     // }
   }
 
