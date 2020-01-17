@@ -19,14 +19,21 @@ public class Robot extends TimedRobot {
 
   public static CLogger logger;
 
+  public static OI oi;
 
+  // Subsystems
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // initlize subsytems
+
+    // Instantiate our RobotContainer. This will perform all our button bindings,
+    // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    //! THE LOG LEVEL SHOULD ALWAYS BE SET. UNCOMMENT EACH OF THE FOLLOWING LINE AFTER COMMENTING ALL
+    oi = new OI();
+    // ! THE LOG LEVEL SHOULD ALWAYS BE SET. UNCOMMENT EACH OF THE FOLLOWING LINE
+    // AFTER COMMENTING ALL
     logger = new CLogger(CLogger.cLoggerMode.COMPETITION);
     // logger = new CLogger(CLogger.cLoggerMode.PRACTICE);
     // logger = new CLogger(CLogger.cLoggerMode.TESTING);
@@ -52,23 +59,25 @@ public class Robot extends TimedRobot {
 
     // // schedule the autonomous command (example)
     // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.schedule();
+    // m_autonomousCommand.schedule();
     // }
   }
 
   @Override
   public void autonomousPeriodic() {
+    oi.updatePeriodicCommands();
   }
 
   @Override
   public void teleopInit() {
     // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.cancel();
+    // m_autonomousCommand.cancel();
     // }
   }
 
   @Override
   public void teleopPeriodic() {
+    oi.updatePeriodicCommands();
   }
 
   @Override
