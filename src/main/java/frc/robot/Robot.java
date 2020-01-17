@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
 import frc.lib.CLogger.cLogType;
+import frc.robot.subsystems.RogerRoger;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -19,7 +20,8 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   public static CLogger logger;
-
+  public static RogerRoger m_rogerroger = null;
+  public static OI oi;
 
   @Override
   public void robotInit() {
@@ -27,6 +29,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
+    m_rogerroger = new RogerRoger();
+    oi = new  OI();
     //! THE LOG LEVEL SHOULD ALWAYS BE SET. UNCOMMENT EACH OF THE FOLLOWING LINE AFTER COMMENTING ALL
     logger = new CLogger(CLogger.cLoggerMode.COMPETITION);
     // logger = new CLogger(CLogger.cLoggerMode.PRACTICE);
