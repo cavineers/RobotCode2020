@@ -232,36 +232,27 @@ public class OI {
 
         if (lastDpad != joy.getPOV()) {
             switch (joy.getPOV()) {
-            case 0: {
+            case 0:
                 // Top
-
                 currentTriggerSetting = BUTTON_MODE.CONTROL_P;
                 System.out.println("In Control Panel mode");
-
                 break;
-            }
-            case 90: {
+            case 90:
                 // Right
-
                 currentTriggerSetting = BUTTON_MODE.CLIMB;
                 System.out.println("In Climb mode");
-
                 break;
-            }
-            case 180: {
+            case 180: 
                 // Bottom
-
                 currentTriggerSetting = BUTTON_MODE.NEUTRAL;
                 System.out.println("In Neutral mode");
-
+            break;
+            case 270:
                 currentTriggerSetting = BUTTON_MODE.AUTO_SHOOT;
                 System.out.println("In Auto Shoot mode");
                 break;
-            }
-            default: {
-                System.out.println("Nothing is pressed, hopefully");
-            }
-
+            default:
+                break;
             }
         }
         lastDpad = joy.getPOV();
