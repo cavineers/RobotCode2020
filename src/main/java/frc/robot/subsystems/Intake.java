@@ -1,4 +1,4 @@
-// TODO: DrumMotor
+// TODO: DrumMotor fix
 
 package frc.robot.subsystems;
 
@@ -19,7 +19,6 @@ public class Intake extends SubsystemBase {
   public boolean isOn = false;
   public boolean drumON = false;
   public boolean drumOnT = false;
-  public boolean isOnEnd = false;
 
   public float drumPosition = 0;
   public int numberStopper = 0;
@@ -38,11 +37,14 @@ public class Intake extends SubsystemBase {
 
     intakeVoltage = this.getIntakeMotor().getMotorOutputVoltage();
 
+    // if the voltage gets to high it means it is jammed
     if (intakeVoltage > 60) {
       isOn = false;
       ballIntakeMotor.set(ControlMode.PercentOutput, -2);
+    }
 
-    } else if (isOn == true) {
+    // this if statement is used to turn on the intake
+    else if (isOn == true) {
       ballIntakeMotor.set(ControlMode.PercentOutput, 2);
     }
 
