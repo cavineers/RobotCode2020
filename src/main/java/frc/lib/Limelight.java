@@ -36,40 +36,14 @@ public class Limelight {
         this.llTable.getEntry("ledMode").setNumber(mode);
     }
 
-    public double getDistance() {
-        // System.out.println("Height from ground: " + Constants.kFieldGoalHeightFromGround);
-        // System.out.println("Limelight from ground: " + Constants.kLimelightHeightFromGround);
-        // System.out.println("Mounting Angle: " + Constants.kLimelightMountingAngle);
-        // System.out.println("ty: " + this.llTable.getEntry("ty").getDouble(0));
-
-        // (height of target - height of camera above floor) / tan (mounting angle + y angle to target)
-        double tmp = (Constants.kFieldGoalHeightFromGround-Constants.kLimelightHeightFromGround)/Math.tan(Math.toRadians(Constants.kLimelightMountingAngle+NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0)));
+    public int getDistance() {
+        double distance = (Constants.kFieldGoalHeightFromGround-Constants.kLimelightHeightFromGround)/Math.tan(Math.toRadians(Constants.kLimelightMountingAngle+NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0)));
         
-        if (tmp == Double.POSITIVE_INFINITY || tmp == Double.NEGATIVE_INFINITY || tmp < 0) {
-            return 0.0;
+        if (distance == Double.POSITIVE_INFINITY || distance == Double.NEGATIVE_INFINITY || distance < 0.0) {
+            return 0;
         } else {
-            // if (tmp < 50) {
-            //     return tmp;
-            // } else
-            // if (tmp < 70) {
-            //     return tmp-5;
-            // } else
-            // if (tmp < 100) {
-            //     return tmp-10;
-            // } else
-            // if (tmp < 150) {
-            //     return tmp-15;
-            // } else
-            // if (tmp < 200) {
-            //     return tmp-20;
-            // } else {
-            //     return tmp;
-            // }
-            return tmp;
+            return (int)Math.round(distance);
         }
-
-        // return (h/Math.tan(Math.toRadians(this.llTable.getEntry("ty").getDouble(0.0))));
-        // return 0.0;
         
     }
 

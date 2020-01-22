@@ -16,8 +16,9 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.lib.CLogger;
 import frc.lib.Limelight;
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.subsystems.DriveTrain;
+// import frc.robot.subsystems.DriveTrain;
 import frc.robot.OI;
+// import frc.robot.commands.TargetDistance;
 
 
 public class Robot extends TimedRobot {
@@ -30,7 +31,7 @@ public class Robot extends TimedRobot {
 
   private static double lastLime = 0;
 
-  public static DriveTrain drivetrain;
+  // public static DriveTrain drivetrain;
 
   public static OI oi;
 
@@ -96,6 +97,14 @@ public class Robot extends TimedRobot {
     // if (m_autonomousCommand != null) {
     //   m_autonomousCommand.cancel();
     // }
+      // new TargetDistance(drivetrain, 150);
+      // if (limelight.getDistance() < 150) {
+      //   System.out.println("driving");
+      //   this.drivetrain.drive(0, 0);
+      // } else {
+      //   System.out.println("stopping");
+      //   this.drivetrain.drive(0.1, 0);
+      // }
   }
 
   @Override
