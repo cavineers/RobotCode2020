@@ -16,4 +16,5 @@ jobs:
         run: chmod +x ./gradlew
       - name: Execute build
         run: ./gradlew build
-      
+      - name: Complete
+        run: echo Done
