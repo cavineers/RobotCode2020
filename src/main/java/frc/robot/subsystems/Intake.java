@@ -60,21 +60,6 @@ public class Intake extends SubsystemBase {
 
     }
 
-    rotatingDrumMotor.getSelectedSensorPosition();
-    if (drumPosition < 5.1 && drumON && 360 - drumPosition * 72 > rotatingDrumMotor.getSelectedSensorPosition() + .1) {
-
-      rotatingDrumMotor.set(ControlMode.Position, drumPosition * 72);
-
-      drumOnT = true;
-
-    }
-
-    else {
-
-      drumON = false;
-
-    }
-
   }
 
   public TalonSRX getIntakeMotor() {
