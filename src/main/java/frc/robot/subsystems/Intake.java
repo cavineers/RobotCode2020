@@ -5,7 +5,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.hal.sim.mockdata.DriverStationDataJNI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.OI;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -45,7 +44,7 @@ public class Intake extends SubsystemBase {
 
         // this if statement is used to turn on the intake
         else if (isOn == true) {
-            ballIntakeMotor.set(ControlMode.PercentOutput, 2);
+            ballIntakeMotor.set(ControlMode.PercentOutput, 1);
         }
 
         else if (isOn == false) {
