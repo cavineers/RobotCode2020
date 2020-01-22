@@ -13,69 +13,69 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class Intake extends SubsystemBase {
 
-  public TalonSRX rotatingDrumMotor = new TalonSRX(Constants.kDrumMotorCANid);
-  public TalonSRX ballIntakeMotor = new TalonSRX(Constants.kIntakeMotorCANid);
+    public TalonSRX rotatingDrumMotor = new TalonSRX(Constants.kDrumMotorCANid);
+    public TalonSRX ballIntakeMotor = new TalonSRX(Constants.kIntakeMotorCANid);
 
-  public boolean isOn = false;
-  public boolean drumON = false;
-  public boolean drumOnT = false;
+    public boolean isOn = false;
+    public boolean drumON = false;
+    public boolean drumOnT = false;
 
-  public float drumPosition = 0;
-  public int numberStopper = 0;
-  public double intakeVoltage = 0;
+    public float drumPosition = 0;
+    public int numberStopper = 0;
+    public double intakeVoltage = 0;
 
-  public Intake() {
+    public Intake() {
 
-    this.getIntakeMotor().setNeutralMode(NeutralMode.Brake);
-    this.getDrumMotor().setNeutralMode(NeutralMode.Brake);
-
-  }
-
-  @Override
-
-  public void periodic() {
-
-    intakeVoltage = this.getIntakeMotor().getMotorOutputVoltage();
-
-    // if the voltage gets to high it means it is jammed
-    if (intakeVoltage > 60) {
-      isOn = false;
-      ballIntakeMotor.set(ControlMode.PercentOutput, -2);
-    }
-
-    // this if statement is used to turn on the intake
-    else if (isOn == true) {
-      ballIntakeMotor.set(ControlMode.PercentOutput, 2);
-    }
-
-    else if (isOn == false) {
-
-      ballIntakeMotor.set(ControlMode.PercentOutput, 0);
+        this.getIntakeMotor().setNeutralMode(NeutralMode.Brake);
+        this.getDrumMotor().setNeutralMode(NeutralMode.Brake);
 
     }
 
-    else {
+    @Override
 
-      ballIntakeMotor.set(ControlMode.PercentOutput, 0);
+    public void periodic() {
+
+        intakeVoltage = this.getIntakeMotor().getMotorOutputVoltage();
+
+        // if the voltage gets to high it means it is jammed
+        if (intakeVoltage > 60) {
+            isOn = false;
+            ballIntakeMotor.set(ControlMode.PercentOutput, -2);
+        }
+
+        // this if statement is used to turn on the intake
+        else if (isOn == true) {
+            ballIntakeMotor.set(ControlMode.PercentOutput, 2);
+        }
+
+        else if (isOn == false) {
+
+            ballIntakeMotor.set(ControlMode.PercentOutput, 0);
+
+        }
+
+        else {
+
+            ballIntakeMotor.set(ControlMode.PercentOutput, 0);
+
+        }
 
     }
 
-  }
+    public TalonSRX getIntakeMotor() {
 
-  public TalonSRX getIntakeMotor() {
+        return this.ballIntakeMotor;
 
-    return this.ballIntakeMotor;
+    }
 
-  }
+    public TalonSRX getDrumMotor() {
 
-  public TalonSRX getDrumMotor() {
+        return this.rotatingDrumMotor;
 
-    return this.rotatingDrumMotor;
+    }
 
-  }
-
-  public void turnOn() {
-    isOn = true;
-  }
+    public void turnOn() {
+        isOn = true;
+    }
 
 }
