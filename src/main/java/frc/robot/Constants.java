@@ -31,4 +31,9 @@ public final class Constants {
     public static int kShooterVerticalPitchCANid   = 9;  // Shooter's vertical pitch
     public static int kPneumaticsControlCANid      = 20; // Pneumatic Control Module (PCM)
     public static int kPowerDistributionPanelCANid = 30; // Power distribution panel (PDP)
+
+    // VISION
+    public static double kFieldGoalHeightFromGround = 53.0; // 31 inches used for testing
+    public static double kLimelightHeightFromGround = 18.0; // vertical distance from limelight to ground
+    public static double kLimelightMountingAngle = -6.0;
 }

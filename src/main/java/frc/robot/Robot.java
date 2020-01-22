@@ -10,15 +10,29 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.lib.CLogger;
+import frc.lib.Limelight;
+import edu.wpi.first.wpilibj.Timer;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.OI;
+
 
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
+  private static Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  private static RobotContainer m_robotContainer;
 
   public static CLogger logger;
+  public static Limelight limelight;
 
+  private static double lastLime = 0;
+
+  public static DriveTrain drivetrain;
+
+  public static OI oi;
 
   @Override
   public void robotInit() {
@@ -31,11 +45,28 @@ public class Robot extends TimedRobot {
     // logger = new CLogger(CLogger.cLoggerMode.PRACTICE);
     // logger = new CLogger(CLogger.cLoggerMode.TESTING);
     // logger = new CLogger(CLogger.cLoggerMode.DEVELOPMENT);
+
+    // Limelight
+    this.limelight = new Limelight();
+
+    this.lastLime = Robot.getCurrentTime();
+
+    // DriveTrain
+    // this.drivetrain = new DriveTrain();
   }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+
+    // System.out.println("Horizontal: " + limelight.getHorizontalOffset());
+    // System.out.println("Vertical: " + limelight.getVerticalOffset());
+    // System.out.println("Distance: " + limelight.getDistance());
+    if (Robot.getCurrentTime()-this.lastLime > .5) {
+        this.lastLime = Robot.getCurrentTime();
+        // System.out.println(NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0));
+        System.out.println("Distance: " + limelight.getDistance());
+    }
   }
 
   @Override
@@ -68,7 +99,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopPeriodic() {
+    public void teleopPeriodic() {
   }
 
   @Override
@@ -85,5 +116,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+
+  public static double getCurrentTime() {
+    return Timer.getFPGATimestamp();
   }
 }
