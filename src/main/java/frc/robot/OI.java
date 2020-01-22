@@ -45,35 +45,10 @@ public class OI {
     public BUTTON_MODE currentTriggerSetting = BUTTON_MODE.NEUTRAL;
 
     public OI() {
-
+        
         // Button inputs for commands
-        r_bump.whenPressed(new RaiseUp()); /* {
-
-            @Override
-            public void initialize() {
-                System.out.println("r bumper");
-            }
-
-            @Override
-            public Set<Subsystem> getRequirements() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-        }); */
-        l_bump.whenPressed(new LowerDown()); /* {
-
-            @Override
-            public void initialize() {
-                System.out.println("l bumper");
-            }
-
-            @Override
-            public Set<Subsystem> getRequirements() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        }); */
+        r_bump.whenPressed(new RaiseRoger());
+        l_bump.whenPressed(new LowerRoger());
         a_button.whenPressed(new Command() {
 
             @Override
@@ -254,6 +229,10 @@ public class OI {
 
                 currentTriggerSetting = BUTTON_MODE.NEUTRAL;
                 System.out.println("In Neutral mode");
+                break;
+            }
+            case 270: {
+                // Left
 
                 currentTriggerSetting = BUTTON_MODE.AUTO_SHOOT;
                 System.out.println("In Auto Shoot mode");

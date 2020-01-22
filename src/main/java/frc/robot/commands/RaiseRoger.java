@@ -8,14 +8,13 @@
 package frc.robot.commands;
 
 import frc.robot.Robot;
-import frc.robot.subsystems.RogerRoger;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class RaiseUp extends CommandBase {
+public class RaiseRoger extends CommandBase {
   /**
    * Creates a new RaiseUp.
    */
-  public RaiseUp() {
+  public RaiseRoger() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Robot.m_rogerroger);
   }

@@ -15,20 +15,23 @@ public class RogerRoger extends SubsystemBase {
   /**
    * Creates a new RogerRoger.
    */
-    //solenoid
-  Solenoid pitchSolenoid = null;
-    //variable because I am confused, and it fixed my problems
-  boolean hype = true;
+    //solenoid and state
+  private Solenoid pitchSolenoid;
+  private boolean controlPanelState = false;
+
   public RogerRoger() {
     pitchSolenoid = new Solenoid(Constants.kControlPanelSolenoidCANid);
   }
 
   public void pitchUp() {
-    pitchSolenoid.set(hype);
+    controlPanelState = true;
+    pitchSolenoid.set(controlPanelState);
   }
 
   public void pitchDown(){
-    pitchSolenoid.set(hype);
+    controlPanelState = false;
+    pitchSolenoid.set(controlPanelState);
+
   }
 
   @Override
