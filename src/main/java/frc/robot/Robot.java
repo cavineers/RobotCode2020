@@ -57,9 +57,9 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    if (Robot.getCurrentTime()-this.lastLime > .5) {
-        this.lastLime = Robot.getCurrentTime();
-        System.out.println("Distance 3: " + limelight.getDistance());
+    if (Robot.getCurrentTime()-lastLime > .5) {
+        lastLime = Robot.getCurrentTime();
+        System.out.println("Distance: " + limelight.getDistance());
     }
   }
 
