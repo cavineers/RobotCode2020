@@ -1,52 +1,35 @@
 package frc.lib;
 
-public class ControlColoring {
-    public enum ControlColor {
-        RED,
-        GREEN,
-        BLUE,
-        YELLOW,
-        ERROR,
-        NO_COLOR
-    }
+import frc.robot.subsystems.ColorSensor.ControlPanelColor;;
 
-    /**
-     * transposeToField
-     * @param oldColor
-     * @return The transposed value
-     */
-    public ControlColor transposeToField(ControlColor oldColor) {
+public class ControlColoring {
+    public ControlPanelColor transposeToField(ControlPanelColor oldColor) {
         switch (oldColor) {
             case RED:
-                return ControlColor.BLUE;
+                return ControlPanelColor.BLUE;
             case GREEN:
-                return ControlColor.YELLOW;
+                return ControlPanelColor.YELLOW;
             case BLUE:
-                return ControlColor.RED;
+                return ControlPanelColor.RED;
             case YELLOW:
-                return ControlColor.GREEN;
+                return ControlPanelColor.GREEN;
             default:
-                return ControlColor.ERROR;
+                return ControlPanelColor.UNKNOWN;
         }
     }
 
-    /**
-     * transposeFromField
-     * @param oldColor
-     * @return The transposed value
-     */
-    public ControlColor transposeFromField(ControlColor oldColor) {
+    public ControlPanelColor transposeFromField(ControlPanelColor oldColor) {
         switch (oldColor) {
             case RED:
-                return ControlColor.BLUE;
+                return ControlPanelColor.BLUE;
             case GREEN:
-                return ControlColor.YELLOW;
+                return ControlPanelColor.YELLOW;
             case BLUE:
-                return ControlColor.RED;
+                return ControlPanelColor.RED;
             case YELLOW:
-                return ControlColor.GREEN;
+                return ControlPanelColor.GREEN;
             default:
-                return ControlColor.ERROR;
+                return ControlPanelColor.UNKNOWN;
         }
     }
 }

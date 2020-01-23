@@ -1,38 +1,62 @@
-//! UNTESTED
-
 package frc.robot.subsystems;
 
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
+import com.revrobotics.ColorSensorV3;
+
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.lib.ControlColoring;
-import frc.lib.ControlColoring.ControlColor;
 
 public class ColorSensor extends SubsystemBase {
-    // Coloring Helper Library
-    private ControlColoring coloring;
-
-    // Last known color
-    private ControlColor lastKnown;
+    private I2C.Port i2cPort = I2C.Port.kOnboard; // Setup i2c
+    private ColorSensorV3 sensor = new ColorSensorV3(i2cPort); // Inst color sensor
+    private ColorMatch colorMatch = new ColorMatch(); // setup color matcher
     
-  /**
-   * Creates a new ExampleSubsystem.
-   */
-  public ColorSensor() {
-    this.coloring = new ControlColoring();
-    this.lastKnown = ControlColor.NO_COLOR;
-  }
+    // config colors
+    private Color redTarget = ColorMatch.makeColor(0.561, 0.232, 0.114); 
+    private Color greenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
+    private Color blueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
+    private Color yellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
 
-  public ControlColor getRobotLast() {
-      return this.lastKnown;
-  }
+    // Current color
+    private ControlPanelColor currentColor = ControlPanelColor.UNKNOWN;
 
-  public ControlColor getFieldLast() {
-    return coloring.transposeToField(this.lastKnown);
-  }
+    // Control Panel Controls
+    public enum ControlPanelColor {
+        RED,
+        GREEN,
+        BLUE,
+        YELLOW,
+        UNKNOWN
+    }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+    public ColorSensor() {
+        // Add colors to matcher
+        colorMatch.addColorMatch(redTarget);
+        colorMatch.addColorMatch(greenTarget);
+        colorMatch.addColorMatch(blueTarget);
+        colorMatch.addColorMatch(yellowTarget);    
+    }
 
-    // TODO: poll color sensor and save data
-  }
+    @Override
+    public void periodic() {
+        Color detectedColor = sensor.getColor();
+        ColorMatchResult result = colorMatch.matchClosestColor(detectedColor);
+
+        if (result.color == redTarget) {
+            this.currentColor = ControlPanelColor.RED;
+        } else
+        if (result.color == greenTarget) {
+            this.currentColor = ControlPanelColor.GREEN;
+        } else
+        if (result.color == blueTarget) {
+            this.currentColor = ControlPanelColor.BLUE;
+        } else
+        if (result.color == yellowTarget) {
+            this.currentColor = ControlPanelColor.YELLOW;
+        } else {
+            this.currentColor = ControlPanelColor.UNKNOWN;
+        }
+    }
 }
