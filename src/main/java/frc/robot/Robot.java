@@ -64,8 +64,8 @@ public class Robot extends TimedRobot {
     if (Robot.getCurrentTime()-this.lastLime > .5) {
         this.lastLime = Robot.getCurrentTime();
         // System.out.println(NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0));
-        System.out.println("Distance 1: " + limelight.getDistance());
-        System.out.println("Distance 2: " + limelight.getDistance2());
+        // System.out.println("Distance 1: " + limelight.getDistance());
+        // System.out.println("Distance 2: " + limelight.getDistance2());
         System.out.println("Distance 3: " + limelight.getDistance3());
     }
   }

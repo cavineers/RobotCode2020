@@ -35,5 +35,5 @@ public final class Constants {
     // VISION
     public static double kFieldGoalHeightFromGround = 53.0; // 31 inches used for testing
     public static double kLimelightHeightFromGround = 18.0; // vertical distance from limelight to ground
-    public static double kLimelightMountingAngle = -3.8;
+    public static double kLimelightMountingAngle = 0;
 }

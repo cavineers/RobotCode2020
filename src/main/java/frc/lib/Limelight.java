@@ -66,8 +66,8 @@ public class Limelight {
         if (tv < 1.0) {
             return 0;
         } else {
-            double d1 = 64; // Actual Distance
-            double a1 = 1.203; // Matching ta
+            double d1 = 82.0; // Actual Distance
+            double a1 = 1.900; // Matching ta
             double distraw = Math.sqrt((a1*Math.pow(d1,2))/ta);
             double tdist = Math.cos(ty)*distraw;
 
@@ -81,6 +81,13 @@ public class Limelight {
         double angle1 = Constants.kLimelightMountingAngle;
         double angle2 = this.llTable.getEntry("ty").getDouble(0.0);
         double distance = (height2-height1) * (1 / Math.tan(Math.toRadians(angle1+angle2)));
-        return (int)Math.round(this.llCatch(distance));
+        int re = (int)Math.round(this.llCatch(distance));
+        // System.out.println(re);
+
+        if (re > 210) {
+            return re+10;
+        } else {
+            return re;
+        }
     }
 }
