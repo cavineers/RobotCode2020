@@ -19,10 +19,10 @@ public final class Constants {
     //? All constants begin with a lowercase 'k'
 
     // CAN network mapping
-    public static int kDriveTrainMotor1CANid       = 0;  // Drive train's first motor
-    public static int kDriveTrainMotor2CANid       = 1;  // Drive train's second motor
-    public static int kDriveTrainMotor3CANid       = 2;  // Drive train's third motor
-    public static int kDriveTrainMotor4CANid       = 3;  // Drive train's fourth motor
+    public static int kDriveTrainMotor1CANid       = 0;  // Drive train's first motor //^ FRONT RIGHT
+    public static int kDriveTrainMotor2CANid       = 1;  // Drive train's second motor //^ FRONT LEFT
+    public static int kDriveTrainMotor3CANid       = 2;  // Drive train's third motor //^ BACK RIGHT
+    public static int kDriveTrainMotor4CANid       = 3;  // Drive train's fourth motor //^ BACK LEFT
     public static int kTurretRotationMotorCANid    = 4;  // Turret rotation motor
     public static int kFlyWheelMotorCANid          = 5;  // The shooter's fly wheel motor
     public static int kIntakeMotorCANid            = 6;  // Intake motor
