@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -45,151 +46,93 @@ public class OI {
 
     public OI() {
 
+        // if (currentTriggerSetting == BUTTON_MODE.CONTROL_P) {
+        // // we are in Control Panel mode
+        // r_bump.whenPressed(new Command());
+        // l_bump.whenPressed(new Command());
+        // a_button.whenPressed(new Command());
+        // b_button.whenPressed(new Command());
+        // x_button.whenPressed(new Command());
+        // y_button.whenPressed(new Command());
+
+        // left_menu.whenPressed(new Command());
+        // right_menu.whenPressed(new Command());
+        // right_stick.whenPressed(new Command());
+        // left_stick.whenPressed(new Command());
+        // } else if (currentTriggerSetting == BUTTON_MODE.CLIMB) {
+        // // we are in Climb mode
+        // r_bump.whenPressed(new Command());
+        // l_bump.whenPressed(new Command());
+        // a_button.whenPressed(new Command());
+        // b_button.whenPressed(new Command());
+        // x_button.whenPressed(new Command());
+        // y_button.whenPressed(new Command());
+
+        // left_menu.whenPressed(new Command());
+        // right_menu.whenPressed(new Command());
+        // right_stick.whenPressed(new Command());
+        // left_stick.whenPressed(new Command());
+        // } else if (currentTriggerSetting == BUTTON_MODE.NEUTRAL) {
+        // // we are in Neutral
+        // r_bump.whenPressed(new Command());
+        // l_bump.whenPressed(new Command());
+        // a_button.whenPressed(new Command());
+        // b_button.whenPressed(new Command());
+        // x_button.whenPressed(new Command());
+        // y_button.whenPressed(new Command());
+
+        // left_menu.whenPressed(new Command());
+        // right_menu.whenPressed(new Command());
+        // right_stick.whenPressed(new Command());
+        // left_stick.whenPressed(new Command());
+        // } else if (currentTriggerSetting == BUTTON_MODE.AUTO_SHOOT) {
+        // // we are in Auto Shoot mode
+        // r_bump.whenPressed(new Command());
+        // l_bump.whenPressed(new Command());
+        // a_button.whenPressed(new Command());
+        // b_button.whenPressed(new Command());
+        // x_button.whenPressed(new Command());
+        // y_button.whenPressed(new Command());
+
+        // left_menu.whenPressed(new Command());
+        // right_menu.whenPressed(new Command());
+        // right_stick.whenPressed(new Command());
+        // left_stick.whenPressed(new Command());
+        // }
+        String rightBump = "r_bump";
+        String leftBump = "l_bump";
+        String aButton = "a_button";
+        String bButton = "b_button";
+        String xButton = "x_button";
+        String yButton = "y_button";
+
+        String leftMenu = "left_menu";
+        String rightMenu = "right_menu";
+        String rightStick = "right_stick";
+        String leftStick = "left_stick";
+
         // Button inputs for commands
-        r_bump.whenPressed(new Command() {
+        r_bump.whenPressed(new PrintButton(rightBump));
+        l_bump.whenPressed(new PrintButton(leftBump));
+        a_button.whenPressed(new PrintButton(aButton));
+        b_button.whenPressed(new PrintButton(bButton));
+        x_button.whenPressed(new PrintButton(xButton));
+        y_button.whenPressed(new PrintButton(yButton));
 
-            @Override
-            public void initialize() {
-                System.out.println("r bumper");
-            }
-
-            @Override
-            public Set<Subsystem> getRequirements() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-        });
-        l_bump.whenPressed(new Command() {
-
-            @Override
-            public void initialize() {
-                System.out.println("l bumper");
-            }
-
-            @Override
-            public Set<Subsystem> getRequirements() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        });
-        a_button.whenPressed(new Command() {
-
-            @Override
-            public void initialize() {
-                System.out.println("a button");
-            }
-
-            @Override
-            public Set<Subsystem> getRequirements() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        });
-        b_button.whenPressed(new Command() {
-
-            @Override
-            public void initialize() {
-                System.out.println("b button");
-            }
-
-            @Override
-            public Set<Subsystem> getRequirements() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-        });
-        x_button.whenPressed(new Command() {
-
-            @Override
-            public void initialize() {
-                System.out.println("x button");
-            }
-
-            @Override
-            public Set<Subsystem> getRequirements() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-        });
-        y_button.whenPressed(new Command() {
-
-            @Override
-            public void initialize() {
-                System.out.println("y button");
-            }
-
-            @Override
-            public Set<Subsystem> getRequirements() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        });
-
-        left_menu.whenPressed(new Command() {
-
-            @Override
-            public void initialize() {
-                System.out.println("start menu");
-            }
-
-            @Override
-            public Set<Subsystem> getRequirements() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        });
-        right_menu.whenPressed(new Command() {
-
-            @Override
-            public void initialize() {
-                System.out.println("scoreboard");
-            }
-
-            @Override
-            public Set<Subsystem> getRequirements() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        });
-        right_stick.whenPressed(new Command() {
-
-            @Override
-            public void initialize() {
-                System.out.println("R3");
-            }
-
-            @Override
-            public Set<Subsystem> getRequirements() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        });
-        left_stick.whenPressed(new Command() {
-
-            @Override
-            public void initialize() {
-                System.out.println("L3");
-            }
-
-            @Override
-            public Set<Subsystem> getRequirements() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-        });
+        left_menu.whenPressed(new PrintButton(leftMenu));
+        right_menu.whenPressed(new PrintButton(rightMenu));
+        right_stick.whenPressed(new PrintButton(rightStick));
+        left_stick.whenPressed(new PrintButton(leftStick));
 
     }
 
     public boolean isRightTriggerPressed() {
-        double rightTrig = this.getJoystick().getRawAxis(3);
+        final double rightTrig = this.getJoystick().getRawAxis(3);
         return rightTrig > 0.9;
     }
 
     public boolean isLeftTriggerPressed() {
-        double leftTrig = this.getJoystick().getRawAxis(2);
+        final double leftTrig = this.getJoystick().getRawAxis(2);
         return leftTrig > 0.9;
     }
 
@@ -242,16 +185,17 @@ public class OI {
                 currentTriggerSetting = BUTTON_MODE.CLIMB;
                 System.out.println("In Climb mode");
                 break;
-            case 180: 
+            case 180:
                 // Bottom
                 currentTriggerSetting = BUTTON_MODE.NEUTRAL;
                 System.out.println("In Neutral mode");
-            break;
+                break;
             case 270:
                 currentTriggerSetting = BUTTON_MODE.AUTO_SHOOT;
                 System.out.println("In Auto Shoot mode");
                 break;
             default:
+                System.out.println("Nothing is pressed, hopefully");
                 break;
             }
         }
