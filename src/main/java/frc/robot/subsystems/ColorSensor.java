@@ -7,6 +7,7 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.ControlColoring;
 
 public class ColorSensor extends SubsystemBase {
     private I2C.Port i2cPort = I2C.Port.kOnboard; // Setup i2c
@@ -58,5 +59,13 @@ public class ColorSensor extends SubsystemBase {
         } else {
             this.currentColor = ControlPanelColor.UNKNOWN;
         }
+    }
+
+    public ControlPanelColor getRobotColor() {
+        return this.currentColor;
+    }
+
+    public ControlPanelColor getFieldColor() {
+        return ControlColoring.transposeToField(this.currentColor);
     }
 }

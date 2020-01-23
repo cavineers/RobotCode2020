@@ -3,7 +3,7 @@ package frc.lib;
 import frc.robot.subsystems.ColorSensor.ControlPanelColor;;
 
 public class ControlColoring {
-    public ControlPanelColor transposeToField(ControlPanelColor oldColor) {
+    public static ControlPanelColor transposeToField(ControlPanelColor oldColor) {
         switch (oldColor) {
             case RED:
                 return ControlPanelColor.BLUE;
@@ -18,7 +18,7 @@ public class ControlColoring {
         }
     }
 
-    public ControlPanelColor transposeFromField(ControlPanelColor oldColor) {
+    public static ControlPanelColor transposeFromField(ControlPanelColor oldColor) {
         switch (oldColor) {
             case RED:
                 return ControlPanelColor.BLUE;
