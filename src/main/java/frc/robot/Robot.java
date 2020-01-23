@@ -12,10 +12,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  // factor to convert sensor values to a distance in inches
+  private static final double kValueToInches = 0.125;
+
+  private static final int kUltrasonicPort = 0;
+
+  private final AnalogInput m_ultrasonic = new AnalogInput(kUltrasonicPort);
 
   public static CLogger logger;
 
@@ -40,6 +49,10 @@ public class Robot extends TimedRobot {
     // logger = new CLogger(CLogger.cLoggerMode.DEVELOPMENT);
   }
 
+  /**
+   * Tells the robot to drive to a set distance (in inches) from an object using
+   * proportional control.
+   */
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
@@ -73,11 +86,15 @@ public class Robot extends TimedRobot {
     // if (m_autonomousCommand != null) {
     // m_autonomousCommand.cancel();
     // }
+
   }
 
   @Override
   public void teleopPeriodic() {
     oi.updatePeriodicCommands();
+    // sensor returns a value from 0-4095 that is scaled to inches
+    double currentDistance = m_ultrasonic.getValue() * kValueToInches;
+    System.out.println(currentDistance);
   }
 
   @Override
