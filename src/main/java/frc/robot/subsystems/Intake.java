@@ -1,4 +1,3 @@
-// TODO: DrumMotor fix
 
 package frc.robot.subsystems;
 
