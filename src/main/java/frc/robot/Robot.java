@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Turntable;
 import frc.robot.OI;
 
 public class Robot extends TimedRobot {
@@ -23,7 +24,9 @@ public class Robot extends TimedRobot {
 
   public static OI oi;
 
-  public DriveTrain driveTrain;
+  public static DriveTrain driveTrain;
+
+  public static Turntable turnTable;
 
   @Override
   public void robotInit() {
@@ -42,7 +45,9 @@ public class Robot extends TimedRobot {
     // logger = new CLogger(CLogger.cLoggerMode.TESTING);
     // logger = new CLogger(CLogger.cLoggerMode.DEVELOPMENT);
 
-    this.oi = new OI();
+    oi = new OI();
+
+    turnTable = new Turntable();
   }
 
   @Override
@@ -83,6 +88,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     oi.updatePeriodicCommands();
+    m_robotContainer.telePeriodic();
   }
 
   @Override

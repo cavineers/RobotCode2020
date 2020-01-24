@@ -18,6 +18,7 @@ public class TeleopDrive extends CommandBase {
     public TeleopDrive(DriveTrain dt) {
         addRequirements(dt);
         this.oi = Robot.oi;
+        this.dt = dt;
     }
 
     @Override

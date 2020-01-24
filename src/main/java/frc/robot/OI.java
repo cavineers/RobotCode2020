@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
+import frc.robot.Robot;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -45,7 +46,6 @@ public class OI {
     public BUTTON_MODE currentTriggerSetting = BUTTON_MODE.NEUTRAL;
 
     public OI() {
-
         // if (currentTriggerSetting == BUTTON_MODE.CONTROL_P) {
         // // we are in Control Panel mode
         // r_bump.whenPressed(new Command());
@@ -110,11 +110,10 @@ public class OI {
         String rightMenu = "right_menu";
         String rightStick = "right_stick";
         String leftStick = "left_stick";
-
         // Button inputs for commands
         // r_bump.whenPressed(new PrintButton(rightBump));
         // l_bump.whenPressed(new PrintButton(leftBump));
-        // a_button.whenPressed(new PrintButton(aButton));
+        // a_button.whenPressed(new AutoAlign(Robot.driveTrain));
         // b_button.whenPressed(new PrintButton(bButton));
         // x_button.whenPressed(new PrintButton(xButton));
         // y_button.whenPressed(new PrintButton(yButton));
