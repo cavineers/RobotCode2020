@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Turntable;
-import frc.robot.OI;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -21,8 +20,6 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   public static CLogger logger;
-
-  public static OI oi;
 
   public static DriveTrain driveTrain;
 
@@ -37,15 +34,12 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    oi = new OI();
     // ! THE LOG LEVEL SHOULD ALWAYS BE SET. UNCOMMENT EACH OF THE FOLLOWING LINE
     // AFTER COMMENTING ALL
     logger = new CLogger(CLogger.cLoggerMode.COMPETITION);
     // logger = new CLogger(CLogger.cLoggerMode.PRACTICE);
     // logger = new CLogger(CLogger.cLoggerMode.TESTING);
     // logger = new CLogger(CLogger.cLoggerMode.DEVELOPMENT);
-
-    oi = new OI();
 
     turnTable = new Turntable();
   }
@@ -56,12 +50,10 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledInit() {
-  }
+  public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {
-  }
+  public void disabledPeriodic() {}
 
   @Override
   public void autonomousInit() {
@@ -74,9 +66,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() {
-    oi.updatePeriodicCommands();
-  }
+  public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {
@@ -87,8 +77,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    oi.updatePeriodicCommands();
-    m_robotContainer.telePeriodic();
+    m_robotContainer.updateController();
   }
 
   @Override
@@ -100,10 +89,6 @@ public class Robot extends TimedRobot {
     logger.updateLogLevel(CLogger.cLoggerMode.TESTING);
   }
 
-  /**
-   * This function is called periodically during test mode.
-   */
   @Override
-  public void testPeriodic() {
-  }
+  public void testPeriodic() {}
 }

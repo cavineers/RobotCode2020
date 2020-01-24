@@ -31,7 +31,7 @@ public class MoveToFiringDistance extends CommandBase {
   public void execute() {
     this.current = limelight.getDistance();
    
-    this.dt.differentialDrive.curvatureDrive(0.1, 0, false);
+    this.dt.drive(0.1, 0, false);
   }
 
   @Override

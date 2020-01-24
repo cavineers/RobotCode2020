@@ -1,24 +1,17 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.networktables.*;
-import frc.robot.OI;
-import frc.robot.Robot;
+import frc.lib.Deadzone;
 import frc.robot.subsystems.DriveTrain;
-
-import java.lang.Math;
-import edu.wpi.first.wpilibj.controller.PIDController;
 
 public class TeleopDrive extends CommandBase {
     private DriveTrain dt;
-    private OI oi;
+    private Joystick joy;
 
-    public TeleopDrive(DriveTrain dt) {
-        addRequirements(dt);
-        this.oi = Robot.oi;
+    public TeleopDrive(DriveTrain dt, Joystick joy) {
         this.dt = dt;
+        this.joy = joy;
     }
 
     @Override
@@ -26,10 +19,10 @@ public class TeleopDrive extends CommandBase {
 
     @Override
     public void execute() {
-        double steer = Robot.oi.addDeadZone(oi.getJoystick().getRawAxis(4));
-        double drive = Robot.oi.addDeadZone(oi.getJoystick().getRawAxis(1));
+        double steer = Deadzone.add(joy.getRawAxis(4));
+        double drive = Deadzone.add(joy.getRawAxis(1));
 
-        dt.differentialDrive.curvatureDrive(drive,steer,true);
+        dt.drive(drive,steer,true);
     }
 
     @Override
@@ -39,5 +32,6 @@ public class TeleopDrive extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        dt.drive(0, 0, false);
     }
 }

@@ -21,6 +21,7 @@ public class Turntable extends SubsystemBase {
         tableMoter.configPeakCurrentDuration(200, 10);
         tableMoter.configContinuousCurrentLimit(1, 10);
         tableMoter.enableCurrentLimit(true);
+        tableMoter.setSelectedSensorPosition(0);
 
         this.currentMode = TurntableMode.STOPPED;
     }
@@ -45,5 +46,10 @@ public class Turntable extends SubsystemBase {
             default:
                 break;
         }
+    }
+
+    public int getTurntableDegree() {
+        // return (this.tableMoter.getSelectedSensorPosition()/4096);
+        return 0;
     }
 }
