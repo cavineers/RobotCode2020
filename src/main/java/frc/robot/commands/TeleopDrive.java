@@ -39,14 +39,4 @@ public class TeleopDrive extends CommandBase {
     @Override
     public void end(boolean interrupted) {
     }
-
-    public double addDeadZone(double input) {
-        if (Math.abs(input) <= .05)
-            input = 0;
-        else if (input < 0)
-            input = -Math.pow(input, 2);
-        else
-            input = Math.pow(input, 2);
-        return input;
-    }
 }

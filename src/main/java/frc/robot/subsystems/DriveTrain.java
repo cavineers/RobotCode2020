@@ -11,7 +11,6 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import frc.robot.Robot;
 
 public class DriveTrain extends SubsystemBase {
     private CANSparkMax left1;
