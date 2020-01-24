@@ -1,17 +1,19 @@
-# 40 amps
+# Motor
 
-1. Drive
-2. Drive
-3. Drive
-4. Drive
-5. Turn table motor
-6. Fire motor
-7. Intake motor
-8. Climber motor
+## 40 amps
 
-# 20 amps
+1. Drive (Neo)
+2. Drive (Neo)
+3. Drive (Neo)
+4. Drive (Neo)
+5. Winch
+6. Flywheel
+7. Turntable
+8. Intake
 
-1. Control Panel
-2. Vertical aim control
-3. Drum rotator
-4. Wheel spinner
+## 20 amps
+
+1. Omni
+2. Control Panel
+3. Hood
+4. Drum
