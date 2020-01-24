@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.Constants;
 
 public class Turntable extends SubsystemBase {
-    private WPI_TalonSRX tableMoter = new WPI_TalonSRX(Constants.kTurretRotationMotorCANid);
+    private WPI_TalonSRX tableMotor = new WPI_TalonSRX(Constants.kTurretRotationMotorCANid);
 
     public enum TurntableMode {
         ROTATE_LEFT,
@@ -17,11 +17,11 @@ public class Turntable extends SubsystemBase {
     private TurntableMode currentMode;
 
     public Turntable() {
-        tableMoter.configPeakCurrentLimit(2, 10);
-        tableMoter.configPeakCurrentDuration(200, 10);
-        tableMoter.configContinuousCurrentLimit(1, 10);
-        tableMoter.enableCurrentLimit(true);
-        tableMoter.setSelectedSensorPosition(0);
+        tableMotor.configPeakCurrentLimit(2, 10);
+        tableMotor.configPeakCurrentDuration(200, 10);
+        tableMotor.configContinuousCurrentLimit(1, 10);
+        tableMotor.enableCurrentLimit(true);
+        tableMotor.setSelectedSensorPosition(0);
 
         this.currentMode = TurntableMode.STOPPED;
     }
@@ -35,13 +35,13 @@ public class Turntable extends SubsystemBase {
         if (this.currentMode == TurntableMode.HOMING) return; // Don't touch anything while home
         switch (mode) {
             case ROTATE_LEFT:
-                tableMoter.set(-Constants.kTurntableSpeed);
+                tableMotor.set(-Constants.kTurntableSpeed);
                 break;
             case ROTATE_RIGHT:
-                tableMoter.set(Constants.kTurntableSpeed);
+                tableMotor.set(Constants.kTurntableSpeed);
                 break;
             case STOPPED:
-                tableMoter.set(0.0);
+                tableMotor.set(0.0);
                 break;
             default:
                 break;
@@ -49,7 +49,7 @@ public class Turntable extends SubsystemBase {
     }
 
     public int getTurntableDegree() {
-        // return (this.tableMoter.getSelectedSensorPosition()/4096);
+        // return (this.tableMotor.getSelectedSensorPosition()/4096);
         return 0;
     }
 }
