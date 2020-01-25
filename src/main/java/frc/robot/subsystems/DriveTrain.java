@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -16,7 +15,6 @@ public class DriveTrain extends SubsystemBase {
 
   public CANSparkMax leftMotor1 = new CANSparkMax(Constants.kDriveTrainMotor1CANid, MotorType.kBrushless);
   public CANSparkMax leftMotor2 = new CANSparkMax(Constants.kDriveTrainMotor2CANid, MotorType.kBrushless);
-
   public CANSparkMax rightMotor1 = new CANSparkMax(Constants.kDriveTrainMotor3CANid, MotorType.kBrushless);
   public CANSparkMax rightMotor2 = new CANSparkMax(Constants.kDriveTrainMotor4CANid, MotorType.kBrushless);
 
@@ -90,15 +88,12 @@ public class DriveTrain extends SubsystemBase {
         IdleMode mode = IdleMode.kBrake;
       if (mode != IdleMode.kBrake) {
         mode = IdleMode.kBrake;
-        }else{
-          mode = IdleMode.kCoast;
-        }
+      }
         rightMotor1.setIdleMode(mode);
         rightMotor2.setIdleMode(mode);
         leftMotor1.setIdleMode(mode);
         leftMotor2.setIdleMode(mode);
         
-
     }
   }
 
