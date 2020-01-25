@@ -40,9 +40,8 @@ public class Drum extends SubsystemBase {
         photoSensor3 = new DIOSim(Constants.kPhotoSensor3);
         photoSensor4 = new DIOSim(Constants.kPhotoSensor4);
         photoSensor5 = new DIOSim(Constants.kPhotoSensor5);
-
+        // set the neutral mode to brake
         this.getDrumMotor().setNeutralMode(NeutralMode.Brake);
-
     }
 
     @Override
