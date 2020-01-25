@@ -27,8 +27,8 @@ public class TankDriveWithJoystick extends CommandBase {
 // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Robot.drivetrain.getRightTalon().set(ControlMode.Velocity, 0);
-    Robot.drivetrain.getLeftTalon().set(ControlMode.Velocity, 0);
+    Robot.drivetrain.getRightTalon().set(0);
+    Robot.drivetrain.getLeftTalon().set(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
