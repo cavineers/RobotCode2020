@@ -11,7 +11,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class Intake extends SubsystemBase {
 
-    public TalonSRX rotatingDrumMotor = new TalonSRX(Constants.kDrumMotorCANid);
     public TalonSRX ballIntakeMotor = new TalonSRX(Constants.kIntakeMotorCANid);
 
     public boolean isOn = false;
@@ -25,7 +24,6 @@ public class Intake extends SubsystemBase {
     public Intake() {
 
         this.getIntakeMotor().setNeutralMode(NeutralMode.Brake);
-        this.getDrumMotor().setNeutralMode(NeutralMode.Brake);
 
     }
 
@@ -43,7 +41,7 @@ public class Intake extends SubsystemBase {
 
         // this if statement is used to turn on the intake
         else if (isOn == true) {
-            ballIntakeMotor.set(ControlMode.PercentOutput, 1);
+            ballIntakeMotor.set(ControlMode.PercentOutput, .1);
         }
 
         else if (isOn == false) {
@@ -63,12 +61,6 @@ public class Intake extends SubsystemBase {
     public TalonSRX getIntakeMotor() {
 
         return this.ballIntakeMotor;
-
-    }
-
-    public TalonSRX getDrumMotor() {
-
-        return this.rotatingDrumMotor;
 
     }
 
