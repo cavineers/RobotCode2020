@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
-
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class Robot extends TimedRobot {
@@ -28,6 +28,8 @@ public class Robot extends TimedRobot {
 
   public static CLogger logger;
 
+  private static double lastSense;
+
   public static OI oi;
 
   // Subsystems
@@ -39,6 +41,8 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
+    this.lastSense = Robot.getCurrentTime();
 
     oi = new OI();
     // ! THE LOG LEVEL SHOULD ALWAYS BE SET. UNCOMMENT EACH OF THE FOLLOWING LINE
@@ -56,6 +60,13 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+    // sensor returns a value from 0-4095 that is scaled to inches
+    double currentDistance = m_ultrasonic.getValue() * kValueToInches;
+
+    if (Robot.getCurrentTime() - lastSense > .5) {
+      lastSense = Robot.getCurrentTime();
+      System.out.println(currentDistance);
+    }
   }
 
   @Override
@@ -92,9 +103,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     oi.updatePeriodicCommands();
-    // sensor returns a value from 0-4095 that is scaled to inches
-    double currentDistance = m_ultrasonic.getValue() * kValueToInches;
-    System.out.println(currentDistance);
+
   }
 
   @Override
@@ -111,5 +120,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+
+  public static double getCurrentTime() {
+    return Timer.getFPGATimestamp();
   }
 }
