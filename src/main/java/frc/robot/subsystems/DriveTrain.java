@@ -41,6 +41,10 @@ public class DriveTrain extends SubsystemBase {
     sol = new DoubleSolenoid(Constants.kPneumaticsControlCANid, Constants.kDriveShifter1, Constants.kDriveShifter2);
     this.setBrakeMode(false);
     this.setDriveGear(DriveGear.LOW_GEAR);
+    leftMotor1.setSmartCurrentLimit(70);
+    leftMotor2.setSmartCurrentLimit(70);
+    rightMotor1.setSmartCurrentLimit(70);
+    rightMotor2.setSmartCurrentLimit(70);
   }
 
   public void setDriveGear(DriveGear gear) {
