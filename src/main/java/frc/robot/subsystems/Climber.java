@@ -18,6 +18,7 @@ public class Climber extends SubsystemBase {
   public Climber() {
     this.getWinchMotor();
     this.setBrakeMode(true);
+    winchMotor.setSmartCurrentLimit(28);
   }
 
 
