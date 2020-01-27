@@ -12,23 +12,20 @@ import frc.lib.Limelight;
 
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
-    private DriveTrain drivetrain = new DriveTrain(this.getJoystick());
-    private Turntable turnTable = new Turntable();
-    private Limelight limelight = new Limelight();
 
     // Controller
-    public static Joystick joy = new Joystick(0);
-    public static JoystickButton a_button = new JoystickButton(joy, 1);
-    public static JoystickButton b_button = new JoystickButton(joy, 2);
-    public static JoystickButton x_button = new JoystickButton(joy, 3);
-    public static JoystickButton y_button = new JoystickButton(joy, 4);
+    public Joystick joy = new Joystick(0);
+    public JoystickButton a_button = new JoystickButton(joy, 1);
+    public JoystickButton b_button = new JoystickButton(joy, 2);
+    public JoystickButton x_button = new JoystickButton(joy, 3);
+    public JoystickButton y_button = new JoystickButton(joy, 4);
 
-    public static JoystickButton l_bump = new JoystickButton(joy, 5);
-    public static JoystickButton r_bump = new JoystickButton(joy, 6);
-    public static JoystickButton left_menu = new JoystickButton(joy, 7);
-    public static JoystickButton right_menu = new JoystickButton(joy, 8);
-    public static JoystickButton left_stick = new JoystickButton(joy, 9);
-    public static JoystickButton right_stick = new JoystickButton(joy, 10);
+    public JoystickButton l_bump = new JoystickButton(joy, 5);
+    public JoystickButton r_bump = new JoystickButton(joy, 6);
+    public JoystickButton left_menu = new JoystickButton(joy, 7);
+    public JoystickButton right_menu = new JoystickButton(joy, 8);
+    public JoystickButton left_stick = new JoystickButton(joy, 9);
+    public JoystickButton right_stick = new JoystickButton(joy, 10);
 
     public int lastDpad = -1;
     public boolean lastRightTrig = false;
@@ -40,13 +37,16 @@ public class RobotContainer {
 
     public BUTTON_MODE currentTriggerSetting = BUTTON_MODE.NEUTRAL;
 
+    private DriveTrain drivetrain = new DriveTrain(this.getJoystick());
+    // private Turntable turnTable = new Turntable();
+    // private Limelight limelight = new Limelight();
+    // private Shooter shooter = new Shooter(this.joy);
+ 
     public RobotContainer() {
         configureButtonBindings();
     }
 
-    private void configureButtonBindings() {
-        a_button.whenPressed(new MoveToFiringDistance(this.drivetrain));
-    }
+    private void configureButtonBindings() {}
 
     private boolean isRightTriggerPressed() {
         final double rightTrig = this.getJoystick().getRawAxis(3);

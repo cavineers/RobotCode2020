@@ -10,6 +10,7 @@ public class TeleopDrive extends CommandBase {
     private Joystick joy;
 
     public TeleopDrive(DriveTrain dt, Joystick joy) {
+        addRequirements(dt);
         this.dt = dt;
         this.joy = joy;
     }
@@ -21,7 +22,7 @@ public class TeleopDrive extends CommandBase {
     public void execute() {
         double steer = Deadzone.add(joy.getRawAxis(4));
         double drive = Deadzone.add(joy.getRawAxis(1));
-        
+
         dt.drive(drive,steer,true);
     }
 
