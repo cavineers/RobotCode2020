@@ -28,6 +28,8 @@ public class Drum extends SubsystemBase {
     DIOSim photoSensor5;
     public boolean finishedShooting = false;
     public boolean readyToShoot = false;
+    public boolean drumReady = false;
+    public double numberStopper = 0;
 
     public enum DrumPosition {
         HOLE1, HOLE2, HOLE3, HOLE4, HOLE5, FULL, INVALID;
@@ -46,7 +48,10 @@ public class Drum extends SubsystemBase {
 
     @Override
     public void periodic() {
-        goToDesiredPosition(getDesiredPosition());
+        if (drumReady == true) {
+            goToDesiredPosition(getDesiredPosition());
+            System.out.println(rotatingDrumMotor.getSelectedSensorPosition());
+        }
     }
 
     public TalonSRX getDrumMotor() {

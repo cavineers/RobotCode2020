@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.DrumInit;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -242,11 +243,11 @@ public class OI {
                 currentTriggerSetting = BUTTON_MODE.CLIMB;
                 System.out.println("In Climb mode");
                 break;
-            case 180: 
+            case 180:
                 // Bottom
                 currentTriggerSetting = BUTTON_MODE.NEUTRAL;
                 System.out.println("In Neutral mode");
-            break;
+                break;
             case 270:
                 currentTriggerSetting = BUTTON_MODE.AUTO_SHOOT;
                 System.out.println("In Auto Shoot mode");

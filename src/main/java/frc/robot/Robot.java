@@ -41,6 +41,7 @@ public class Robot extends TimedRobot {
     // logger = new CLogger(CLogger.cLoggerMode.PRACTICE);
     // logger = new CLogger(CLogger.cLoggerMode.TESTING);
     // logger = new CLogger(CLogger.cLoggerMode.DEVELOPMENT);
+
   }
 
   @Override
