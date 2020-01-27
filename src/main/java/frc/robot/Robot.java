@@ -15,11 +15,9 @@ import frc.lib.CLogger;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  private RobotContainer robotContainer;
 
   public static CLogger logger;
-
-  public static OI oi;
 
   // Subsystems
   @Override
@@ -29,9 +27,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
-
-    oi = new OI();
+    robotContainer = new RobotContainer();
     // ! THE LOG LEVEL SHOULD ALWAYS BE SET. UNCOMMENT EACH OF THE FOLLOWING LINE
     // AFTER COMMENTING ALL
     logger = new CLogger(CLogger.cLoggerMode.COMPETITION);
@@ -65,7 +61,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    oi.updatePeriodicCommands();
   }
 
   @Override
@@ -77,7 +72,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    oi.updatePeriodicCommands();
+    robotContainer.ControllerPeriodic();
   }
 
   @Override
