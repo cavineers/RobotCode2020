@@ -30,8 +30,8 @@ public class TankDriveWithJoystick extends CommandBase {
 // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    drivetrain.getRightTalon().set(0);
-    drivetrain.getLeftTalon().set(0);
+    drivetrain.getRightSparkMax().set(0);
+    drivetrain.getLeftSparkMax().set(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

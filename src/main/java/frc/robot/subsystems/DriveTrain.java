@@ -61,11 +61,11 @@ public class DriveTrain extends SubsystemBase {
     }
   }
 
-  public CANSparkMax getLeftTalon() {
+  public CANSparkMax getLeftSparkMax() {
     return this.leftMotor1;
   }
 
-  public CANSparkMax getRightTalon() {
+  public CANSparkMax getRightSparkMax() {
     return this.rightMotor1;
   }
 
