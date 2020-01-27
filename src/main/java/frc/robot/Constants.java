@@ -1,37 +1,24 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
  
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants.  This class should not be used for any other purpose.  All constants should be
- * declared globally (i.e. public static).  Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
- */
 public final class Constants {
     //? All constants begin with a lowercase 'k'
 
     // CAN network mapping
-    public static int kDriveTrainMotor1CANid       = 0;  // Drive train's first motor
-    public static int kDriveTrainMotor2CANid       = 1;  // Drive train's second motor
-    public static int kDriveTrainMotor3CANid       = 2;  // Drive train's third motor
-    public static int kDriveTrainMotor4CANid       = 3;  // Drive train's fourth motor
+    public static int kDriveTrainMotor1CANid       = 0;  // Left 1
+    public static int kDriveTrainMotor2CANid       = 1;  // Right 1
+    public static int kDriveTrainMotor3CANid       = 2;  // Left 2
+    public static int kDriveTrainMotor4CANid       = 3;  // Right 2
     public static int kTurretRotationMotorCANid    = 4;  // Turret rotation motor
     public static int kFlyWheelMotorCANid          = 5;  // The shooter's fly wheel motor
+    public static int kFeederMotorCANid            = 6;  // Feeder motor
     public static int kIntakeMotorCANid            = 6;  // Intake motor
     public static int kClimberMotorCANid           = 7;  // Climber motor
     public static int kControlPanelMotorCANid      = 8;  // Control Panel rotator
-    public static int kShooterVerticalPitchCANid   = 9;  // Shooter's vertical pitch
-    public static int kDrumMotorCANid              = 10; // Intakes drum motor
-    public static int kPneumaticsControlCANid      = 20; // Pneumatic Control Module (PCM)
-    public static int kPowerDistributionPanelCANid = 30; // Power distribution panel (PDP)
+    public static int kControlPanelSolenoidCANid   = 9;  // Control Panel piston
+    public static int kShooterVerticalPitchCANid   = 10;  // Shooter's vertical pitch
+    public static int kDrumMotorCANid              = 11; // Intakes drum motor
+    public static int kPneumaticsControlCANid      = 25; // Pneumatic Control Module (PCM)
+    public static int kPowerDistributionPanelCANid = 35; // Power distribution panel (PDP)
 
     // VISION
     public static double kFieldGoalHeightFromGround = 53.0; // 31 inches used for testing
@@ -40,4 +27,24 @@ public final class Constants {
 
     // Turntable
     public static double kTurntableSpeed = 0.06;
+
+    // Shooter
+    public static double kShooterMotorPIDp = 0.0;
+    public static double kShooterMotorPIDi = 0.0;
+    public static double kShooterMotorPIDd = 0.0;
+
+    // tmp
+    public static int[] kShooterEncoderPorts = new int[]{4, 5};
+    public static int kEncoderCPR = 1024;
+    public static double kEncoderDistancePerPulse = 1.0 / (double) kEncoderCPR;
+    public static double kShooterFreeRPS = 5300;
+    public static double kShooterTargetRPS = 4000;
+    public static double kShooterToleranceRPS = 50;
+    public static double kFeederVolts = 0.05;
+    public static double kVVoltSecondsPerRotation = 12.0 / kShooterFreeRPS;
+    public static double kFeederSpeed = 0.5;
+
+    // Drum
+    public static double kDrumDiameter   = 22.0; // in inches
+    public static double kDrumEncoderPPI = (4096 / (kDrumDiameter * Math.PI)); // PPI
 }

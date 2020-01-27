@@ -45,13 +45,8 @@ public class RobotContainer {
     }
 
     private void configureButtonBindings() {
+        a_button.whenPressed(new MoveToFiringDistance(this.drivetrain));
     }
-
-
-    // public Command getAutonomousCommand() {
-    //     // An ExampleCommand will run in autonomous
-    //     return m_autoCommand;
-    // }
 
     private boolean isRightTriggerPressed() {
         final double rightTrig = this.getJoystick().getRawAxis(3);
