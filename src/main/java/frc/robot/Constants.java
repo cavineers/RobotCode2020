@@ -32,4 +32,8 @@ public final class Constants {
     public static int kPneumaticsControlCANid      = 20; // Pneumatic Control Module (PCM)
     public static int kPowerDistributionPanelCANid = 30; // Power distribution panel (PDP)
 
+    // Shooter Speeds
+    public static double kShooterSpeedHigh = 0.8;
+    public static double kShooterSpeedMedium = 0.6;
+    public static double kShooterSpeedLow = 0.4;
 }
