@@ -21,7 +21,6 @@ public class Climber extends SubsystemBase {
     winchMotor.setSmartCurrentLimit(28);
   }
 
-
   public CANSparkMax getWinchMotor() {
     return winchMotor;
   }
