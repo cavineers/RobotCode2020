@@ -17,21 +17,23 @@ import frc.robot.subsystems.RogerRoger;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  private RobotContainer robotContainer;
 
   public static CLogger logger;
   public static RogerRoger m_rogerroger = null;
   public static OI oi;
 
+  // Subsystems
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+    // initlize subsytems
 
-    m_rogerroger = new RogerRoger();
-    oi = new  OI();
-    //! THE LOG LEVEL SHOULD ALWAYS BE SET. UNCOMMENT EACH OF THE FOLLOWING LINE AFTER COMMENTING ALL
+    // Instantiate our RobotContainer. This will perform all our button bindings,
+    // and put our
+    // autonomous chooser on the dashboard.
+    robotContainer = new RobotContainer();
+    // ! THE LOG LEVEL SHOULD ALWAYS BE SET. UNCOMMENT EACH OF THE FOLLOWING LINE
+    // AFTER COMMENTING ALL
     logger = new CLogger(CLogger.cLoggerMode.COMPETITION);
     // logger = new CLogger(CLogger.cLoggerMode.PRACTICE);
     // logger = new CLogger(CLogger.cLoggerMode.TESTING);
@@ -58,7 +60,7 @@ public class Robot extends TimedRobot {
 
     // // schedule the autonomous command (example)
     // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.schedule();
+    // m_autonomousCommand.schedule();
     // }
   }
 
@@ -69,12 +71,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.cancel();
+    // m_autonomousCommand.cancel();
     // }
   }
 
   @Override
   public void teleopPeriodic() {
+    robotContainer.ControllerPeriodic();
   }
 
   @Override
