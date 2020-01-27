@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.PrintButton;
 import frc.robot.subsystems.ExampleSubsystem;
 
 /**
@@ -121,30 +120,30 @@ public class RobotContainer {
     // right_stick.whenPressed(new Command());
     // left_stick.whenPressed(new Command());
     // }
-    String rightBump = "r_bump";
-    String leftBump = "l_bump";
-    String aButton = "a_button";
-    String bButton = "b_button";
-    String xButton = "x_button";
-    String yButton = "y_button";
+    // String rightBump = "r_bump";
+    // String leftBump = "l_bump";
+    // String aButton = "a_button";
+    // String bButton = "b_button";
+    // String xButton = "x_button";
+    // String yButton = "y_button";
 
-    String leftMenu = "left_menu";
-    String rightMenu = "right_menu";
-    String rightStick = "right_stick";
-    String leftStick = "left_stick";
+    // String leftMenu = "left_menu";
+    // String rightMenu = "right_menu";
+    // String rightStick = "right_stick";
+    // String leftStick = "left_stick";
 
     // Button inputs for commands
-    //   r_bump.whenPressed();
-    //   l_bump.whenPressed();
-    //   a_button.whenPressed();
-    //   b_button.whenPressed();
-    //   x_button.whenPressed();
-    //   y_button.whenPressed();
+    // r_bump.whenPressed();
+    // l_bump.whenPressed();
+    // a_button.whenPressed();
+    // b_button.whenPressed();
+    // x_button.whenPressed();
+    // y_button.whenPressed();
 
-    //   left_menu.whenPressed();
-    //   right_menu.whenPressed();
-    //   right_stick.whenPressed();
-    //   left_stick.whenPressed();
+    // left_menu.whenPressed();
+    // right_menu.whenPressed();
+    // right_stick.whenPressed();
+    // left_stick.whenPressed();
   }
 
   public boolean isRightTriggerPressed() {

@@ -21,12 +21,11 @@ public class Robot extends TimedRobot {
 
   public static CLogger logger;
   public static RogerRoger m_rogerroger = null;
-  public static OI oi;
 
   // Subsystems
   @Override
   public void robotInit() {
-    // initlize subsytems
+    // initialize subsystems
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
