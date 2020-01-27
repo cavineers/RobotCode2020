@@ -69,8 +69,8 @@ public class DriveTrain extends SubsystemBase {
     return this.rightMotor1;
   }
 
-  public void initDefaultCommand() {
-    setDefaultCommand(new TankDriveWithJoystick());
+  public void initDefaultCommand(Joystick joy) {
+    setDefaultCommand(new TankDriveWithJoystick(this, joy));
   }
 
   public void configTalons() {
@@ -79,7 +79,6 @@ public class DriveTrain extends SubsystemBase {
 
     rightMotor1.setInverted(false);
     rightMotor2.setInverted(false);
-
   }
 
   public void setBrakeMode(boolean on) {
@@ -106,7 +105,7 @@ public class DriveTrain extends SubsystemBase {
     vel += accel * Constants.kAVelocity;
     double targetVel = vel * Constants.kDriveSensorUnitsPerInch / 10;
     leftMotor1.set(targetVel);
-}
+  }
 
   public double getRightVelocity() {
     return this.rightEncoder.getVelocity() / Constants.kDriveSensorUnitsPerInch * 10;
