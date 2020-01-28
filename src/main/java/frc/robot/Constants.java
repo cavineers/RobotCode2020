@@ -4,6 +4,7 @@ public final class Constants {
     //? All constants begin with a lowercase 'k'
 
     // CAN network mapping
+    public static int kPneumaticsControlCANid      = 0; // Pneumatic Control Module (PCM)
     public static int kDriveTrainMotor1CANid       = 1;  // Left 1
     public static int kDriveTrainMotor2CANid       = 3;  // Right 1
     public static int kDriveTrainMotor3CANid       = 2;  // Left 2
@@ -17,7 +18,6 @@ public final class Constants {
     public static int kControlPanelSolenoidCANid   = 11; // Control Panel piston
     public static int kShooterVerticalPitchCANid   = 12; // Shooter's vertical pitch
     public static int kDrumMotorCANid              = 13; // Intakes drum motor
-    public static int kPneumaticsControlCANid      = 25; // Pneumatic Control Module (PCM)
     public static int kPowerDistributionPanelCANid = 35; // Power distribution panel (PDP)
 
     // VISION
@@ -32,6 +32,7 @@ public final class Constants {
     public static double kShooterMotorPIDp = 0.0;
     public static double kShooterMotorPIDi = 0.0;
     public static double kShooterMotorPIDd = 0.0;
+    public static int kShooterCurrentLimit = 39;
 
     // tmp
     public static int[] kShooterEncoderPorts = new int[]{4, 5};

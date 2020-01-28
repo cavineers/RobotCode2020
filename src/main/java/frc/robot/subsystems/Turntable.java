@@ -18,10 +18,6 @@ public class Turntable extends SubsystemBase {
     private TurntableMode currentMode;
 
     public Turntable() {
-        tableMotor.configPeakCurrentLimit(2, 10);
-        tableMotor.configPeakCurrentDuration(200, 10);
-        tableMotor.configContinuousCurrentLimit(1, 10);
-        tableMotor.enableCurrentLimit(true);
         tableMotor.setSelectedSensorPosition(0);
 
         this.currentMode = TurntableMode.STOPPED;
