@@ -37,10 +37,10 @@ public class RobotContainer {
 
     public BUTTON_MODE currentTriggerSetting = BUTTON_MODE.NEUTRAL;
 
-    private DriveTrain drivetrain = new DriveTrain(this.getJoystick());
+    // private DriveTrain drivetrain = new DriveTrain(this.getJoystick());
     // private Turntable turnTable = new Turntable();
     // private Limelight limelight = new Limelight();
-    // private Shooter shooter = new Shooter(this.joy);
+    private Shooter shooter = new Shooter(this.joy);
  
     public RobotContainer() {
         configureButtonBindings();

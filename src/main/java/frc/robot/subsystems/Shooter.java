@@ -20,14 +20,14 @@ public class Shooter extends PIDSubsystem {
     private CANPIDController pidController = flyWheel.getPIDController();
     private CANEncoder flyingEncoder = flyWheel.getEncoder();
     public double kP = 0.05;
-    public double kI = 0;
-    public double kD = 0;
-    public double kIz = 0;
-    public double kMaxOutput = 1;
-    public double kMinOutput = -1;
+    public double kI = 0.0;
+    public double kD = 0.0;
+    public double kIz = 0.0;
+    public double kMaxOutput = 1.0;
+    public double kMinOutput = -1.0;
     public double maxRPM = 5700;
-    // public double kFF = 1/maxRPM;
-    public double kFF = 0;
+    public double kFF = 1/maxRPM;
+    //public double kFF = 0.01;
     
     private Joystick joy;
 
@@ -69,7 +69,7 @@ public class Shooter extends PIDSubsystem {
             pidController.setOutputRange(min, max); 
             kMinOutput = min; kMaxOutput = max; 
         }
-        double setPoint = -(.5*maxRPM);
+        double setPoint = 100000000;
         pidController.setReference(setPoint, ControlType.kVelocity);
         
         SmartDashboard.putNumber("SetPoint", setPoint);
