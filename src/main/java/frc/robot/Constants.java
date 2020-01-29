@@ -41,4 +41,7 @@ public final class Constants {
     public static int kPhotoSensor3 = 3;// Intakes 3rd photo sensor
     public static int kPhotoSensor4 = 4;// Intakes 4th photo sensor
     public static int kPhotoSensor5 = 5;// Intakes 5th photo sensor
+    // drum
+    public static double kDrumDiameter = 22.0; // in inches
+    public static double kDrumEncoderPPI = (4096 / (kDrumDiameter * Math.PI)); // PPI
 }

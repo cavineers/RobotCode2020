@@ -110,19 +110,54 @@ public class Drum extends SubsystemBase {
     public void goToDesiredPosition(DrumPosition position) {
         switch (position) {
         case HOLE1:
-            rotatingDrumMotor.set(ControlMode.Position, 0);
+            rotatingDrumMotor.setSelectedSensorPosition(0);
+            while (rotatingDrumMotor.getSelectedSensorPosition() != Constants.kDrumEncoderPPI / 5) {
+                if (rotatingDrumMotor.getSelectedSensorPosition() > Constants.kDrumEncoderPPI / 5) {
+                    rotatingDrumMotor.set(ControlMode.PercentOutput, .5);
+                } else {
+                    rotatingDrumMotor.set(ControlMode.PercentOutput, -.5);
+                }
+            }
             break;
         case HOLE2:
-            rotatingDrumMotor.set(ControlMode.Position, .2);
+            rotatingDrumMotor.setSelectedSensorPosition(0);
+            while (rotatingDrumMotor.getSelectedSensorPosition() != (Constants.kDrumEncoderPPI / 5) * 2) {
+                if (rotatingDrumMotor.getSelectedSensorPosition() > (Constants.kDrumEncoderPPI / 5) * 2) {
+                    rotatingDrumMotor.set(ControlMode.PercentOutput, .5);
+                } else {
+                    rotatingDrumMotor.set(ControlMode.PercentOutput, -.5);
+                }
+            }
             break;
         case HOLE3:
-            rotatingDrumMotor.set(ControlMode.Position, .4);
+            rotatingDrumMotor.setSelectedSensorPosition(0);
+            while (rotatingDrumMotor.getSelectedSensorPosition() != (Constants.kDrumEncoderPPI / 5) * 3) {
+                if (rotatingDrumMotor.getSelectedSensorPosition() > (Constants.kDrumEncoderPPI / 5) * 3) {
+                    rotatingDrumMotor.set(ControlMode.PercentOutput, .5);
+                } else {
+                    rotatingDrumMotor.set(ControlMode.PercentOutput, -.5);
+                }
+            }
             break;
         case HOLE4:
-            rotatingDrumMotor.set(ControlMode.Position, .6);
+            rotatingDrumMotor.setSelectedSensorPosition(0);
+            while (rotatingDrumMotor.getSelectedSensorPosition() != (Constants.kDrumEncoderPPI / 5) * 4) {
+                if (rotatingDrumMotor.getSelectedSensorPosition() > (Constants.kDrumEncoderPPI / 5) * 4) {
+                    rotatingDrumMotor.set(ControlMode.PercentOutput, .5);
+                } else {
+                    rotatingDrumMotor.set(ControlMode.PercentOutput, -.5);
+                }
+            }
             break;
         case HOLE5:
-            rotatingDrumMotor.set(ControlMode.Position, .8);
+            rotatingDrumMotor.setSelectedSensorPosition(0);
+            while (rotatingDrumMotor.getSelectedSensorPosition() != (Constants.kDrumEncoderPPI / 5) * 5) {
+                if (rotatingDrumMotor.getSelectedSensorPosition() > (Constants.kDrumEncoderPPI / 5) * 5) {
+                    rotatingDrumMotor.set(ControlMode.PercentOutput, .5);
+                } else {
+                    rotatingDrumMotor.set(ControlMode.PercentOutput, -.5);
+                }
+            }
             break;
         case FULL:
             readyToShoot = true;
