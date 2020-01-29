@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -25,7 +26,14 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  public static Joystick joy = new Joystick(0);
+  public int lastDpad = -1;
 
+  public enum BUTTON_MODE {
+    AUTO_SHOOT, CONTROL_P, CLIMB, NEUTRAL
+  }
+
+  public BUTTON_MODE currentTriggerSetting = BUTTON_MODE.NEUTRAL;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -44,6 +52,35 @@ public class RobotContainer {
   private void configureButtonBindings() {
   }
 
+  public void ControllerPeriodic(){
+    if (lastDpad != joy.getPOV()) {
+      switch (joy.getPOV()) {
+      case 0:
+        // Top
+        currentTriggerSetting = BUTTON_MODE.CONTROL_P;
+        System.out.println("In Control Panel mode");
+        break;
+      case 90:
+        // Right
+        currentTriggerSetting = BUTTON_MODE.CLIMB;
+        System.out.println("In Climb mode");
+        break;
+      case 180:
+        // Bottom
+        currentTriggerSetting = BUTTON_MODE.NEUTRAL;
+        System.out.println("In Neutral mode");
+        break;
+      case 270:
+        currentTriggerSetting = BUTTON_MODE.AUTO_SHOOT;
+        System.out.println("In Auto Shoot mode");
+        break;
+      default:
+        System.out.println("Nothing is pressed, hopefully");
+        break;
+      }
+    }
+    lastDpad = joy.getPOV();
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
