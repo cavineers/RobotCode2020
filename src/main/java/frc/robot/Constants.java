@@ -26,10 +26,8 @@ public final class Constants {
     public static final double kDriveWheelDiameter = 6; // in inches
     public static final double kDriveSensorUnitsPerInch = 4096 / (kDriveWheelDiameter * Math.PI);
     public static final int kTimeoutMs = 10;
-    public static final int kPIDLoopIdx = 0;
     public static final double kDefaultDt = 0.01;
     public static final double kAVelocity = 0.001;
-    public static final double kDriveVoltageRampRate = 0;
   
     public static int kTurretRotationMotorCANid    = 12;  // Turret rotation motor
     public static int kFlyWheelMotorCANid          = 5;  // The shooter's fly wheel motor
