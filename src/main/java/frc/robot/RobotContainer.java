@@ -37,16 +37,21 @@ public class RobotContainer {
 
     public BUTTON_MODE currentTriggerSetting = BUTTON_MODE.NEUTRAL;
 
-    // private DriveTrain drivetrain = new DriveTrain(this.getJoystick());
-    // private Turntable turnTable = new Turntable();
-    // private Limelight limelight = new Limelight();
+    private DriveTrain drivetrain = new DriveTrain(this.getJoystick());
+    private Turntable turnTable = new Turntable();
+    private Limelight limelight = new Limelight();
     private Shooter shooter = new Shooter(this.joy);
+    public Climber climber = new Climber();
  
     public RobotContainer() {
         configureButtonBindings();
     }
 
-    private void configureButtonBindings() {}
+    private void configureButtonBindings() {
+        y_button.whenPressed(new ExtendElevator(this.climber));
+        b_button.whenPressed(new RetractElevator(this.climber));
+        a_button.whenPressed(new StopElevator(this.climber));
+    }
 
     private boolean isRightTriggerPressed() {
         final double rightTrig = this.getJoystick().getRawAxis(3);
@@ -121,6 +126,10 @@ public class RobotContainer {
             }
         }
         lastDpad = joy.getPOV();
+    }
+
+    public void teleInit() {
+        new TeleopDrive(this.drivetrain, this.joy);
     }
 
     public Joystick getJoystick() {

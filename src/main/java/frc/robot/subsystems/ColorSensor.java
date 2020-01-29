@@ -44,19 +44,26 @@ public class ColorSensor extends SubsystemBase {
         Color detectedColor = sensor.getColor();
         ColorMatchResult result = colorMatch.matchClosestColor(detectedColor);
 
+        System.out.println("Confidence: " + result.confidence);
+
         if (result.color == redTarget) {
             this.currentColor = ControlPanelColor.RED;
+            System.out.println("Color: RED");
         } else
         if (result.color == greenTarget) {
             this.currentColor = ControlPanelColor.GREEN;
+            System.out.println("Color: GREEN");
         } else
         if (result.color == blueTarget) {
             this.currentColor = ControlPanelColor.BLUE;
+            System.out.println("Color: BLUE");
         } else
         if (result.color == yellowTarget) {
             this.currentColor = ControlPanelColor.YELLOW;
+            System.out.println("Color: YELLOW");
         } else {
             this.currentColor = ControlPanelColor.UNKNOWN;
+            System.out.println("Color: UNKNOWN");
         }
     }
 

@@ -44,6 +44,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        // System.out.println("Climber Current: " + robotContainer.climber.climberMotor.getOutputCurrent());
     }
 
     @Override
@@ -70,6 +71,7 @@ public class Robot extends TimedRobot {
         // if (m_autonomousCommand != null) {
         // m_autonomousCommand.cancel();
         // }
+        this.robotContainer.teleInit();
     }
 
     @Override

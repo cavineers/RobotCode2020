@@ -39,6 +39,13 @@ public class Shooter extends PIDSubsystem {
     //! TESTING JOYSTICK
     private Joystick joy;
 
+    public enum ShooterMode {
+        ENABLED,
+        DISABLED
+    }
+
+    private ShooterMode currentMode = ShooterMode.DISABLED;
+
     public Shooter(Joystick joy) {
         super(new PIDController(Constants.kShooterMotorPIDp, Constants.kShooterMotorPIDi, Constants.kShooterMotorPIDd));
 
@@ -89,7 +96,12 @@ public class Shooter extends PIDSubsystem {
 
         // Set the setpoint
         //double setPoint = -5000;
-        pidController.setReference(setPoint, ControlType.kVelocity);
+
+        if (this.currentMode == ShooterMode.ENABLED) {
+            pidController.setReference(setPoint, ControlType.kVelocity);
+        } else {
+            pidController.setReference(0, ControlType.kVelocity);
+        }
 
         // Add the setpoint and actual to smart dashboard
         SmartDashboard.putNumber("SetPoint", setPoint);
