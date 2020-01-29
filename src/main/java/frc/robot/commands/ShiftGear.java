@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.DriveTrain.DriveGear;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -7,11 +8,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class ShiftGear extends CommandBase{
     DriveGear gear;
     DriveTrain drivetrain;
+    RobotContainer robotContainer;
 
 
-    public ShiftGear(DriveGear gear, DriveTrain drivetrain) {
+    public ShiftGear(DriveGear gear, DriveTrain drivetrain, RobotContainer robotContainer) {
       this.gear = gear;
       this.drivetrain = drivetrain;
+      this.robotContainer = robotContainer;
     }
 
     public void initialize() {
@@ -21,14 +24,14 @@ public class ShiftGear extends CommandBase{
       // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-      /*DriveGear highGear = DriveGear.HIGH_GEAR;
+      DriveGear highGear = DriveGear.HIGH_GEAR;
       DriveGear lowGear = DriveGear.LOW_GEAR;
-      if (Robot.m_robotContainer.isLeftTriggerPressed){
-        Robot.drivetrain.setDriveGear(highGear);
+      if (robotContainer.isLeftTriggerPressed()) {
+        drivetrain.setDriveGear(highGear);
       }
-      if (Robot.m_robotContainer.isRightTriggerPressed){
-        Robot.drivetrain.setDriveGear(lowGear);
-      }*/
+      if (robotContainer.isRightTriggerPressed()){
+        drivetrain.setDriveGear(lowGear);
+      }
     } 
     
       // Called once the command ends or is interrupted.

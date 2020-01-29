@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.commands.TankDriveWithJoystick;
 
 public class DriveTrain extends SubsystemBase {
@@ -69,8 +70,8 @@ public class DriveTrain extends SubsystemBase {
     return this.rightMotor1;
   }
 
-  public void initDefaultCommand(Joystick joy) {
-    setDefaultCommand(new TankDriveWithJoystick(this, joy));
+  public void initDefaultCommand(Joystick joy, RobotContainer robotContainer) {
+    setDefaultCommand(new TankDriveWithJoystick(this, joy, robotContainer));
   }
 
   public void configTalons() {
