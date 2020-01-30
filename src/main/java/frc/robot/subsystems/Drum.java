@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
 import edu.wpi.first.hal.sim.DIOSim;
@@ -48,46 +41,61 @@ public class Drum extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if (drumReady == true) {
+        if (rotatingDrumMotor.getBusVoltage() > 20) {
+            rotatingDrumMotor.set(ControlMode.PercentOutput, -.5);
+        } else if (drumReady == true) {
+            // when the robot inits or after the robot is ready to shoot the variable should
+            // be false to stop it from stalling when shooting
             goToDesiredPosition(getDesiredPosition());
             System.out.println(rotatingDrumMotor.getSelectedSensorPosition());
+        } else {
+            System.out.println("Drum not ready");
         }
     }
 
+    // Get the drum motor
     public TalonSRX getDrumMotor() {
 
         return this.rotatingDrumMotor;
 
     }
 
+    // Get drum motor position
     public double getPosition() {
         return rotatingDrumMotor.getSelectedSensorPosition();
     }
 
+    // get limit switch value
     public boolean getLimitSwitch() {
         return limitSwitch.get();
     }
 
+    // get photo senor 1 value
     public boolean getPhotoSensor1() {
         return photoSensor1.getValue();
     }
 
+    // get photo sensor 3 value
     public boolean getPhotoSensor2() {
         return photoSensor2.getValue();
     }
 
+    // get photo sensor 3 value
     public boolean getPhotoSensor3() {
         return photoSensor3.getValue();
     }
 
+    // get photo sensor 4 value
     public boolean getPhotoSensor4() {
         return photoSensor4.getValue();
     }
 
+    // get photo sensor 5 value
     public boolean getPhotoSensor5() {
         return photoSensor5.getValue();
     }
 
+    // find the open drum hole
     public DrumPosition getDesiredPosition() {
         if (getPhotoSensor1() == false) {
             return DrumPosition.HOLE1;
@@ -107,20 +115,14 @@ public class Drum extends SubsystemBase {
         }
     }
 
+    // go tp the desired drum hole
     public void goToDesiredPosition(DrumPosition position) {
         switch (position) {
         case HOLE1:
-            rotatingDrumMotor.setSelectedSensorPosition(0);
-            while (rotatingDrumMotor.getSelectedSensorPosition() != Constants.kDrumEncoderPPI / 5) {
-                if (rotatingDrumMotor.getSelectedSensorPosition() > Constants.kDrumEncoderPPI / 5) {
-                    rotatingDrumMotor.set(ControlMode.PercentOutput, .5);
-                } else {
-                    rotatingDrumMotor.set(ControlMode.PercentOutput, -.5);
-                }
-            }
+            homeDrum();
             break;
         case HOLE2:
-            rotatingDrumMotor.setSelectedSensorPosition(0);
+
             while (rotatingDrumMotor.getSelectedSensorPosition() != (Constants.kDrumEncoderPPI / 5) * 2) {
                 if (rotatingDrumMotor.getSelectedSensorPosition() > (Constants.kDrumEncoderPPI / 5) * 2) {
                     rotatingDrumMotor.set(ControlMode.PercentOutput, .5);
@@ -130,7 +132,7 @@ public class Drum extends SubsystemBase {
             }
             break;
         case HOLE3:
-            rotatingDrumMotor.setSelectedSensorPosition(0);
+
             while (rotatingDrumMotor.getSelectedSensorPosition() != (Constants.kDrumEncoderPPI / 5) * 3) {
                 if (rotatingDrumMotor.getSelectedSensorPosition() > (Constants.kDrumEncoderPPI / 5) * 3) {
                     rotatingDrumMotor.set(ControlMode.PercentOutput, .5);
@@ -140,7 +142,7 @@ public class Drum extends SubsystemBase {
             }
             break;
         case HOLE4:
-            rotatingDrumMotor.setSelectedSensorPosition(0);
+
             while (rotatingDrumMotor.getSelectedSensorPosition() != (Constants.kDrumEncoderPPI / 5) * 4) {
                 if (rotatingDrumMotor.getSelectedSensorPosition() > (Constants.kDrumEncoderPPI / 5) * 4) {
                     rotatingDrumMotor.set(ControlMode.PercentOutput, .5);
@@ -150,7 +152,7 @@ public class Drum extends SubsystemBase {
             }
             break;
         case HOLE5:
-            rotatingDrumMotor.setSelectedSensorPosition(0);
+
             while (rotatingDrumMotor.getSelectedSensorPosition() != (Constants.kDrumEncoderPPI / 5) * 5) {
                 if (rotatingDrumMotor.getSelectedSensorPosition() > (Constants.kDrumEncoderPPI / 5) * 5) {
                     rotatingDrumMotor.set(ControlMode.PercentOutput, .5);
@@ -161,6 +163,7 @@ public class Drum extends SubsystemBase {
             break;
         case FULL:
             readyToShoot = true;
+            drumReady = false;
             break;
         case INVALID:
             System.out.println("ERROR");
@@ -170,10 +173,12 @@ public class Drum extends SubsystemBase {
 
     }
 
+    // home the drum
     public void homeDrum() {
         while (getLimitSwitch() == false) {
             rotatingDrumMotor.set(ControlMode.PercentOutput, .25);
         }
+        rotatingDrumMotor.setSelectedSensorPosition(0);
 
     }
 
