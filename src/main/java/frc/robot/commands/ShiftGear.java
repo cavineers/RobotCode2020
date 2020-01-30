@@ -32,6 +32,7 @@ public class ShiftGear extends CommandBase{
       if (robotContainer.isRightTriggerPressed()){
         drivetrain.setDriveGear(lowGear);
       }
+      System.out.println(drivetrain.getDriveGear());
     } 
     
       // Called once the command ends or is interrupted.

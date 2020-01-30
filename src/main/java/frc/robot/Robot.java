@@ -17,12 +17,12 @@ public class Robot extends TimedRobot {
 
   public static CLogger logger;
 
+  RobotContainer robotContainer = new RobotContainer();
 
   @Override
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    RobotContainer m_robotContainer = new RobotContainer();
 
     //! THE LOG LEVEL SHOULD ALWAYS BE SET. UNCOMMENT EACH OF THE FOLLOWING LINE AFTER COMMENTING ALL
     // logger = new CLogger(CLogger.cLoggerMode.COMPETITION);
@@ -63,10 +63,12 @@ public class Robot extends TimedRobot {
     // if (m_autonomousCommand != null) {
     //   m_autonomousCommand.cancel();
     // }
+    this.robotContainer.teleInit();
   }
 
   @Override
   public void teleopPeriodic() {
+    robotContainer.controllerPeriodic();
   }
 
   @Override

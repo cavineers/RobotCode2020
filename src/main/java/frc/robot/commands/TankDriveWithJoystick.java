@@ -39,7 +39,11 @@ public class TankDriveWithJoystick extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrain.drive(robotContainer.getJoystick());
+    drivetrain.drive(joy);
+    System.out.println(drivetrain.leftMotor1.get());
+    System.out.println(drivetrain.leftMotor2.get());
+    System.out.println(drivetrain.rightMotor1.get());
+    System.out.println(drivetrain.rightMotor2.get());
   }
 
 

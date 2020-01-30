@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.TankDriveWithJoystick;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -26,6 +28,8 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+
+  private final DriveTrain drivetrain = new DriveTrain();
 
   public static Joystick joy = new Joystick(0);
   public static JoystickButton a_button = new JoystickButton(joy, 1);
@@ -92,7 +96,7 @@ public class RobotContainer {
     return leftTrig > 0.9;
   }
 
-  public void ControllerPeriodic() {
+  public void controllerPeriodic() {
 
     if (lastRightTrig != isRightTriggerPressed()) {
       // the right trigger changed state
@@ -170,6 +174,11 @@ public class RobotContainer {
       input = Math.pow(input, 2);
     return input;
   }
+
+  public void teleInit() {
+    new TankDriveWithJoystick(this.drivetrain, getJoystick(), this);
+  }
+
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
