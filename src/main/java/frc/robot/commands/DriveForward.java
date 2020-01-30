@@ -9,6 +9,7 @@ public class DriveForward extends CommandBase{
 
     public DriveForward(DriveTrain drivetrain) {
         super();
+        addRequirements(drivetrain);
         this.drivetrain = drivetrain;
       }
     

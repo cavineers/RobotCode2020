@@ -24,6 +24,7 @@ public class TankDriveWithJoystick extends CommandBase {
    */
   public TankDriveWithJoystick(DriveTrain drivetrain, Joystick joy, RobotContainer robotContainer) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(drivetrain);
     this.drivetrain = drivetrain;
     this.joy = joy;
     this.robotContainer = robotContainer;

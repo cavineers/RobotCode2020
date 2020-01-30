@@ -12,6 +12,7 @@ public class ShiftGear extends CommandBase{
 
 
     public ShiftGear(DriveGear gear, DriveTrain drivetrain, RobotContainer robotContainer) {
+      addRequirements(drivetrain);
       this.gear = gear;
       this.drivetrain = drivetrain;
       this.robotContainer = robotContainer;
