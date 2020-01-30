@@ -24,9 +24,9 @@ public final class Constants {
     public static int kDriveTrainMotor3CANid       = 2;  // Drive train's third motor
     public static int kDriveTrainMotor4CANid       = 3;  // Drive train's fourth motor
     public static int kTurretRotationMotorCANid    = 4;  // Turret rotation motor
-    public static int kFlyWheelMotorCANid          = 5;  // The shooter's fly wheel motor
+    public static int kFlyWheelMotorCANid          = 7;  // The shooter's fly wheel motor
     public static int kIntakeMotorCANid            = 6;  // Intake motor
-    public static int kClimberMotorCANid           = 7;  // Climber motor
+    public static int kClimberMotorCANid           = 5;  // Climber motor
     public static int kControlPanelMotorCANid      = 8;  // Control Panel rotator
     public static int kShooterVerticalPitchCANid   = 9;  // Shooter's vertical pitch
     public static int kPneumaticsControlCANid      = 20; // Pneumatic Control Module (PCM)

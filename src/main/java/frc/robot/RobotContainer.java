@@ -10,7 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.Climb;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -26,14 +28,18 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  private final Climber climber = new Climber();
+
   public static Joystick joy = new Joystick(0);
   public int lastDpad = -1;
+  
 
   public enum BUTTON_MODE {
     AUTO_SHOOT, CONTROL_P, CLIMB, NEUTRAL
   }
 
   public BUTTON_MODE currentTriggerSetting = BUTTON_MODE.NEUTRAL;
+
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -52,7 +58,12 @@ public class RobotContainer {
   private void configureButtonBindings() {
   }
 
-  public void ControllerPeriodic(){
+  public boolean isLeftTriggerPressed() {
+    final double leftTrig = this.getJoystick().getRawAxis(2);
+    return leftTrig > 0.9;
+  }
+
+  public void controllerPeriodic(){
     if (lastDpad != joy.getPOV()) {
       switch (joy.getPOV()) {
       case 0:
@@ -71,6 +82,7 @@ public class RobotContainer {
         System.out.println("In Neutral mode");
         break;
       case 270:
+        // Left
         currentTriggerSetting = BUTTON_MODE.AUTO_SHOOT;
         System.out.println("In Auto Shoot mode");
         break;
@@ -80,6 +92,14 @@ public class RobotContainer {
       }
     }
     lastDpad = joy.getPOV();
+  }
+
+  public void teleInit() {
+    new Climb(this.climber, this);
+  }
+
+  public Joystick getJoystick() {
+    return joy;
   }
 
   /**
