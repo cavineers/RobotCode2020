@@ -6,7 +6,7 @@ import frc.robot.Constants;
 
 public class ControlPanel extends SubsystemBase {
     // Control Panel Solenoid
-    private Solenoid controlSolenoid = new Solenoid(Constants.kControlPanelPCMid);
+    private Solenoid controlSolenoid = new Solenoid(Constants.ControlPanel.PCMChannel1);
     
     // Control Panel Position
     public enum ControlPanelPosition {

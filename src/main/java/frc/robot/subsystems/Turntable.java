@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Turntable extends SubsystemBase {
-    private WPI_TalonSRX tableMotor = new WPI_TalonSRX(Constants.kTurretRotationMotorCANid);
+    private WPI_TalonSRX tableMotor = new WPI_TalonSRX(Constants.Turntable.MotorID);
 
     public enum TurntableMode {
         ROTATE_LEFT,
@@ -32,10 +32,10 @@ public class Turntable extends SubsystemBase {
         if (this.currentMode == TurntableMode.HOMING) return; // Don't touch anything while home
         switch (mode) {
             case ROTATE_LEFT:
-                tableMotor.set(-Constants.kTurntableSpeed);
+                tableMotor.set(-Constants.Turntable.speed);
                 break;
             case ROTATE_RIGHT:
-                tableMotor.set(Constants.kTurntableSpeed);
+                tableMotor.set(Constants.Turntable.speed);
                 break;
             case STOPPED:
                 tableMotor.set(0.0);

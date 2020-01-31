@@ -13,28 +13,28 @@ import frc.robot.commands.TeleopDrive;
 
 public class DriveTrain extends SubsystemBase {
     // Inst motors
-    private CANSparkMax left1 = new CANSparkMax(Constants.kDriveTrainMotor1CANid, MotorType.kBrushless);
-    private CANSparkMax right1 = new CANSparkMax(Constants.kDriveTrainMotor2CANid, MotorType.kBrushless);
-    private CANSparkMax left2 = new CANSparkMax(Constants.kDriveTrainMotor3CANid, MotorType.kBrushless);
-    private CANSparkMax right2 = new CANSparkMax(Constants.kDriveTrainMotor4CANid, MotorType.kBrushless);
+    private CANSparkMax left1 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor1, MotorType.kBrushless);
+    private CANSparkMax right1 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor2, MotorType.kBrushless);
+    private CANSparkMax left2 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor3, MotorType.kBrushless);
+    private CANSparkMax right2 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor4, MotorType.kBrushless);
 
     // Differential drive
     private DifferentialDrive differentialDrive;
 
     // Encoders
-    // CANEncoder leftEncoder = new CANEncoder(left1);
-    // CANEncoder rightEncoder = new CANEncoder(left2);
+    CANEncoder leftEncoder = new CANEncoder(left1);
+    CANEncoder rightEncoder = new CANEncoder(left2);
 
-    // // Gear mode
-    // public enum DriveGear {
-    //     HIGH_GEAR,
-    //     LOW_GEAR
-    // }
+    // Gear mode
+    public enum DriveGear {
+        HIGH_GEAR,
+        LOW_GEAR
+    }
 
-    // private DriveGear currentDriveGear;
+    private DriveGear currentDriveGear;
     
     // Gear shifting
-    // private DoubleSolenoid shiftingSol;
+    private DoubleSolenoid shiftingSol;
 
     public DriveTrain(Joystick joy) {
         // Add left1 & right1 to differential
@@ -54,7 +54,7 @@ public class DriveTrain extends SubsystemBase {
         this.right2.follow(right1);
 
         // Shift to low gear
-        // this.setDriveGear(DriveGear.LOW_GEAR);
+        this.setDriveGear(DriveGear.LOW_GEAR);
 
         // Set default command
         setDefaultCommand(new TeleopDrive(this, joy));
@@ -81,24 +81,24 @@ public class DriveTrain extends SubsystemBase {
         this.differentialDrive.curvatureDrive(drive, steer, false);
     }
 
-    // public void setDriveGear(DriveGear gear) {
-    //     // if (this.currentDriveGear == gear) return;
-    //     // switch (gear) {
-    //     //     case HIGH_GEAR:
-    //     //         shiftingSol.set(DoubleSolenoid.Value.kForward);
-    //     //         this.currentDriveGear = DriveGear.HIGH_GEAR;
-    //     //         break;
-    //     //     case LOW_GEAR:
-    //     //         shiftingSol.set(DoubleSolenoid.Value.kReverse);
-    //     //         this.currentDriveGear = DriveGear.LOW_GEAR;
-    //     //         break;
-    //     //     default:
-    //     //         // Do nothing if the value is not properly set
-    //     //         break;
-    //     // }
-    // }
+    public void setDriveGear(DriveGear gear) {
+        // if (this.currentDriveGear == gear) return;
+        // switch (gear) {
+        //     case HIGH_GEAR:
+        //         shiftingSol.set(DoubleSolenoid.Value.kForward);
+        //         this.currentDriveGear = DriveGear.HIGH_GEAR;
+        //         break;
+        //     case LOW_GEAR:
+        //         shiftingSol.set(DoubleSolenoid.Value.kReverse);
+        //         this.currentDriveGear = DriveGear.LOW_GEAR;
+        //         break;
+        //     default:
+        //         // Do nothing if the value is not properly set
+        //         break;
+        // }
+    }
 
-    // public DriveGear getDriveGear() {
-    //     return this.currentDriveGear;
-    // }
+    public DriveGear getDriveGear() {
+        return this.currentDriveGear;
+    }
 }

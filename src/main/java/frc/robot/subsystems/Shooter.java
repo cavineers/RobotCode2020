@@ -16,7 +16,7 @@ import frc.robot.Constants;
 public class Shooter extends PIDSubsystem {
 
     // Fly wheel motor
-    private CANSparkMax flyWheel = new CANSparkMax(Constants.kFlyWheelMotorCANid, MotorType.kBrushless);
+    private CANSparkMax flyWheel = new CANSparkMax(Constants.Shooter.ShootID, MotorType.kBrushless);
 
     // Fly wheel PID
     private CANPIDController pidController = flyWheel.getPIDController();
@@ -25,20 +25,11 @@ public class Shooter extends PIDSubsystem {
     private CANEncoder flyingEncoder = flyWheel.getEncoder();
 
     // Set initial PID values
-    public double kP = 0.0005;
-    public double kI = 0.0;
-    public double kD = 0.0001;
-    public double kIz = 0.0;
-    public double kMaxOutput = 1.0;
-    public double kMinOutput = -1.0;
-    public double maxRPM = 10000000;
-    private double setPoint = -5000;
-    public double kFF = 1/setPoint;
-    //public double kFF = 0.01;
+    public double kP = Constants.Shooter.PIDp;
+    public double kI = Constants.Shooter.PIDi;
+    public double kD = Constants.Shooter.PIDd;
+    public double kIz = Constants.Shooter.PIDiz;
     
-    //! TESTING JOYSTICK
-    private Joystick joy;
-
     public enum ShooterMode {
         ENABLED,
         DISABLED
@@ -46,31 +37,28 @@ public class Shooter extends PIDSubsystem {
 
     private ShooterMode currentMode = ShooterMode.DISABLED;
 
-    public Shooter(Joystick joy) {
-        super(new PIDController(Constants.kShooterMotorPIDp, Constants.kShooterMotorPIDi, Constants.kShooterMotorPIDd));
-
-        // Set the testing joystick
-        this.joy = joy;
+    public Shooter() {
+        super(new PIDController(Constants.Shooter.PIDp, Constants.Shooter.PIDi, Constants.Shooter.PIDd));
 
         // Configure the spark max
-        this.flyWheel.setSmartCurrentLimit(Constants.kShooterCurrentLimit);
+        this.flyWheel.setSmartCurrentLimit(Constants.Shooter.ShooterCurrentLimit);
 
         // Add PID values to controller
         pidController.setP(kP);
         pidController.setI(kI);
         pidController.setD(kD);
         pidController.setIZone(kIz);
-        pidController.setFF(kFF);
-        pidController.setOutputRange(kMinOutput, kMaxOutput);
+        pidController.setFF(1/Constants.Shooter.MaxRPM);
+        pidController.setOutputRange(Constants.Shooter.MinOutput, Constants.Shooter.MaxOutput);
 
         // Add to smart dashboard
         SmartDashboard.putNumber("P Gain", kP);
         SmartDashboard.putNumber("I Gain", kI);
         SmartDashboard.putNumber("D Gain", kD);
         SmartDashboard.putNumber("I Zone", kIz);
-        SmartDashboard.putNumber("Feed Forward", kFF);
-        SmartDashboard.putNumber("Max Output", kMaxOutput);
-        SmartDashboard.putNumber("Min Output", kMinOutput);
+        SmartDashboard.putNumber("Feed Forward", 1/Constants.Shooter.MaxRPM);
+        SmartDashboard.putNumber("Max Output", Constants.Shooter.MaxOutput);
+        SmartDashboard.putNumber("Min Output", Constants.Shooter.MinOutput);
     }
 
     @Override
@@ -88,23 +76,19 @@ public class Shooter extends PIDSubsystem {
         if((i != kI)) { pidController.setI(i); kI = i; }
         if((d != kD)) { pidController.setD(d); kD = d; }
         if((iz != kIz)) { pidController.setIZone(iz); kIz = iz; }
-        if((ff != kFF)) { pidController.setFF(ff); kFF = ff; }
-        if((max != kMaxOutput) || (min != kMinOutput)) { 
+        if((max != Constants.Shooter.MaxOutput) || (min != Constants.Shooter.MinOutput)) { 
             pidController.setOutputRange(min, max); 
-            kMinOutput = min; kMaxOutput = max; 
+            Constants.Shooter.MinOutput = min; Constants.Shooter.MaxOutput = max; 
         }
 
-        // Set the setpoint
-        //double setPoint = -5000;
-
         if (this.currentMode == ShooterMode.ENABLED) {
-            pidController.setReference(setPoint, ControlType.kVelocity);
+            pidController.setReference(Constants.Shooter.MaxRPM, ControlType.kVelocity);
         } else {
             pidController.setReference(0, ControlType.kVelocity);
         }
 
         // Add the setpoint and actual to smart dashboard
-        SmartDashboard.putNumber("SetPoint", setPoint);
+        SmartDashboard.putNumber("SetPoint", Constants.Shooter.MaxRPM);
         SmartDashboard.putNumber("ProcessVariable", flyingEncoder.getVelocity());
     }
 

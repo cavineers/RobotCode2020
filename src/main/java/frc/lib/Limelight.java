@@ -45,9 +45,9 @@ public class Limelight {
     }
 
     public int getDistance() {
-        double height1 = Constants.kLimelightHeightFromGround;
-        double height2 = Constants.kFieldGoalHeightFromGround;
-        double angle1 = Constants.kLimelightMountingAngle;
+        double height1 = Constants.Vision.kLimelightHeightFromGround;
+        double height2 = Constants.Vision.kFieldGoalHeightFromGround;
+        double angle1 = Constants.Vision.kLimelightMountingAngle;
         double angle2 = this.llTable.getEntry("ty").getDouble(0.0);
         double distance = (height2-height1) * (1 / Math.tan(Math.toRadians(angle1+angle2)));
         int re = (int)Math.round(this.llCatch(distance));

@@ -40,8 +40,9 @@ public class RobotContainer {
     private DriveTrain drivetrain = new DriveTrain(this.getJoystick());
     private Turntable turnTable = new Turntable();
     private Limelight limelight = new Limelight();
-    private Shooter shooter = new Shooter(this.joy);
-    public Climber climber = new Climber();
+    private Shooter shooter = new Shooter();
+    private Climber climber = new Climber();
+    private ColorSensor colorSensor = new ColorSensor();
  
     public RobotContainer() {
         configureButtonBindings();

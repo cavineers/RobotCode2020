@@ -3,7 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
-
+// import com.revrobotics.ColorSensorV3.ColorSensorResolution;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -32,6 +32,9 @@ public class ColorSensor extends SubsystemBase {
     }
 
     public ColorSensor() {
+        // Configure sensor
+        // this.sensor.configureColorSensor(, rate, gain);
+
         // Add colors to matcher
         colorMatch.addColorMatch(redTarget);
         colorMatch.addColorMatch(greenTarget);
@@ -44,26 +47,26 @@ public class ColorSensor extends SubsystemBase {
         Color detectedColor = sensor.getColor();
         ColorMatchResult result = colorMatch.matchClosestColor(detectedColor);
 
-        System.out.println("Confidence: " + result.confidence);
+        // System.out.println("Confidence: " + result.confidence);
 
         if (result.color == redTarget) {
             this.currentColor = ControlPanelColor.RED;
-            System.out.println("Color: RED");
+            // System.out.println("Color: RED");
         } else
         if (result.color == greenTarget) {
             this.currentColor = ControlPanelColor.GREEN;
-            System.out.println("Color: GREEN");
+            // System.out.println("Color: GREEN");
         } else
         if (result.color == blueTarget) {
             this.currentColor = ControlPanelColor.BLUE;
-            System.out.println("Color: BLUE");
+            // System.out.println("Color: BLUE");
         } else
         if (result.color == yellowTarget) {
             this.currentColor = ControlPanelColor.YELLOW;
-            System.out.println("Color: YELLOW");
+            // System.out.println("Color: YELLOW");
         } else {
             this.currentColor = ControlPanelColor.UNKNOWN;
-            System.out.println("Color: UNKNOWN");
+            // System.out.println("Color: UNKNOWN");
         }
     }
 

@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
-    public CANSparkMax climberMotor = new CANSparkMax(Constants.kClimberMotorCANid, MotorType.kBrushless);
+    public CANSparkMax climberMotor = new CANSparkMax(Constants.Climber.MotorID, MotorType.kBrushless);
 
     public enum ClimberMode {
         EXTENDING,
