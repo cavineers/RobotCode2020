@@ -17,8 +17,6 @@ public class Robot extends TimedRobot {
 
     public static Turntable turnTable;
 
-    // private CANSparkMax flyWheel = new CANSparkMax(Constants.kFlyWheelMotorCANid, MotorType.kBrushless);
-
     // protected Robot() {
     //     super(0.00000002); // 50 MHz //^ This is how we yeet the robot
     // }
