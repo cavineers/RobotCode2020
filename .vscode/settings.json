@@ -68,8 +68,11 @@
         }
     ],
     "cSpell.words": [
+        "CANPID",
         "Deadzone",
         "Dpad",
-        "setpoint"
+        "setpoint",
+        "teleop",
+        "yeet"
     ]
 }

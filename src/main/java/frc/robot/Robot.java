@@ -1,18 +1,13 @@
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Turntable;
 
 public class Robot extends TimedRobot {
-    private Command autonomousCommand;
+    // private Command autonomousCommand;
 
     private RobotContainer robotContainer;
 
@@ -23,6 +18,10 @@ public class Robot extends TimedRobot {
     public static Turntable turnTable;
 
     // private CANSparkMax flyWheel = new CANSparkMax(Constants.kFlyWheelMotorCANid, MotorType.kBrushless);
+
+    // protected Robot() {
+    //     super(0.00000002); // 50 MHz //^ This is how we yeet the robot
+    // }
 
     @Override
     public void robotInit() {

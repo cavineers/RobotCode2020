@@ -1,14 +1,17 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
-import frc.lib.Deadzone;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
+import frc.robot.commands.ExtendElevator;
+import frc.robot.commands.RetractElevator;
+import frc.robot.commands.StopElevator;
+import frc.robot.commands.TeleopDrive;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ColorSensor;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turntable;
 
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
@@ -31,11 +34,11 @@ public class RobotContainer {
     public boolean lastRightTrig = false;
     public boolean lastLeftTrig = false;
 
-    public enum BUTTON_MODE {
+    public enum CONTROLLER_MODE {
         AUTO_SHOOT, CONTROL_P, CLIMB, NEUTRAL
     }
 
-    public BUTTON_MODE currentTriggerSetting = BUTTON_MODE.NEUTRAL;
+    public CONTROLLER_MODE currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
 
     private DriveTrain drivetrain = new DriveTrain(this.getJoystick());
     private Turntable turnTable = new Turntable();
@@ -51,7 +54,9 @@ public class RobotContainer {
     private void configureButtonBindings() {
         y_button.whenPressed(new ExtendElevator(this.climber));
         b_button.whenPressed(new RetractElevator(this.climber));
-        a_button.whenPressed(new StopElevator(this.climber));
+        // a_button.whenPressed(new StopElevator(this.climber));
+        // a_button.and(this.currentTriggerSetting == CONTROLLER_MODE.NEUTRAL);
+        a_button.get();
     }
 
     private boolean isRightTriggerPressed() {
@@ -68,15 +73,15 @@ public class RobotContainer {
         if (lastRightTrig != isRightTriggerPressed()) {
             // the right trigger changed state
             lastRightTrig = isRightTriggerPressed();
-            if (lastRightTrig && currentTriggerSetting == BUTTON_MODE.CONTROL_P) {
+            if (lastRightTrig && currentTriggerSetting == CONTROLLER_MODE.CONTROL_P) {
                 // the right trigger is pressed and we are in Control Panel mode
 
-            } else if (lastRightTrig && currentTriggerSetting == BUTTON_MODE.CLIMB) {
+            } else if (lastRightTrig && currentTriggerSetting == CONTROLLER_MODE.CLIMB) {
                 // the right trigger is pressed and we are in Climb mode
-            } else if (lastRightTrig && currentTriggerSetting == BUTTON_MODE.NEUTRAL) {
+            } else if (lastRightTrig && currentTriggerSetting == CONTROLLER_MODE.NEUTRAL) {
                 // the right trigger is pressed and we are in Neutral
 
-            } else if (lastRightTrig && currentTriggerSetting == BUTTON_MODE.AUTO_SHOOT) {
+            } else if (lastRightTrig && currentTriggerSetting == CONTROLLER_MODE.AUTO_SHOOT) {
                 // the right trigger is pressed and we are in Auto Shoot mode
 
             }
@@ -86,15 +91,15 @@ public class RobotContainer {
         if (lastLeftTrig != isLeftTriggerPressed()) {
             // the left trigger changed state
             lastLeftTrig = isLeftTriggerPressed();
-            if (lastLeftTrig && currentTriggerSetting == BUTTON_MODE.CONTROL_P) {
+            if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.CONTROL_P) {
                 // the left trigger is pressed and we are in Control Panel mode
 
-            } else if (lastLeftTrig && currentTriggerSetting == BUTTON_MODE.CLIMB) {
+            } else if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.CLIMB) {
                 // the left trigger is pressed and we are in Climb mode
-            } else if (lastLeftTrig && currentTriggerSetting == BUTTON_MODE.NEUTRAL) {
+            } else if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.NEUTRAL) {
                 // the left trigger is pressed and we are in Neutral mode
 
-            } else if (lastLeftTrig && currentTriggerSetting == BUTTON_MODE.AUTO_SHOOT) {
+            } else if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.AUTO_SHOOT) {
                 // the left trigger is pressed and we are in Auto Shoot mode
 
             }
@@ -104,21 +109,21 @@ public class RobotContainer {
             switch (joy.getPOV()) {
             case 0:
                 // Top
-                currentTriggerSetting = BUTTON_MODE.CONTROL_P;
+                currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
                 System.out.println("In Control Panel mode");
                 break;
             case 90:
                 // Right
-                currentTriggerSetting = BUTTON_MODE.CLIMB;
+                currentTriggerSetting = CONTROLLER_MODE.CLIMB;
                 System.out.println("In Climb mode");
                 break;
             case 180:
                 // Bottom
-                currentTriggerSetting = BUTTON_MODE.NEUTRAL;
+                currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
                 System.out.println("In Neutral mode");
                 break;
             case 270:
-                currentTriggerSetting = BUTTON_MODE.AUTO_SHOOT;
+                currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;
                 System.out.println("In Auto Shoot mode");
                 break;
             default:
