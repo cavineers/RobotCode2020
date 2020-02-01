@@ -37,7 +37,7 @@ public class DriveTrain extends SubsystemBase {
     this.configTalons();
     leftMotor2.follow(leftMotor1);
     rightMotor2.follow(rightMotor1);
-    sol = new DoubleSolenoid(Constants.kPneumaticsControlCANid, Constants.DriveTrain().PCMGearShift1, Constants.DriveTrain().PCMGearShift2);
+    sol = new DoubleSolenoid(Constants.kPneumaticsControlCANid, Constants.DriveTrain.PCMGearShift1, Constants.DriveTrain.PCMGearShift2);
     this.setBrakeMode(false);
     this.setDriveGear(DriveGear.LOW_GEAR);
     leftMotor1.setSmartCurrentLimit(32);

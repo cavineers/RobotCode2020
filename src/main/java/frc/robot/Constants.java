@@ -38,10 +38,14 @@ public final class Constants {
     public static int kPneumaticsControlCANid      = 20; // Pneumatic Control Module (PCM)
     public static int kPowerDistributionPanelCANid = 30; // Power distribution panel (PDP)
 
+    public static class PCMChannels {
+        public static int DriveShift1   = 0;
+        public static int DriveShift2   = 1;
+    }
 
-    public static void DriveTrain() {
-        int PCMGearShift1 = 11;
-        int PCMGearShift2 = 12;
+    public static class DriveTrain {
+        public static int PCMGearShift1 = 11;
+        public static int PCMGearShift2 = 12;
         public static int kDriveTrainMotor1CANid = 4; // Drive train's first motor
         public static int kDriveTrainMotor2CANid = 3;  // Drive train's second motor
         public static int kDriveTrainMotor3CANid = 1;  // Drive train's third motor
