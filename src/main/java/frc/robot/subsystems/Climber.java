@@ -1,5 +1,3 @@
-// TODO: Everything
-
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
@@ -13,7 +11,7 @@ import frc.robot.RobotContainer.BUTTON_MODE;
 
 public class Climber extends SubsystemBase {
 
-  CANSparkMax winchMotor = new CANSparkMax(Constants.kClimberMotorCANid, MotorType.kBrushless);
+  CANSparkMax winchMotor = new CANSparkMax(Constants.Climber.MotorID, MotorType.kBrushless);
   private boolean brakeMode;
 
   public Climber() {

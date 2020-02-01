@@ -18,18 +18,23 @@ package frc.robot;
 public final class Constants {
     //? All constants begin with a lowercase 'k'
 
-    // CAN network mapping
-    public static int kDriveTrainMotor1CANid       = 0;  // Drive train's first motor
-    public static int kDriveTrainMotor2CANid       = 1;  // Drive train's second motor
-    public static int kDriveTrainMotor3CANid       = 2;  // Drive train's third motor
-    public static int kDriveTrainMotor4CANid       = 3;  // Drive train's fourth motor
-    public static int kTurretRotationMotorCANid    = 4;  // Turret rotation motor
-    public static int kFlyWheelMotorCANid          = 7;  // The shooter's fly wheel motor
-    public static int kIntakeMotorCANid            = 6;  // Intake motor
-    public static int kClimberMotorCANid           = 5;  // Climber motor
-    public static int kControlPanelMotorCANid      = 8;  // Control Panel rotator
-    public static int kShooterVerticalPitchCANid   = 9;  // Shooter's vertical pitch
-    public static int kPneumaticsControlCANid      = 20; // Pneumatic Control Module (PCM)
-    public static int kPowerDistributionPanelCANid = 30; // Power distribution panel (PDP)
+    public static class CANIds{
+        // CAN network mapping
+        public static int kDriveTrainMotor1CANid       = 0;  // Drive train's first motor
+        public static int kDriveTrainMotor2CANid       = 1;  // Drive train's second motor
+        public static int kDriveTrainMotor3CANid       = 2;  // Drive train's third motor
+        public static int kDriveTrainMotor4CANid       = 3;  // Drive train's fourth motor
+        public static int kTurretRotationMotorCANid    = 4;  // Turret rotation motor
+        public static int kFlyWheelMotorCANid          = 7;  // The shooter's fly wheel motor
+        public static int kIntakeMotorCANid            = 6;  // Intake motor
+        public static int kClimberMotorCANid           = 5;  // Climber motor
+        public static int kControlPanelMotorCANid      = 8;  // Control Panel rotator
+        public static int kShooterVerticalPitchCANid   = 9;  // Shooter's vertical pitch
+        public static int kPneumaticsControlCANid      = 20; // Pneumatic Control Module (PCM)
+        public static int kPowerDistributionPanelCANid = 30; // Power distribution panel (PDP)
+    }
 
+    public static class Climber {
+        public static int MotorID = CANIds.kClimberMotorCANid;
+    }
 }
