@@ -18,6 +18,7 @@ public final class Constants {
         public static int IntakeMotor            = 10; // Intake motor
         public static int ControlPanelMotor      = 11; // Control Panel rotator
         public static int TurretRotationMotor    = 12; // Turret rotation motor
+        public static int PowerDistributionPanel = 30; // Power Distribution Panel (PDP)
     }
 
     // PCM module mapping

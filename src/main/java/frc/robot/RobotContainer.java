@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
 import frc.robot.commands.AutoAlign;
@@ -57,6 +58,7 @@ public class RobotContainer {
     public ColorSensor colorSensor = new ColorSensor();
     public ControlPanel controlPanel = new ControlPanel();
     public Compressor compressor = new Compressor();
+    public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
  
     public enum CompressorMode {
         ENABLED,

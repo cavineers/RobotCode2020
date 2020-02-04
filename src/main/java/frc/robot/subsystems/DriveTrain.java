@@ -101,4 +101,8 @@ public class DriveTrain extends SubsystemBase {
     public DriveGear getDriveGear() {
         return this.currentDriveGear;
     }
+
+    public DifferentialDrive getDifferentialDrive() {
+        return this.differentialDrive;
+    }
 }
