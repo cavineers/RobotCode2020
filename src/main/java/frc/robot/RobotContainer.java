@@ -59,6 +59,7 @@ public class RobotContainer {
     public ControlPanel controlPanel = new ControlPanel();
     public Compressor compressor = new Compressor();
     public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
+    public Dashboard dashboard = new Dashboard(this);
  
     public enum CompressorMode {
         ENABLED,
@@ -81,9 +82,10 @@ public class RobotContainer {
         // a_button.get();
         // a_button.whenPressed(new ExtendControlPanel(this.controlPanel));
         // b_button.whenPressed(new RetractControlPanel(this.controlPanel));
-        a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
+        // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
         // a_button.whenPressed(new StartSpinning(this.controlPanel));
         // b_button.whenPressed(new StopSpinning(this.controlPanel));
+        a_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
     }
 
     private boolean isRightTriggerPressed() {
@@ -164,7 +166,7 @@ public class RobotContainer {
 
     public void teleInit() {
         new TeleopDrive(this.drivetrain, this.joy);
-        new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset());
+        // new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset());
     }
 
     public void compressorPeriodic() {

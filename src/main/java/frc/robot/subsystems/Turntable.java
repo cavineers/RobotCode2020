@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Turntable extends SubsystemBase {
-    private WPI_TalonSRX tableMotor = new WPI_TalonSRX(Constants.Turntable.MotorID);
+    public WPI_TalonSRX tableMotor = new WPI_TalonSRX(Constants.Turntable.MotorID);
 
     public enum TurntableMode {
         ROTATE_LEFT,
@@ -48,7 +48,6 @@ public class Turntable extends SubsystemBase {
     }
 
     public int getTurntableDegree() {
-        // return (this.tableMotor.getSelectedSensorPosition()/4096);
-        return 0;
+        return this.tableMotor.getSelectedSensorPosition();
     }
 }
