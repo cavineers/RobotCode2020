@@ -22,23 +22,23 @@ public final class Constants {
 
     // PCM module mapping
     public static class PCMChannels {
-        public static int DriveShift1   = 0;
-        public static int DriveShift2   = 1;
-        public static int ControlPanel1 = 6;
-        public static int ControlPanel2 = 7;
+        public static int DriveShift1   = 6;
+        public static int DriveShift2   = 7;
+        public static int ControlPanel1 = 0;
+        public static int ControlPanel2 = 1;
     }
     
     // VISION
     public static class Vision {
-        public static double kFieldGoalHeightFromGround = 53.0; // 31 inches used for testing
+        public static double kFieldGoalHeightFromGround = 98.0; // 31 inches used for testing
         public static double kLimelightHeightFromGround = 18.0; // vertical distance from limelight to ground
-        public static double kLimelightMountingAngle    = 0;
+        public static double kLimelightMountingAngle    = 25.0;
     }
 
     // Turntable
     public static class Turntable {
         public static int MotorID  = CANIds.TurretRotationMotor;
-        public static double speed = 0.06;
+        public static double speed = 0.09;
     }
 
     // Shooter
@@ -72,6 +72,7 @@ public final class Constants {
         public static int PCM = CANIds.PCM;
         public static int PCMChannel1 = PCMChannels.ControlPanel1;
         public static int PCMChannel2 = PCMChannels.ControlPanel2;
+        public static int MotorID = CANIds.ControlPanelMotor;
     }
 
     // DriveTrain

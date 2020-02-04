@@ -29,7 +29,9 @@ public class Turntable extends SubsystemBase {
     }
 
     public void setMotorRotation(TurntableMode mode) {
+        System.out.println("Motor rotation");
         if (this.currentMode == TurntableMode.HOMING) return; // Don't touch anything while home
+        System.out.println("Homing is done");
         switch (mode) {
             case ROTATE_LEFT:
                 tableMotor.set(-Constants.Turntable.speed);

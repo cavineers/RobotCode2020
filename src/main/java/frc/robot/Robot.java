@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
 import frc.robot.subsystems.DriveTrain;
@@ -13,9 +14,7 @@ public class Robot extends TimedRobot {
 
     public static CLogger logger;
 
-    public static DriveTrain driveTrain;
-
-    public static Turntable turnTable;
+    public double lastLime;
 
     // protected Robot() {
     //     super(0.00000002); // 50 MHz //^ This is how we yeet the robot
@@ -35,13 +34,16 @@ public class Robot extends TimedRobot {
         // logger = new CLogger(CLogger.cLoggerMode.TESTING);
         logger = new CLogger(CLogger.cLoggerMode.DEVELOPMENT);
 
-        turnTable = new Turntable();
     }
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
         // System.out.println("Climber Current: " + robotContainer.climber.climberMotor.getOutputCurrent());
+        if (Robot.getCurrentTime()-lastLime > .5) {
+            lastLime = Robot.getCurrentTime();
+            // System.out.println("Distance: " + robotContainer.limelight.getDistance());
+        }
     }
 
     @Override
@@ -69,6 +71,7 @@ public class Robot extends TimedRobot {
         // m_autonomousCommand.cancel();
         // }
         this.robotContainer.teleInit();
+        // this.robotContainer.turnTable.setMotorRotation(Turntable.TurntableMode.ROTATE_LEFT);
     }
 
     @Override
@@ -88,4 +91,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void testPeriodic() {}
+
+    public static double getCurrentTime() {
+        return Timer.getFPGATimestamp();
+    }
 }

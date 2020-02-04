@@ -3,15 +3,23 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
+import frc.robot.commands.AutoAlign;
+import frc.robot.commands.ExtendControlPanel;
 import frc.robot.commands.ExtendElevator;
+import frc.robot.commands.RetractControlPanel;
 import frc.robot.commands.RetractElevator;
+import frc.robot.commands.StartSpinning;
 import frc.robot.commands.StopElevator;
+import frc.robot.commands.StopSpinning;
 import frc.robot.commands.TeleopDrive;
+import frc.robot.commands.TurntableToTarget;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
+import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turntable;
+import edu.wpi.first.wpilibj.Compressor;
 
 public class RobotContainer {
     // The robot's subsystems and commands are defined here...
@@ -40,23 +48,40 @@ public class RobotContainer {
 
     public CONTROLLER_MODE currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
 
-    private DriveTrain drivetrain = new DriveTrain(this.getJoystick());
-    private Turntable turnTable = new Turntable();
-    private Limelight limelight = new Limelight();
-    private Shooter shooter = new Shooter();
-    private Climber climber = new Climber();
-    private ColorSensor colorSensor = new ColorSensor();
+    // Subsystems
+    public DriveTrain drivetrain = new DriveTrain(this.getJoystick());
+    public Turntable turnTable = new Turntable();
+    public Limelight limelight = new Limelight();
+    public Shooter shooter = new Shooter();
+    public Climber climber = new Climber();
+    public ColorSensor colorSensor = new ColorSensor();
+    public ControlPanel controlPanel = new ControlPanel();
+    public Compressor compressor = new Compressor();
  
+    public enum CompressorMode {
+        ENABLED,
+        DISABLED
+    }
+
+    // Default compressor mode
+    private CompressorMode currentCompressor = CompressorMode.DISABLED;
+
     public RobotContainer() {
         configureButtonBindings();
+        compressor.stop();
     }
 
     private void configureButtonBindings() {
-        y_button.whenPressed(new ExtendElevator(this.climber));
-        b_button.whenPressed(new RetractElevator(this.climber));
-        // a_button.whenPressed(new StopElevator(this.climber));
-        // a_button.and(this.currentTriggerSetting == CONTROLLER_MODE.NEUTRAL);
-        a_button.get();
+        // y_button.whenPressed(new ExtendElevator(this.climber));
+        // b_button.whenPressed(new RetractElevator(this.climber));
+        // // a_button.whenPressed(new StopElevator(this.climber));
+        // // a_button.and(this.currentTriggerSetting == CONTROLLER_MODE.NEUTRAL);
+        // a_button.get();
+        // a_button.whenPressed(new ExtendControlPanel(this.controlPanel));
+        // b_button.whenPressed(new RetractControlPanel(this.controlPanel));
+        a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
+        // a_button.whenPressed(new StartSpinning(this.controlPanel));
+        // b_button.whenPressed(new StopSpinning(this.controlPanel));
     }
 
     private boolean isRightTriggerPressed() {
@@ -70,6 +95,7 @@ public class RobotContainer {
     }
 
     public void updateController() {
+        // new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset());
         if (lastRightTrig != isRightTriggerPressed()) {
             // the right trigger changed state
             lastRightTrig = isRightTriggerPressed();
@@ -136,6 +162,23 @@ public class RobotContainer {
 
     public void teleInit() {
         new TeleopDrive(this.drivetrain, this.joy);
+        new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset());
+    }
+
+    public void compressorPeriodic() {
+        System.out.println("Pressure switch value:" + compressor.getPressureSwitchValue());
+        if (compressor.getPressureSwitchValue()) {
+            if (currentCompressor != CompressorMode.ENABLED) {
+                compressor.start();
+                System.out.println("Started compressor");
+            }
+        } else {
+            if (currentCompressor != CompressorMode.DISABLED) {
+                compressor.stop();
+                System.out.println("Stopped compressor");
+            }
+        }
+
     }
 
     public Joystick getJoystick() {

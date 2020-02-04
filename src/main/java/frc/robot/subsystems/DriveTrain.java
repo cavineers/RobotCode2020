@@ -83,19 +83,19 @@ public class DriveTrain extends SubsystemBase {
 
     public void setDriveGear(DriveGear gear) {
         if (this.currentDriveGear == gear) return;
-        switch (gear) {
-            case HIGH_GEAR:
-                shiftingSol.set(DoubleSolenoid.Value.kForward);
-                this.currentDriveGear = DriveGear.HIGH_GEAR;
-                break;
-            case LOW_GEAR:
-                shiftingSol.set(DoubleSolenoid.Value.kReverse);
-                this.currentDriveGear = DriveGear.LOW_GEAR;
-                break;
-            default:
-                // Do nothing if the value is not properly set
-                break;
-        }
+        // switch (gear) {
+        //     case HIGH_GEAR:
+        //         shiftingSol.set(DoubleSolenoid.Value.kForward);
+        //         this.currentDriveGear = DriveGear.HIGH_GEAR;
+        //         break;
+        //     case LOW_GEAR:
+        //         shiftingSol.set(DoubleSolenoid.Value.kReverse);
+        //         this.currentDriveGear = DriveGear.LOW_GEAR;
+        //         break;
+        //     default:
+        //         // Do nothing if the value is not properly set
+        //         break;
+        // }
     }
 
     public DriveGear getDriveGear() {
