@@ -10,7 +10,7 @@ public class TurntableToTarget extends CommandBase {
     private int rotationBefore;
     private int wantedRotation;
     private boolean finished = false;
-    private double speed = 4;
+    private double speed = 12;
 
     public TurntableToTarget(Turntable turntable, double angle) {
         addRequirements(turntable);
@@ -27,17 +27,23 @@ public class TurntableToTarget extends CommandBase {
 
     @Override
     public void execute() {
+        // Tried and failed
+        // this.turntable.tableMotor.set(ControlMode.Current, 12.0);
+        // this.turntable.tableMotor.set(ControlMode.Velocity, 0.15);
+        // this.turntable.tableMotor.set(ControlMode.Position, 20);
+        this.turntable.tableMotor.set(ControlMode.PercentOutput, -0.05);
+
         System.out.println(this.wantedRotation - this.turntable.getTurntableDegree());
-        if (this.wantedRotation - this.turntable.getTurntableDegree() > 0) {
-            this.turntable.tableMotor.set(ControlMode.Current, -this.speed);
-        } else
-        if (this.wantedRotation - this.turntable.getTurntableDegree() < 0) {
-            this.turntable.tableMotor.set(ControlMode.Current, this.speed);
-        }
-        if (this.wantedRotation == this.turntable.getTurntableDegree()) {
-            System.out.println("Target reached");
-            this.finished = true;
-        }
+        // if (this.wantedRotation - this.turntable.getTurntableDegree() > 0) {
+        //     this.turntable.tableMotor.set(ControlMode.Current, -this.speed);
+        // } else
+        // if (this.wantedRotation - this.turntable.getTurntableDegree() < 0) {
+        //     this.turntable.tableMotor.set(ControlMode.Current, this.speed);
+        // }
+        // if (this.wantedRotation == this.turntable.getTurntableDegree()) {
+        //     System.out.println("Target reached");
+        //     this.finished = true;
+        // }
     }
 
     @Override

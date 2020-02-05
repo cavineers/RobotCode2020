@@ -1,6 +1,9 @@
 package frc.robot;
 
 import frc.robot.RobotContainer;
+
+import java.util.Map;
+
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
@@ -34,6 +37,20 @@ public class Dashboard {
         .withWidget(BuiltInWidgets.kBooleanBox)
         .withPosition(0, 3)
         .withSize(1, 1);
+
+        // // Add limelight
+        // Shuffleboard.getTab("Dashboard")
+        // .add("Camera", "http://limelight.local:5800")
+        // .withWidget(BuiltInWidgets.kCameraStream)
+        // .withPosition(4, 2)
+        // .withSize(3, 3);
+
+        Shuffleboard.getTab("Dashboard")
+        .add("FMS", "network_table:///FMSInfo")
+        .withWidget("Basic FMS Info")
+        .withPosition(3, 0)
+        .withSize(3, 1)
+        .withProperties(Map.of("source", "network_table:///FMSInfo"));
     }
 
     private void configureTuner() {
