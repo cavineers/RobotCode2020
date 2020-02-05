@@ -20,13 +20,7 @@ public class Climb extends CommandBase {
 
     @Override
     public void execute() {
-        if (climber.getClimberState(robotContainer) == Climber.ClimberState.UP) {
-            climber.getWinchMotor().set(-5800);
-        } else if (climber.getClimberState(robotContainer) == Climber.ClimberState.OFF){
-            climber.getWinchMotor().set(0);
-        } else if (climber.getClimberState(robotContainer) == Climber.ClimberState.DOWN){
-            climber.getWinchMotor().set(5800);
-        }
+        climber.getWinchMotor().set(climber.getWinchMotorSpeed(robotContainer));
     }
 
     @Override
