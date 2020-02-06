@@ -16,7 +16,7 @@ public class AutoAlign extends SequentialCommandGroup {
     public AutoAlign(DriveTrain dt, Turntable tt, Limelight ll) {
         // super(new FooCommand(), new BarCommand());
         // super(new MoveIntoShootDistance(dt));
-        super(new TurntableToTarget(tt, ll.getHorizontalOffset()));
+        // super(new TurntableToTarget(tt, ll.getHorizontalOffset()));
         System.out.println("Auto align");
     }
 }

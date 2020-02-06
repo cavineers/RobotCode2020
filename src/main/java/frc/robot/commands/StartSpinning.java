@@ -13,7 +13,7 @@ public class StartSpinning extends CommandBase {
 
   @Override
   public void initialize() {
-    this.cp.setSpin(1.0);
+    this.cp.setSpin(.05);
   }
 
   @Override

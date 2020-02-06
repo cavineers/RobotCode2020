@@ -1,14 +1,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Turntable;
+import frc.robot.subsystems.Turntable2;
 
-public class TurntableToTarget extends CommandBase {
+public class TurntableToTarget2 extends CommandBase {
     private double target;
 
-    private Turntable table;
+    private Turntable2 table;
 
-    public TurntableToTarget(Turntable tt, double target) {
+    public TurntableToTarget2(Turntable2 tt, double target) {
         addRequirements(tt);
         this.target = target;
         this.table = tt;
@@ -16,20 +16,19 @@ public class TurntableToTarget extends CommandBase {
 
     @Override
     public void initialize() {
-        table.enable();
-        table.turnToAngle(10);
+        table.setPosition(this.target);
     }
 
     @Override
-    public void execute() {}
+    public void execute() {
+    }
 
     @Override
     public void end(boolean interrupted) {
-        table.disable();
     }
 
     @Override
     public boolean isFinished() {
-        return table.atTarget();
+        return false;
     }
 }

@@ -2,52 +2,39 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 
-public class Turntable extends SubsystemBase {
-    public WPI_TalonSRX tableMotor = new WPI_TalonSRX(Constants.Turntable.MotorID);
+public class Turntable extends PIDSubsystem {
 
-    public enum TurntableMode {
-        ROTATE_LEFT,
-        ROTATE_RIGHT,
-        STOPPED,
-        HOMING
-    }
-
-    private TurntableMode currentMode;
+    private WPI_TalonSRX tableMotor = new WPI_TalonSRX(Constants.Turntable.MotorID);
 
     public Turntable() {
-        tableMotor.setSelectedSensorPosition(0);
-
-        this.currentMode = TurntableMode.STOPPED;
+        super(new PIDController(0.0005, 0, 0));
+        getController().setTolerance(0.0);
+        // getController().disableContinuousInput();
     }
 
     @Override
-    public void periodic() {
-        // This method will be called once per scheduler run
+    public void useOutput(double output, double setpoint) {
+        System.out.println("Output: " + output);
+        System.out.println("Setpoint: " + setpoint);
+        tableMotor.pidWrite(output);
     }
 
-    public void setMotorRotation(TurntableMode mode) {
-        System.out.println("Motor rotation");
-        if (this.currentMode == TurntableMode.HOMING) return; // Don't touch anything while home
-        System.out.println("Homing is done");
-        switch (mode) {
-            case ROTATE_LEFT:
-                tableMotor.set(-Constants.Turntable.speed);
-                break;
-            case ROTATE_RIGHT:
-                tableMotor.set(Constants.Turntable.speed);
-                break;
-            case STOPPED:
-                tableMotor.set(0.0);
-                break;
-            default:
-                break;
-        }
+    @Override
+    public double getMeasurement() {
+        return tableMotor.getSelectedSensorPosition();
     }
 
-    public int getTurntableDegree() {
-        return this.tableMotor.getSelectedSensorPosition();
+    public void turnToAngle(double angle) {
+        // int pos = tableMotor.getSelectedSensorPosition() + (int)((4096/360)*angle);
+        System.out.println("Angle: " + (angle));
+        getController().setSetpoint(tableMotor.getSelectedSensorPosition()+200);
+    }
+
+    public boolean atTarget() {
+        return getController().atSetpoint();
     }
 }

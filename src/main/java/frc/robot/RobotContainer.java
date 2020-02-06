@@ -14,12 +14,14 @@ import frc.robot.commands.StopElevator;
 import frc.robot.commands.StopSpinning;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.commands.TurntableToTarget;
+import frc.robot.commands.TurntableToTarget2;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turntable;
+import frc.robot.subsystems.Turntable2;
 import edu.wpi.first.wpilibj.Compressor;
 
 public class RobotContainer {
@@ -60,6 +62,7 @@ public class RobotContainer {
     public Compressor compressor = new Compressor();
     public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
     public Dashboard dashboard = new Dashboard(this);
+    public Turntable2 turntable2 = new Turntable2();
  
     public enum CompressorMode {
         ENABLED,
@@ -85,6 +88,7 @@ public class RobotContainer {
         // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
         // a_button.whenPressed(new StartSpinning(this.controlPanel));
         // b_button.whenPressed(new StopSpinning(this.controlPanel));
+        // a_button.whenPressed(new TurntableToTarget2(this.turntable2, this.limelight.getHorizontalOffset()));
         a_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
     }
 

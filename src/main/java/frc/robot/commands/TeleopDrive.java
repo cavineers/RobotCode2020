@@ -20,8 +20,8 @@ public class TeleopDrive extends CommandBase {
 
     @Override
     public void execute() {
-        double steer = -Deadzone.add(joy.getRawAxis(4));
-        double drive = -Deadzone.add(joy.getRawAxis(1));
+        double steer = -Deadzone.add(joy.getRawAxis(4), 0.05);
+        double drive = -Deadzone.add(joy.getRawAxis(1), 0.05);
 
         dt.drive(drive,steer,true);
     }
