@@ -12,6 +12,7 @@ import frc.robot.commands.RetractElevator;
 import frc.robot.commands.StartSpinning;
 import frc.robot.commands.StopElevator;
 import frc.robot.commands.StopSpinning;
+import frc.robot.commands.StopTurntable;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.commands.TurntableToTarget;
 import frc.robot.commands.TurntableToTarget2;
@@ -90,6 +91,7 @@ public class RobotContainer {
         // b_button.whenPressed(new StopSpinning(this.controlPanel));
         // a_button.whenPressed(new TurntableToTarget2(this.turntable2, this.limelight.getHorizontalOffset()));
         a_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
+        b_button.whenPressed(new StopTurntable(this.turnTable));
     }
 
     private boolean isRightTriggerPressed() {
