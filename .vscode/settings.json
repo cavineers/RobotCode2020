@@ -15,7 +15,6 @@
     "cSpell.userWords": ["wpilib", "spalding"],
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
-    "editor.formatOnSave": true,
     "pretty-formatter.correct": true,
     "editor.autoClosingBrackets": "always",
     "editor.autoIndent": true,
@@ -74,5 +73,6 @@
         "setpoint",
         "teleop",
         "yeet"
-    ]
+    ],
+    "editor.formatOnType": true
 }
