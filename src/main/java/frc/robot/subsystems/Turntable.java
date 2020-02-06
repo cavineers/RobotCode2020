@@ -13,7 +13,7 @@ public class Turntable extends PIDSubsystem {
     public Turntable() {
         super(new PIDController(0.0005, 0, 0));
         getController().setTolerance(0.0);
-        // getController().disableContinuousInput();
+        getController().disableContinuousInput();
     }
 
     @Override
@@ -29,9 +29,9 @@ public class Turntable extends PIDSubsystem {
     }
 
     public void turnToAngle(double angle) {
-        // int pos = tableMotor.getSelectedSensorPosition() + (int)((4096/360)*angle);
-        System.out.println("Angle: " + (angle));
-        getController().setSetpoint(tableMotor.getSelectedSensorPosition()+200);
+        int pos = tableMotor.getSelectedSensorPosition() + (int)((4096/360)*angle);
+        System.out.println("Angle: " + (pos));
+        getController().setSetpoint(pos);
     }
 
     public boolean atTarget() {
