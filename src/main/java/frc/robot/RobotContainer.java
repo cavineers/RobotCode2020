@@ -87,10 +87,12 @@ public class RobotContainer {
         // a_button.whenPressed(new ExtendControlPanel(this.controlPanel));
         // b_button.whenPressed(new RetractControlPanel(this.controlPanel));
         // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
-        // a_button.whenPressed(new StartSpinning(this.controlPanel));
-        // b_button.whenPressed(new StopSpinning(this.controlPanel));
+        /*b_button.whenPressed(new StartSpinning(this.controlPanel));
+        x_button.whenPressed(new StopSpinning(this.controlPanel));
+        y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
+        x_button.whenPressed(new RetractControlPanel(this.controlPanel));*/
         // a_button.whenPressed(new TurntableToTarget2(this.turntable2, this.limelight.getHorizontalOffset()));
-        a_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
+        a_button.whenPressed(new TurntableToTarget(this.turnTable, -90));
         b_button.whenPressed(new StopTurntable(this.turnTable));
     }
 
@@ -145,8 +147,9 @@ public class RobotContainer {
             switch (joy.getPOV()) {
             case 0:
                 // Top
-                currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
-                System.out.println("In Control Panel mode");
+                // currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
+                // System.out.println("In Control Panel mode");
+                this.compressor.start();
                 break;
             case 90:
                 // Right
@@ -155,8 +158,9 @@ public class RobotContainer {
                 break;
             case 180:
                 // Bottom
-                currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
-                System.out.println("In Neutral mode");
+                // currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
+                // System.out.println("In Neutral mode");
+                this.compressor.stop();
                 break;
             case 270:
                 currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;

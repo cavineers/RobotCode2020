@@ -17,7 +17,7 @@ public class TurntableToTarget extends CommandBase {
     @Override
     public void initialize() {
         table.enable();
-        table.turnToAngle(5);
+        table.turnToAngle(this.target);
     }
 
     @Override
@@ -25,6 +25,7 @@ public class TurntableToTarget extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        System.out.println("finished");
         table.disable();
     }
 

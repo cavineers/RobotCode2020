@@ -20,13 +20,22 @@ public class Turntable extends PIDSubsystem {
 
     @Override
     public void useOutput(double output, double setpoint) {
+        output = getController().calculate(getMeasurement(), this.currentSetpoint);
         System.out.println("CurrentPos: " + getMeasurement());
         System.out.println("Wanted: " + this.currentSetpoint);
-        if (getMeasurement() > this.currentSetpoint) {
-            tableMotor.pidWrite(MathUtil.clamp(getController().calculate(getMeasurement(), this.currentSetpoint),-0.1,0.1));
+        System.out.println("OUTPUT: " +  output);
+        output = output * -1;
+        tableMotor.pidWrite(MathUtil.clamp(output,-0.1,0.1));
+
+
+        /*if (getMeasurement() < this.currentSetpoint) {
+            System.out.println("1");
+            
+            tableMotor.pidWrite(MathUtil.clamp(getController().calculate(getMeasurement(), this.currentSetpoint),0,0.1));
         } else {
-            tableMotor.pidWrite(-MathUtil.clamp(getController().calculate(getMeasurement(), this.currentSetpoint),-0.1,0.1));
-        }
+            System.out.println("2");
+            tableMotor.pidWrite(MathUtil.clamp(getController().calculate(getMeasurement(), this.currentSetpoint),-0.1,0));
+        }*/
     }
 
     @Override
