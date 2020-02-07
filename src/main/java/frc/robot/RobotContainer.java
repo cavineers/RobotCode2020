@@ -92,7 +92,7 @@ public class RobotContainer {
         y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
         x_button.whenPressed(new RetractControlPanel(this.controlPanel));*/
         // a_button.whenPressed(new TurntableToTarget2(this.turntable2, this.limelight.getHorizontalOffset()));
-        a_button.whenPressed(new TurntableToTarget(this.turnTable, -90));
+        a_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
         b_button.whenPressed(new StopTurntable(this.turnTable));
     }
 
