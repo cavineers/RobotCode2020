@@ -27,6 +27,7 @@ public class TurntableToTarget extends CommandBase {
     public void end(boolean interrupted) {
         System.out.println("finished");
         table.disable();
+        table.getMotor().set(0);
     }
 
     @Override

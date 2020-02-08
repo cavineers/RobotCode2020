@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
         // System.out.println("Climber Current: " + robotContainer.climber.climberMotor.getOutputCurrent());
         if (Robot.getCurrentTime()-lastLime > .5) {
             lastLime = Robot.getCurrentTime();
-            // System.out.println("Distance: " + robotContainer.limelight.getDistance());
+            System.out.println("Distance: " + robotContainer.limelight.getDistance());
         }
     }
 

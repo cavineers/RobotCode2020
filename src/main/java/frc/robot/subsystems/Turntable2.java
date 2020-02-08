@@ -15,22 +15,18 @@ public class Turntable2 extends SubsystemBase {
 
     public Turntable2() {
         tableMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
-        tableMotor.setSensorPhase(true);
-        tableMotor.configAllowableClosedloopError(0, 0, 30);
-        tableMotor.config_kP(0, 0.05, 30);
-        tableMotor.config_kI(0, 0, 30);
-        tableMotor.config_kD(0, 0, 30);
-        tableMotor.config_kF(0, 0, 30);
     }
 
     @Override
-    public void periodic() {}
+    public void periodic() {
+        // System.out.println("Wanted: " + );
+    }
 
     public void setPosition(double angle) {
-        // int targetPositionRotations = (int)((4096/360)*angle);
-        // System.out.println("Set Position: "+targetPositionRotations);
-        System.out.println(tableMotor.getSelectedSensorPosition()+200);
-        tableMotor.set(ControlMode.Position, tableMotor.getSelectedSensorPosition()+200);
+        int targetPositionRotations = (int)(11.37*angle);
+        System.out.println("Set Position: "+targetPositionRotations);
+        System.out.println(tableMotor.getSelectedSensorPosition()+targetPositionRotations);
+        tableMotor.set(ControlMode.Position, tableMotor.getSelectedSensorPosition()+targetPositionRotations);
     }
 
 }

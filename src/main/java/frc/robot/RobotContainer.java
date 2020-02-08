@@ -81,17 +81,17 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // y_button.whenPressed(new ExtendElevator(this.climber));
         // b_button.whenPressed(new RetractElevator(this.climber));
-        // // a_button.whenPressed(new StopElevator(this.climber));
-        // // a_button.and(this.currentTriggerSetting == CONTROLLER_MODE.NEUTRAL);
+        // a_button.whenPressed(new StopElevator(this.climber));
+        // a_button.and(this.currentTriggerSetting == CONTROLLER_MODE.NEUTRAL);
         // a_button.get();
         // a_button.whenPressed(new ExtendControlPanel(this.controlPanel));
         // b_button.whenPressed(new RetractControlPanel(this.controlPanel));
         // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
-        /*b_button.whenPressed(new StartSpinning(this.controlPanel));
-        x_button.whenPressed(new StopSpinning(this.controlPanel));
-        y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
-        x_button.whenPressed(new RetractControlPanel(this.controlPanel));*/
-        // a_button.whenPressed(new TurntableToTarget2(this.turntable2, this.limelight.getHorizontalOffset()));
+        // b_button.whenPressed(new StartSpinning(this.controlPanel));
+        // x_button.whenPressed(new StopSpinning(this.controlPanel));
+        // y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
+        // x_button.whenPressed(new RetractControlPanel(this.controlPanel));
+        // a_button.whenPressed(new TurntableToTarget(this.turnTable, 90));
         a_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
         b_button.whenPressed(new StopTurntable(this.turnTable));
     }
