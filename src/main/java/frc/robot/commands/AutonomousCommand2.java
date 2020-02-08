@@ -8,24 +8,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.lib.Limelight;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Drum;
-import frc.robot.subsystems.Turntable;
-
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class AutonomousCommand1 extends SequentialCommandGroup {
+public class AutonomousCommand2 extends SequentialCommandGroup {
   /**
-   * Creates a new AutononmousSubcommand1.
+   * Creates a new AutonomousCommand2.
    */
-
-  public AutonomousCommand1(DriveTrain dt, Drum d, Turntable tt, Limelight ll) {
+  public AutonomousCommand2(DriveTrain dt) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new AutoDrive(dt), new DrumInit(d), new MoveIntoShootDistance(dt), new AutoAlign(dt, tt, ll));
+    super(new AutoDrive(dt));
   }
-
 }

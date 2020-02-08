@@ -57,7 +57,7 @@ public class Drum extends SubsystemBase {
           return photoSensor5.getValue();
      }
 
-     private boolean withinRange(DrumPosition pos, int sensorPos) {
+     public boolean withinRange(DrumPosition pos, int sensorPos) {
           int desiredSensorPosition = 0;
           if (pos == DrumPosition.POS_1) {
                desiredSensorPosition = 1000;

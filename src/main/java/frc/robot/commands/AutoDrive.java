@@ -8,6 +8,11 @@ public class AutoDrive extends CommandBase {
     private DriveTrain dt;
     boolean turning;
 
+    public AutoDrive(DriveTrain dt) {
+        addRequirements(dt);
+        this.dt = dt;
+    }
+
     @Override
     public void initialize() {}
 
