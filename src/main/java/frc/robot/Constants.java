@@ -40,6 +40,10 @@ public final class Constants {
     public static class Turntable {
         public static int MotorID  = CANIds.TurretRotationMotor;
         public static double speed = 0.09;
+        public static double kP = 0.1; // was 10
+        public static double kI = 0.0; // was 1
+        public static double kD = 0.014; // was 1.4
+        public static double tolerance = 55.0; //! Don't change this or everything will break for some reason
     }
 
     // Shooter
@@ -90,5 +94,8 @@ public final class Constants {
     // Climber
     public static class Climber {
         public static int MotorID = CANIds.ClimberMotor;
+        public static int UpwardRPM = -5800;
+        public static int DownwardRPM = 5800;
+        public static int CurrentLimit = 38;
     }
 }

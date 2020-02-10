@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+//! DO NOT USE
+
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
@@ -8,7 +10,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ColorSensor extends SubsystemBase {
+public class RevColorSensor extends SubsystemBase {
     private I2C.Port i2cPort = I2C.Port.kOnboard; // Setup i2c
     private ColorSensorV3 sensor = new ColorSensorV3(i2cPort); // Inst color sensor
     private ColorMatch colorMatch = new ColorMatch(); // setup color matcher
@@ -31,7 +33,7 @@ public class ColorSensor extends SubsystemBase {
         UNKNOWN
     }
 
-    public ColorSensor() {
+    public RevColorSensor() {
         // Configure sensor
         // this.sensor.configureColorSensor(, rate, gain);
 

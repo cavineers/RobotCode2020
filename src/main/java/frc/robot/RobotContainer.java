@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -15,19 +16,14 @@ import frc.robot.commands.StopSpinning;
 import frc.robot.commands.StopTurntable;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.commands.TurntableToTarget;
-import frc.robot.commands.TurntableToTarget2;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.RevColorSensor;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turntable;
-import frc.robot.subsystems.Turntable2;
-import edu.wpi.first.wpilibj.Compressor;
 
 public class RobotContainer {
-    // The robot's subsystems and commands are defined here...
-
     // Controller
     public Joystick joy = new Joystick(0);
     public JoystickButton a_button = new JoystickButton(joy, 1);
@@ -58,13 +54,13 @@ public class RobotContainer {
     public Limelight limelight = new Limelight();
     public Shooter shooter = new Shooter();
     public Climber climber = new Climber();
-    public ColorSensor colorSensor = new ColorSensor();
+    public RevColorSensor colorSensor = new RevColorSensor();
     public ControlPanel controlPanel = new ControlPanel();
     public Compressor compressor = new Compressor();
     public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
     public Dashboard dashboard = new Dashboard(this);
-    public Turntable2 turntable2 = new Turntable2();
  
+    // Compressor Mode
     public enum CompressorMode {
         ENABLED,
         DISABLED
@@ -73,39 +69,60 @@ public class RobotContainer {
     // Default compressor mode
     private CompressorMode currentCompressor = CompressorMode.DISABLED;
 
+    /**
+     * RobotContainer
+     */
     public RobotContainer() {
-        configureButtonBindings();
-        compressor.stop();
+        configureButtonBindings(); // Config Buttons
+        compressor.stop(); // Stop the compressor by during testing
     }
 
+    /**
+     * configureButtonBindings
+     */
     private void configureButtonBindings() {
+        //! TESTING BUTTON CONFIGS
+
+        //^ Elevator
         // y_button.whenPressed(new ExtendElevator(this.climber));
         // b_button.whenPressed(new RetractElevator(this.climber));
         // a_button.whenPressed(new StopElevator(this.climber));
-        // a_button.and(this.currentTriggerSetting == CONTROLLER_MODE.NEUTRAL);
-        // a_button.get();
-        // a_button.whenPressed(new ExtendControlPanel(this.controlPanel));
-        // b_button.whenPressed(new RetractControlPanel(this.controlPanel));
-        // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
+
+        //^ Control Panel
         // b_button.whenPressed(new StartSpinning(this.controlPanel));
         // x_button.whenPressed(new StopSpinning(this.controlPanel));
         // y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
-        // x_button.whenPressed(new RetractControlPanel(this.controlPanel));
+        // a_button.whenPressed(new RetractControlPanel(this.controlPanel));
+
+        //^ Vision
+        // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
         // a_button.whenPressed(new TurntableToTarget(this.turnTable, 90));
         a_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
         b_button.whenPressed(new StopTurntable(this.turnTable));
     }
 
+    /**
+     * isRightTriggerPressed
+     * @return if it's pressed
+     */
     private boolean isRightTriggerPressed() {
         final double rightTrig = this.getJoystick().getRawAxis(3);
         return rightTrig > 0.9;
     }
 
+    /**
+     * isLeftTriggerPressed
+     * @return if it's pressed
+     */
     private boolean isLeftTriggerPressed() {
         final double leftTrig = this.getJoystick().getRawAxis(2);
         return leftTrig > 0.9;
     }
 
+    /**
+     * updateController
+     * Periodic to update controller
+     */
     public void updateController() {
         // new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset());
         if (lastRightTrig != isRightTriggerPressed()) {
@@ -174,11 +191,14 @@ public class RobotContainer {
         lastDpad = joy.getPOV();
     }
 
+    // Tele init
     public void teleInit() {
         new TeleopDrive(this.drivetrain, this.joy);
-        // new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset());
     }
 
+    /**
+     * compressorPeriodic
+     */
     public void compressorPeriodic() {
         System.out.println("Pressure switch value:" + compressor.getPressureSwitchValue());
         if (compressor.getPressureSwitchValue()) {
@@ -195,6 +215,10 @@ public class RobotContainer {
 
     }
 
+    /**
+     * getJoystick
+     * @return returns the joystick
+     */
     public Joystick getJoystick() {
         return joy;
     }

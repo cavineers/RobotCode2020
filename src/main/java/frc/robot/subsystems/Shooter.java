@@ -9,10 +9,10 @@ import com.revrobotics.ControlType;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Shooter extends PIDSubsystem {
-
+public class Shooter extends SubsystemBase {
     // Fly wheel motor
     private CANSparkMax flyWheel = new CANSparkMax(Constants.Shooter.ShootID, MotorType.kBrushless);
 
@@ -28,16 +28,19 @@ public class Shooter extends PIDSubsystem {
     public double kD = Constants.Shooter.PIDd;
     public double kIz = Constants.Shooter.PIDiz;
     
+    // Shooter Mode
     public enum ShooterMode {
         ENABLED,
         DISABLED
     }
 
+    // Current shooter mode
     private ShooterMode currentMode = ShooterMode.DISABLED;
 
+    /**
+     * Shooter
+     */
     public Shooter() {
-        super(new PIDController(Constants.Shooter.PIDp, Constants.Shooter.PIDi, Constants.Shooter.PIDd));
-
         // Configure the spark max
         this.flyWheel.setSmartCurrentLimit(Constants.Shooter.ShooterCurrentLimit);
 
@@ -87,13 +90,5 @@ public class Shooter extends PIDSubsystem {
         // Add the setpoint and actual to smart dashboard
         SmartDashboard.putNumber("SetPoint", Constants.Shooter.MaxRPM);
         SmartDashboard.putNumber("ProcessVariable", flyingEncoder.getVelocity());
-    }
-
-    @Override
-    public void useOutput(double output, double setpoint) {}
-
-    @Override
-    public double getMeasurement() {
-        return flyingEncoder.getPosition();
     }
 }
