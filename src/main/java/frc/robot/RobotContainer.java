@@ -1,6 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -17,6 +16,7 @@ import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turntable;
+import frc.robot.subsystems.CompressorController;
 
 public class RobotContainer {
     // Controller
@@ -50,26 +50,16 @@ public class RobotContainer {
     public Shooter shooter = new Shooter();
     public Climber climber = new Climber();
     public ControlPanel controlPanel = new ControlPanel();
-    public Compressor compressor = new Compressor();
     public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
     public Dashboard dashboard = new Dashboard(this);
     public ColorSensor colorSensor = new ColorSensor();
- 
-    // Compressor Mode
-    public enum CompressorMode {
-        ENABLED,
-        DISABLED
-    }
-
-    // Default compressor mode
-    private CompressorMode currentCompressor = CompressorMode.DISABLED;
+    public CompressorController compressor = new CompressorController();
 
     /**
      * RobotContainer
      */
     public RobotContainer() {
         configureButtonBindings(); // Config Buttons
-        compressor.stop(); // Stop the compressor by during testing
     }
 
     /**
@@ -95,7 +85,9 @@ public class RobotContainer {
         // a_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
         // b_button.whenPressed(new StopTurntable(this.turnTable));
 
-        //^ DriveTrain
+        //! ACTUAL FINAL BUTTON CONFIGS
+
+        //^ DriveTrain (Shifting)
         left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
         right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
     }
@@ -165,7 +157,7 @@ public class RobotContainer {
                 // Top
                 // currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
                 // System.out.println("In Control Panel mode");
-                this.compressor.start();
+                this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
                 break;
             case 90:
                 // Right
@@ -176,7 +168,7 @@ public class RobotContainer {
                 // Bottom
                 // currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
                 // System.out.println("In Neutral mode");
-                this.compressor.stop();
+                this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
                 break;
             case 270:
                 currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;
@@ -193,25 +185,6 @@ public class RobotContainer {
     // Tele init
     public void teleInit() {
         new TeleopDrive(this.drivetrain, this.joy);
-    }
-
-    /**
-     * compressorPeriodic
-     */
-    public void compressorPeriodic() {
-        System.out.println("Pressure switch value:" + compressor.getPressureSwitchValue());
-        if (compressor.getPressureSwitchValue()) {
-            if (currentCompressor != CompressorMode.ENABLED) {
-                compressor.start();
-                System.out.println("Started compressor");
-            }
-        } else {
-            if (currentCompressor != CompressorMode.DISABLED) {
-                compressor.stop();
-                System.out.println("Stopped compressor");
-            }
-        }
-
     }
 
     /**

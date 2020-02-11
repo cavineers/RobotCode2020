@@ -90,6 +90,7 @@ public final class Constants {
         public static int DriveTrainMotor2 = CANIds.DriveTrainMotor2;
         public static int DriveTrainMotor3 = CANIds.DriveTrainMotor3;
         public static int DriveTrainMotor4 = CANIds.DriveTrainMotor4;
+        public static int WheelDiameter = 0;
     }
 
     // Climber

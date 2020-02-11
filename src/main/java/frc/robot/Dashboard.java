@@ -1,7 +1,5 @@
 package frc.robot;
 
-import frc.robot.RobotContainer;
-
 import java.util.Map;
 
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -33,7 +31,7 @@ public class Dashboard {
 
         // Setup compressor
         Shuffleboard.getTab("Dashboard")
-        .add("Compressor", this.rc.compressor.enabled())
+        .add("Compressor", this.rc.compressor.isEnabled())
         .withWidget(BuiltInWidgets.kBooleanBox)
         .withPosition(0, 3)
         .withSize(1, 1);
