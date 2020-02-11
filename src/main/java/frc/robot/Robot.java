@@ -21,8 +21,8 @@ public class Robot extends TimedRobot {
         // ! THE LOG LEVEL SHOULD ALWAYS BE SET. UNCOMMENT EACH OF THE FOLLOWING LINE AFTER COMMENTING ALL
         // logger = new CLogger(CLogger.cLoggerMode.COMPETITION);
         // logger = new CLogger(CLogger.cLoggerMode.PRACTICE);
-        // logger = new CLogger(CLogger.cLoggerMode.TESTING);
-        logger = new CLogger(CLogger.cLoggerMode.DEVELOPMENT);
+        logger = new CLogger(CLogger.cLoggerMode.TESTING);
+        // logger = new CLogger(CLogger.cLoggerMode.DEVELOPMENT);
 
     }
 

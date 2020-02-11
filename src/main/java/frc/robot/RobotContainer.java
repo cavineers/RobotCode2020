@@ -5,21 +5,16 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
-import frc.robot.commands.AutoAlign;
+import frc.robot.Constants.ColorSensor;
 import frc.robot.commands.ExtendControlPanel;
-import frc.robot.commands.ExtendElevator;
 import frc.robot.commands.RetractControlPanel;
-import frc.robot.commands.RetractElevator;
+import frc.robot.commands.ShiftGear;
 import frc.robot.commands.StartSpinning;
-import frc.robot.commands.StopElevator;
 import frc.robot.commands.StopSpinning;
-import frc.robot.commands.StopTurntable;
 import frc.robot.commands.TeleopDrive;
-import frc.robot.commands.TurntableToTarget;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.RevColorSensor;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turntable;
 
@@ -54,11 +49,11 @@ public class RobotContainer {
     public Limelight limelight = new Limelight();
     public Shooter shooter = new Shooter();
     public Climber climber = new Climber();
-    public RevColorSensor colorSensor = new RevColorSensor();
     public ControlPanel controlPanel = new ControlPanel();
     public Compressor compressor = new Compressor();
     public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
     public Dashboard dashboard = new Dashboard(this);
+    public ColorSensor colorSensor = new ColorSensor();
  
     // Compressor Mode
     public enum CompressorMode {
@@ -89,16 +84,20 @@ public class RobotContainer {
         // a_button.whenPressed(new StopElevator(this.climber));
 
         //^ Control Panel
-        // b_button.whenPressed(new StartSpinning(this.controlPanel));
-        // x_button.whenPressed(new StopSpinning(this.controlPanel));
-        // y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
-        // a_button.whenPressed(new RetractControlPanel(this.controlPanel));
+        b_button.whenPressed(new StartSpinning(this.controlPanel));
+        x_button.whenPressed(new StopSpinning(this.controlPanel));
+        y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
+        a_button.whenPressed(new RetractControlPanel(this.controlPanel));
 
         //^ Vision
         // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
         // a_button.whenPressed(new TurntableToTarget(this.turnTable, 90));
-        a_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
-        b_button.whenPressed(new StopTurntable(this.turnTable));
+        // a_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
+        // b_button.whenPressed(new StopTurntable(this.turnTable));
+
+        //^ DriveTrain
+        left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
+        right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
     }
 
     /**

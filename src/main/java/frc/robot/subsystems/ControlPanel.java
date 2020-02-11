@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -41,6 +42,7 @@ public class ControlPanel extends SubsystemBase {
     }
 
     public void setSpin(double speed) {
+        System.out.println("set spin");
         this.controlMotor.set(speed);
     }
 

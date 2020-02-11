@@ -34,7 +34,7 @@ public class DriveTrain extends SubsystemBase {
     private DriveGear currentDriveGear;
     
     // Gear shifting
-    private DoubleSolenoid shiftingSol;
+    private DoubleSolenoid shiftingSol = new DoubleSolenoid(Constants.DriveTrain.PCMChannel1, Constants.DriveTrain.PCMChannel2);
 
     public DriveTrain(Joystick joy) {
         // Add left1 & right1 to differential
@@ -81,27 +81,41 @@ public class DriveTrain extends SubsystemBase {
         this.differentialDrive.curvatureDrive(drive, steer, false);
     }
 
+    /**
+     * set the drive gear
+     * @param gear wanted drive gear
+     */
     public void setDriveGear(DriveGear gear) {
         if (this.currentDriveGear == gear) return;
-        // switch (gear) {
-        //     case HIGH_GEAR:
-        //         shiftingSol.set(DoubleSolenoid.Value.kForward);
-        //         this.currentDriveGear = DriveGear.HIGH_GEAR;
-        //         break;
-        //     case LOW_GEAR:
-        //         shiftingSol.set(DoubleSolenoid.Value.kReverse);
-        //         this.currentDriveGear = DriveGear.LOW_GEAR;
-        //         break;
-        //     default:
-        //         // Do nothing if the value is not properly set
-        //         break;
-        // }
+        switch (gear) {
+            case HIGH_GEAR:
+                // Switch to high
+                this.shiftingSol.set(DoubleSolenoid.Value.kForward);
+                this.currentDriveGear = DriveGear.HIGH_GEAR;
+                break;
+            case LOW_GEAR:
+                // Switch to low
+                this.shiftingSol.set(DoubleSolenoid.Value.kReverse);
+                this.currentDriveGear = DriveGear.LOW_GEAR;
+                break;
+            default:
+                // Do nothing if the value is not properly set
+                break;
+        }
     }
 
+    /**
+     * get the current drive gear
+     * @return the current drive gear
+     */
     public DriveGear getDriveGear() {
         return this.currentDriveGear;
     }
 
+    /**
+     * get the drivetrain differential drive
+     * @return the drivetrain differential drive
+     */
     public DifferentialDrive getDifferentialDrive() {
         return this.differentialDrive;
     }

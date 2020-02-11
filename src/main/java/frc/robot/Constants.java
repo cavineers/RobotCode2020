@@ -98,4 +98,9 @@ public final class Constants {
         public static int DownwardRPM = 5800;
         public static int CurrentLimit = 38;
     }
+
+    // Color Sensor
+    public static class ColorSensor {
+        public static int SerialBaudRate = 9600; // 9600 or 115200 (source: https://www.chiefdelphi.com/t/roborio-and-serial-data/144312/2)
+    }
 }
