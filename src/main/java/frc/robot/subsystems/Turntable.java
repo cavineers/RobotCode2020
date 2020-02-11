@@ -17,7 +17,7 @@ public class Turntable extends PIDSubsystem {
     private int currentSetpoint;
 
     /**
-     * Turntbale
+     * Turntable
      */
     public Turntable() {
         // Set our PID values

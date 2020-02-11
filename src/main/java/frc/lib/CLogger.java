@@ -1,7 +1,5 @@
 package frc.lib;
 
-import com.fasterxml.jackson.annotation.ObjectIdGenerators.StringIdGenerator;
-
 public class CLogger {
     // Logger Mode Enum
     public enum cLoggerMode {

@@ -70,6 +70,7 @@ public final class Constants {
         public static int PhotoSensor4 = 3;
         public static int PhotoSensor5 = 4;
         public static int DrumLocationOffset = 10;
+        public static int LimitSwitch = 0;
     }
     
     // Control Panel
