@@ -24,9 +24,10 @@ public class Drum extends SubsystemBase {
     public double numberOfBalls = 0;
     public double numberStopperIR = 0;
     public double drumPosition = 1;
+    public double counter = 0;
 
     public enum DrumPosition {
-        HOLE1, HOLE2, HOLE3, HOLE4, HOLE5, FULL, Switch, INVALID;
+        HOLE1, HOLE2, HOLE3, HOLE4, HOLE5, FULL, INVALID;
     }
 
     public Drum() {
@@ -75,6 +76,18 @@ public class Drum extends SubsystemBase {
             System.out.println("false");
         } else {
             System.out.println("error");
+        }
+        // if (getLimitSwitch() == true) {
+        // if (counter == 1) {
+        // drumPosition = drumPosition + 1;
+        // counter = 0;
+        // }
+        // }
+        // if (getLimitSwitch() == false) {
+        // counter = 1;
+        // }
+        if (numberOfBalls > 4 & irSensor.getVoltage() < 1.5) {
+            numberOfBalls = 0;
         }
     }
 
