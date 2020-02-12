@@ -20,6 +20,6 @@ public class AutonomousCommand3 extends SequentialCommandGroup {
   public AutonomousCommand3(DriveTrain dt) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new AutoDrive(dt));
+    super(new AutoDrive(dt, .5));
   }
 }

@@ -1,24 +1,30 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.lib.Deadzone;
 import frc.robot.subsystems.DriveTrain;
 
 public class AutoDrive extends CommandBase {
     private DriveTrain dt;
     boolean turning;
+    double steer;
 
-    public AutoDrive(DriveTrain dt) {
+    public AutoDrive(DriveTrain dt, double steer) {
         addRequirements(dt);
         this.dt = dt;
+        this.steer = steer;
     }
 
     @Override
-    public void initialize() {}
+    public void initialize() {
+        try {
+            dt.wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void execute() {
-        double steer = 0;
         if (turning) {
             steer = .5;
         }
