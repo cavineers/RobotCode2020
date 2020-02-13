@@ -1,6 +1,6 @@
 # Geoff Controls
 
-![Controller Format](https://github.com/cavineers/Geoff/blob/master/controller_mapped.png)
+![Controller Format](https://github.com/cavineers/RobotCode2020/blob/TheMess/controller_mapped.png)
 
 ### Buttons
 
