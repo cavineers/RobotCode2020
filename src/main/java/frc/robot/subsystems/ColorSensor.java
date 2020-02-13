@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.SerialPort;
 
 public class ColorSensor extends SubsystemBase {
     // Create the color sensor usb controller to go between the arduino and rio
-    private SerialPort usbController = new SerialPort(9600, SerialPort.Port.kUSB);
+    private SerialPort usbController = new SerialPort(9600, SerialPort.Port.kUSB1);
     
     // Control Panel Controls
     public enum ControlPanelColor {

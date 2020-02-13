@@ -15,26 +15,26 @@ public class Dashboard {
     }   
 
     private void configureDashboard() {
-        // Setup Power Distribution Panel (PDP)
-        Shuffleboard.getTab("Dashboard")
-        .add("PDP", this.rc.PDP)
-        .withWidget(BuiltInWidgets.kPowerDistributionPanel)
-        .withPosition(0, 1)
-        .withSize(3, 2);
+        // // Setup Power Distribution Panel (PDP)
+        // Shuffleboard.getTab("Dashboard")
+        // .add("PDP", this.rc.PDP)
+        // .withWidget(BuiltInWidgets.kPowerDistributionPanel)
+        // .withPosition(0, 1)
+        // .withSize(3, 2);
 
-        // Setup differential drive
-        Shuffleboard.getTab("Dashboard")
-        .add("DriveTrain", this.rc.drivetrain.getDifferentialDrive())
-        .withWidget(BuiltInWidgets.kDifferentialDrive)
-        .withPosition(6, 1)
-        .withSize(3, 2);
+        // // Setup differential drive
+        // Shuffleboard.getTab("Dashboard")
+        // .add("DriveTrain", this.rc.drivetrain.getDifferentialDrive())
+        // .withWidget(BuiltInWidgets.kDifferentialDrive)
+        // .withPosition(6, 1)
+        // .withSize(3, 2);
 
-        // Setup compressor
-        Shuffleboard.getTab("Dashboard")
-        .add("Compressor", this.rc.compressor.isEnabled())
-        .withWidget(BuiltInWidgets.kBooleanBox)
-        .withPosition(0, 3)
-        .withSize(1, 1);
+        // // Setup compressor
+        // Shuffleboard.getTab("Dashboard")
+        // .add("Compressor", this.rc.compressor.isEnabled())
+        // .withWidget(BuiltInWidgets.kBooleanBox)
+        // .withPosition(0, 3)
+        // .withSize(1, 1);
 
         // // Add limelight
         // Shuffleboard.getTab("Dashboard")

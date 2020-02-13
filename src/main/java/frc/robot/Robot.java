@@ -32,7 +32,7 @@ public class Robot extends TimedRobot {
         if (Robot.getCurrentTime()-lastLime > .5) {
             lastLime = Robot.getCurrentTime();
             // Log the limelight distance
-            logger.logln("Distance: " + robotContainer.limelight.getDistance());
+            // logger.logln("Distance: " + robotContainer.limelight.getDistance());
         }
     }
 
