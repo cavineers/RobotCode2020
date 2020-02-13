@@ -1,4 +1,4 @@
-# Geoff Controls
+# Robot Controls (name tbd)
 
 ![Controller Format](https://github.com/cavineers/RobotCode2020/blob/TheMess/controller_mapped.png)
 
