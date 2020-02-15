@@ -1,57 +1,197 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.lib.Limelight;
+import frc.robot.subsystems.ColorSensor;
+import frc.robot.commands.ExtendControlPanel;
+import frc.robot.commands.RetractControlPanel;
+import frc.robot.commands.ShiftGear;
+import frc.robot.commands.StartSpinning;
+import frc.robot.commands.StopSpinning;
+import frc.robot.commands.TeleopDrive;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ControlPanel;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turntable;
+import frc.robot.subsystems.CompressorController;
 
-/**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
- */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+    // Controller
+    public Joystick joy = new Joystick(0);
+    public JoystickButton a_button = new JoystickButton(joy, 1);
+    public JoystickButton b_button = new JoystickButton(joy, 2);
+    public JoystickButton x_button = new JoystickButton(joy, 3);
+    public JoystickButton y_button = new JoystickButton(joy, 4);
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+    public JoystickButton l_bump = new JoystickButton(joy, 5);
+    public JoystickButton r_bump = new JoystickButton(joy, 6);
+    public JoystickButton left_menu = new JoystickButton(joy, 7);
+    public JoystickButton right_menu = new JoystickButton(joy, 8);
+    public JoystickButton left_stick = new JoystickButton(joy, 9);
+    public JoystickButton right_stick = new JoystickButton(joy, 10);
 
+    public int lastDpad = -1;
+    public boolean lastRightTrig = false;
+    public boolean lastLeftTrig = false;
 
+    public enum CONTROLLER_MODE {
+        AUTO_SHOOT, CONTROL_P, CLIMB, NEUTRAL
+    }
 
-  /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
-  }
+    public CONTROLLER_MODE currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
 
-  /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {
-  }
+    // Subsystems
+    // public DriveTrain drivetrain = new DriveTrain(this.getJoystick());
+    // public Turntable turnTable = new Turntable();
+    // public Limelight limelight = new Limelight();
+    // public Shooter shooter = new Shooter();
+    // public Climber climber = new Climber();
+    // public ControlPanel controlPanel = new ControlPanel();
+    // public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
+    // public Dashboard dashboard = new Dashboard(this);
+    public ColorSensor colorSensor = new ColorSensor();
+    // public CompressorController compressor = new CompressorController();
 
+    /**
+     * RobotContainer
+     */
+    public RobotContainer() {
+        configureButtonBindings(); // Config Buttons
+    }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
-  }
+    /**
+     * configureButtonBindings
+     */
+    private void configureButtonBindings() {
+        //! TESTING BUTTON CONFIGS
+
+        //^ Elevator
+        // y_button.whenPressed(new ExtendElevator(this.climber));
+        // b_button.whenPressed(new RetractElevator(this.climber));
+        // a_button.whenPressed(new StopElevator(this.climber));
+
+        //^ Control Panel
+        // b_button.whenPressed(new StartSpinning(this.controlPanel));
+        // x_button.whenPressed(new StopSpinning(this.controlPanel));
+        // y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
+        // a_button.whenPressed(new RetractControlPanel(this.controlPanel));
+
+        //^ Vision
+        // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
+        // a_button.whenPressed(new TurntableToTarget(this.turnTable, 90));
+        // a_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
+        // b_button.whenPressed(new StopTurntable(this.turnTable));
+
+        //! ACTUAL FINAL BUTTON CONFIGS
+
+        //^ DriveTrain (Shifting)
+        // left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
+        // right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
+    }
+
+    /**
+     * isRightTriggerPressed
+     * @return if it's pressed
+     */
+    private boolean isRightTriggerPressed() {
+        final double rightTrig = this.getJoystick().getRawAxis(3);
+        return rightTrig > 0.9;
+    }
+
+    /**
+     * isLeftTriggerPressed
+     * @return if it's pressed
+     */
+    private boolean isLeftTriggerPressed() {
+        final double leftTrig = this.getJoystick().getRawAxis(2);
+        return leftTrig > 0.9;
+    }
+
+    /**
+     * updateController
+     * Periodic to update controller
+     */
+    public void updateController() {
+        // new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset());
+        if (lastRightTrig != isRightTriggerPressed()) {
+            // the right trigger changed state
+            lastRightTrig = isRightTriggerPressed();
+            if (lastRightTrig && currentTriggerSetting == CONTROLLER_MODE.CONTROL_P) {
+                // the right trigger is pressed and we are in Control Panel mode
+
+            } else if (lastRightTrig && currentTriggerSetting == CONTROLLER_MODE.CLIMB) {
+                // the right trigger is pressed and we are in Climb mode
+            } else if (lastRightTrig && currentTriggerSetting == CONTROLLER_MODE.NEUTRAL) {
+                // the right trigger is pressed and we are in Neutral
+
+            } else if (lastRightTrig && currentTriggerSetting == CONTROLLER_MODE.AUTO_SHOOT) {
+                // the right trigger is pressed and we are in Auto Shoot mode
+
+            }
+
+        }
+
+        if (lastLeftTrig != isLeftTriggerPressed()) {
+            // the left trigger changed state
+            lastLeftTrig = isLeftTriggerPressed();
+            if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.CONTROL_P) {
+                // the left trigger is pressed and we are in Control Panel mode
+
+            } else if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.CLIMB) {
+                // the left trigger is pressed and we are in Climb mode
+            } else if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.NEUTRAL) {
+                // the left trigger is pressed and we are in Neutral mode
+
+            } else if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.AUTO_SHOOT) {
+                // the left trigger is pressed and we are in Auto Shoot mode
+
+            }
+        }
+
+        if (lastDpad != joy.getPOV()) {
+            switch (joy.getPOV()) {
+            case 0:
+                // Top
+                // currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
+                // System.out.println("In Control Panel mode");
+                // this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
+                break;
+            case 90:
+                // Right
+                currentTriggerSetting = CONTROLLER_MODE.CLIMB;
+                System.out.println("In Climb mode");
+                break;
+            case 180:
+                // Bottom
+                // currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
+                // System.out.println("In Neutral mode");
+                // this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
+                break;
+            case 270:
+                currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;
+                System.out.println("In Auto Shoot mode");
+                break;
+            default:
+                System.out.println("Nothing is pressed, hopefully");
+                break;
+            }
+        }
+        lastDpad = joy.getPOV();
+    }
+
+    // Tele init
+    public void teleInit() {
+        // new TeleopDrive(this.drivetrain, this.joy);
+    }
+
+    /**
+     * getJoystick
+     * @return returns the joystick
+     */
+    public Joystick getJoystick() {
+        return joy;
+    }
 }

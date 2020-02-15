@@ -7,7 +7,7 @@
 3. Drive (Neo)
 4. Drive (Neo)
 5. Winch
-6. Flywheel
+6. Flywheel (neo)
 7. Turntable
 8. Intake
 

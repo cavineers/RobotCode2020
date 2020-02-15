@@ -1,0 +1,60 @@
+{
+    "tabPane": [
+        {
+            "title": "Dashboard -\u003e 2020 Robot",
+            "autoPopulate": false,
+            "autoPopulatePrefix": "",
+            "widgetPane": {
+                "gridSize": 128.0,
+                "showGrid": false,
+                "hgap": 16.0,
+                "vgap": 16.0,
+                "tiles": {
+                    "0,3": {
+                        "size": [1, 1],
+                        "content": {
+                            "_type": "Boolean Box",
+                            "_source0": "network_table:///LiveWindow/Ungrouped/Compressor[0]/Enabled",
+                            "_title": "Compressor",
+                            "Colors/Color when true": "#7CFC00FF",
+                            "Colors/Color when false": "#8B0000FF"
+                        }
+                    },
+                    "6,1": {
+                        "size": [3, 2],
+                        "content": {
+                            "_type": "Differential Drivebase",
+                            "_source0": "network_table:///LiveWindow/Ungrouped/DifferentialDrive[1]",
+                            "_title": "DriveTrain",
+                            "Wheels/Number of wheels": 4,
+                            "Wheels/Wheel diameter": 80.0,
+                            "Visuals/Show velocity vectors": true
+                        }
+                    },
+                    "0,1": {
+                        "size": [3, 2],
+                        "content": {
+                            "_type": "PDP",
+                            "_title": "PDP",
+                            "Visuals/Show voltage and current values": true
+                        }
+                    },
+                    "3,1": {
+                        "size": [3, 1],
+                        "content": {
+                            "_type": "Basic FMS Info",
+                            "_source0": "network_table:///FMSInfo",
+                            "_title": "FMSInfo"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "windowGeometry": {
+        "x": -6.5,
+        "y": -6.5,
+        "width": 1381.0,
+        "height": 885.0
+    }
+}

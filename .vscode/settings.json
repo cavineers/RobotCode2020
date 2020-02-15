@@ -68,6 +68,12 @@
         }
     ],
     "cSpell.words": [
-        "Dpad"
+        "AHRS",
+        "CANPID",
+        "Deadzone",
+        "Dpad",
+        "setpoint",
+        "teleop",
+        "yeet"
     ]
 }
