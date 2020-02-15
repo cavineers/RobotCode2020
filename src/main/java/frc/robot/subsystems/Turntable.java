@@ -2,52 +2,71 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
-public class Turntable extends SubsystemBase {
-    public WPI_TalonSRX tableMotor = new WPI_TalonSRX(Constants.Turntable.MotorID);
 
-    public enum TurntableMode {
-        ROTATE_LEFT,
-        ROTATE_RIGHT,
-        STOPPED,
-        HOMING
-    }
+public class Turntable extends PIDSubsystem {
+    // turntable motor
+    private WPI_TalonSRX tableMotor = new WPI_TalonSRX(Constants.Turntable.MotorID);
 
-    private TurntableMode currentMode;
+    // Current setpoint
+    private int currentSetpoint;
 
+    /**
+     * Turntable
+     */
     public Turntable() {
-        tableMotor.setSelectedSensorPosition(0);
+        // Set our PID values
+        super(new PIDController(Constants.Turntable.kP, Constants.Turntable.kI, Constants.Turntable.kD));
 
-        this.currentMode = TurntableMode.STOPPED;
+        // Set the tolerance
+        getController().setTolerance(Constants.Turntable.tolerance);
+
+        // Encoder
+        tableMotor.setSelectedSensorPosition(0);
     }
 
     @Override
-    public void periodic() {
-        // This method will be called once per scheduler run
+    public void useOutput(double output, double setpoint) {
+        // Debugging logs
+        Robot.logger.logln("CurrentPos: " + getMeasurement());
+        Robot.logger.logln("Wanted: " + this.currentSetpoint);
+        Robot.logger.logln("OUTPUT: " +  output);
+
+        // Output
+        tableMotor.set(MathUtil.clamp(output,-0.1,0.1));
     }
 
-    public void setMotorRotation(TurntableMode mode) {
-        System.out.println("Motor rotation");
-        if (this.currentMode == TurntableMode.HOMING) return; // Don't touch anything while home
-        System.out.println("Homing is done");
-        switch (mode) {
-            case ROTATE_LEFT:
-                tableMotor.set(-Constants.Turntable.speed);
-                break;
-            case ROTATE_RIGHT:
-                tableMotor.set(Constants.Turntable.speed);
-                break;
-            case STOPPED:
-                tableMotor.set(0.0);
-                break;
-            default:
-                break;
+    @Override
+    public double getMeasurement() {
+        return tableMotor.getSelectedSensorPosition();
+    }
+
+    /**
+     * turnToAngle
+     * @param angle angle to turn to (in degrees)
+     */
+    public void turnToAngle(double angle) {
+        Robot.logger.logln(angle);
+        this.currentSetpoint = (int)((4096/360)*angle);
+        setSetpoint(this.currentSetpoint);
+        getController().setSetpoint(this.currentSetpoint);
+    }
+
+    /**
+     * atTarget
+     * @return whether we are at target
+     */
+    public boolean atTarget() {
+        boolean r = (this.currentSetpoint-5<getMeasurement() && this.currentSetpoint+5>getMeasurement());
+        if (r) {
+            disable();
+            tableMotor.set(0);
         }
-    }
-
-    public int getTurntableDegree() {
-        return this.tableMotor.getSelectedSensorPosition();
+        return r;
     }
 }

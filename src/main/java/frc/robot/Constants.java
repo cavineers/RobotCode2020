@@ -40,6 +40,10 @@ public final class Constants {
     public static class Turntable {
         public static int MotorID  = CANIds.TurretRotationMotor;
         public static double speed = 0.09;
+        public static double kP = 0.1; // was 10
+        public static double kI = 0.0; // was 1
+        public static double kD = 0.014; // was 1.4
+        public static double tolerance = 55.0; //! Don't change this or everything will break for some reason
     }
 
     // Shooter
@@ -66,6 +70,7 @@ public final class Constants {
         public static int PhotoSensor4 = 3;
         public static int PhotoSensor5 = 4;
         public static int DrumLocationOffset = 10;
+        public static int LimitSwitch = 0;
     }
     
     // Control Panel
@@ -85,10 +90,19 @@ public final class Constants {
         public static int DriveTrainMotor2 = CANIds.DriveTrainMotor2;
         public static int DriveTrainMotor3 = CANIds.DriveTrainMotor3;
         public static int DriveTrainMotor4 = CANIds.DriveTrainMotor4;
+        public static int WheelDiameter = 0;
     }
 
     // Climber
     public static class Climber {
         public static int MotorID = CANIds.ClimberMotor;
+        public static int UpwardRPM = -5800;
+        public static int DownwardRPM = 5800;
+        public static int CurrentLimit = 38;
+    }
+
+    // Color Sensor
+    public static class ColorSensor {
+        public static int SerialBaudRate = 9600; // 9600 or 115200 (source: https://www.chiefdelphi.com/t/roborio-and-serial-data/144312/2)
     }
 }

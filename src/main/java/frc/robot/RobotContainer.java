@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
 import frc.robot.commands.AutoAlign;
+import frc.robot.commands.AutonomousSelector;
 import frc.robot.commands.ExtendControlPanel;
 import frc.robot.commands.ExtendElevator;
 import frc.robot.commands.RetractControlPanel;
@@ -18,6 +19,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Drum;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turntable;
 import edu.wpi.first.wpilibj.Compressor;
@@ -57,6 +59,7 @@ public class RobotContainer {
     public Climber climber = new Climber();
     public ColorSensor colorSensor = new ColorSensor();
     public ControlPanel controlPanel = new ControlPanel();
+    public Drum drum = new Drum();
     public Compressor compressor = new Compressor();
     public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
     public Dashboard dashboard = new Dashboard(this);
@@ -187,5 +190,9 @@ public class RobotContainer {
 
     public Joystick getJoystick() {
         return joy;
+    }
+
+    public void autoInit() {
+        new AutonomousSelector(this.drivetrain, this.drum, this.turnTable, this.limelight);
     }
 }
