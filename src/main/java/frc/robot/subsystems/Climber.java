@@ -11,9 +11,7 @@ public class Climber extends SubsystemBase {
 
     // Create Climber Mode
     public enum ClimberMode {
-        EXTENDING,
-        RETRACTING,
-        STOPPED
+        EXTENDING, RETRACTING, STOPPED
     }
 
     // Current mode
@@ -22,24 +20,24 @@ public class Climber extends SubsystemBase {
     // Constructor
     public Climber() {
         // Configure current limiting on the NEO (38amps)
-        this.climberMotor.setSmartCurrentLimit(Constants.Climber.CurrentLimit);
+        // this.climberMotor.setSmartCurrentLimit(Constants.Climber.CurrentLimit);
     }
 
     @Override
-    public void periodic() {} // Empty periodic
+    public void periodic() {
+    } // Empty periodic
 
     /**
      * setMode
+     * 
      * @param mode the desired climbing mode
      */
     public void setMode(ClimberMode mode) {
         if (mode == ClimberMode.EXTENDING) {
             this.climberMotor.set(Constants.Climber.UpwardRPM);
-        } else
-        if (mode == ClimberMode.RETRACTING) {
+        } else if (mode == ClimberMode.RETRACTING) {
             this.climberMotor.set(Constants.Climber.DownwardRPM);
-        } else
-        if (mode == ClimberMode.STOPPED) {
+        } else if (mode == ClimberMode.STOPPED) {
             this.climberMotor.set(0);
         }
         this.currentMode = mode;
@@ -47,6 +45,7 @@ public class Climber extends SubsystemBase {
 
     /**
      * getMode
+     * 
      * @return current climber mode
      */
     public ClimberMode getMode() {

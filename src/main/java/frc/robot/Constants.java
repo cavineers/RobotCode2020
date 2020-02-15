@@ -1,5 +1,5 @@
 package frc.robot;
- 
+
 public final class Constants {
     //? All constants begin with a lowercase 'k'
 
@@ -23,8 +23,8 @@ public final class Constants {
 
     // PCM module mapping
     public static class PCMChannels {
-        public static int DriveShift1   = 6;
-        public static int DriveShift2   = 7;
+        public static int DriveShift1 = 6;
+        public static int DriveShift2 = 7;
         public static int ControlPanel1 = 0;
         public static int ControlPanel2 = 1;
     }
@@ -43,7 +43,7 @@ public final class Constants {
         public static double kP = 0.1; // was 10
         public static double kI = 0.0; // was 1
         public static double kD = 0.014; // was 1.4
-        public static double tolerance = 55.0; //! Don't change this or everything will break for some reason
+        public static double tolerance = 55.0; // ! Don't change this or everything will break for some reason
     }
 
     // Shooter
