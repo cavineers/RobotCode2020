@@ -1,15 +1,79 @@
 {
-  "java.configuration.updateBuildConfiguration": "automatic",
-  "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "bin/": true,
-    "**/.classpath": true,
-    "**/.project": true,
-    "**/.settings": true,
-    "**/.factorypath": true
-  }
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "bin/": true,
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "cSpell.userWords": ["wpilib", "spalding"],
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+    "editor.formatOnSave": true,
+    "pretty-formatter.correct": true,
+    "editor.autoClosingBrackets": "always",
+    "editor.autoIndent": true,
+    "editor.tabSize": 4,
+    "editor.wordWrap": "off",
+    "window.title": "${dirty}${activeEditorShort}${separator}${rootName}${separator}Cavineers",
+    "better-comments.multilineComments": true,
+    "better-comments.tags": [
+        {
+            "tag": "!",
+            "color": "#FF2D00",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            "tag": "?",
+            "color": "#3498DB",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            "tag": "#",
+            "color": "#474747",
+            "strikethrough": true,
+            "backgroundColor": "transparent"
+        },
+        {
+            "tag": "todo",
+            "color": "#FF8C00",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            "tag": "*",
+            "color": "#98C379",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            "tag": "$",
+            "color": "#558B54",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            "tag": "^",
+            "color": "#EDE054",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        }
+    ],
+    "cSpell.words": [
+        "AHRS",
+        "CANPID",
+        "Deadzone",
+        "Dpad",
+        "setpoint",
+        "teleop",
+        "yeet"
+    ]
 }
