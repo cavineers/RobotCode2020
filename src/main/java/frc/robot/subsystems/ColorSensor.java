@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.SerialPort;
 
 public class ColorSensor extends SubsystemBase {
     // Create the color sensor usb controller to go between the arduino and rio
-    private SerialPort usbController = new SerialPort(9600, SerialPort.Port.kUSB1);
+    // private SerialPort usbController = new SerialPort(9600, SerialPort.Port.kUSB1);
     
     // Control Panel Controls
     public enum ControlPanelColor {
@@ -25,10 +25,10 @@ public class ColorSensor extends SubsystemBase {
     @Override
     public void periodic() {
         // Read the string that's given from the arduino
-        String dataBack = usbController.readString();
+        // String dataBack = usbController.readString();
         
         // Print the data given by the controller
-        Robot.logger.logln(dataBack);
+        // Robot.logger.logln(dataBack);
 
         // Reset the input
         // usbController.reset(); //? maybe, untested

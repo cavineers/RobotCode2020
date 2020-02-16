@@ -44,16 +44,16 @@ public class RobotContainer {
     public CONTROLLER_MODE currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
 
     // Subsystems
-    // public DriveTrain drivetrain = new DriveTrain(this.getJoystick());
-    // public Turntable turnTable = new Turntable();
-    // public Limelight limelight = new Limelight();
-    // public Shooter shooter = new Shooter();
-    // public Climber climber = new Climber();
-    // public ControlPanel controlPanel = new ControlPanel();
-    // public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
-    // public Dashboard dashboard = new Dashboard(this);
-    public ColorSensor colorSensor = new ColorSensor();
-    // public CompressorController compressor = new CompressorController();
+    public DriveTrain drivetrain = new DriveTrain(this.getJoystick());
+    public Turntable turnTable = new Turntable();
+    public Limelight limelight = new Limelight();
+    public Shooter shooter = new Shooter();
+    public Climber climber = new Climber();
+    public ControlPanel controlPanel = new ControlPanel();
+    public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
+    public Dashboard dashboard = new Dashboard(this);
+    // public ColorSensor colorSensor = new ColorSensor();
+    public CompressorController compressor = new CompressorController(true);
 
     /**
      * RobotContainer
@@ -73,11 +73,11 @@ public class RobotContainer {
         // b_button.whenPressed(new RetractElevator(this.climber));
         // a_button.whenPressed(new StopElevator(this.climber));
 
-        //^ Control Panel
-        // b_button.whenPressed(new StartSpinning(this.controlPanel));
-        // x_button.whenPressed(new StopSpinning(this.controlPanel));
-        // y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
-        // a_button.whenPressed(new RetractControlPanel(this.controlPanel));
+        // ^ Control Panel
+        b_button.whenPressed(new StartSpinning(this.controlPanel));
+        x_button.whenPressed(new StopSpinning(this.controlPanel));
+        y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
+        a_button.whenPressed(new RetractControlPanel(this.controlPanel));
 
         //^ Vision
         // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
@@ -88,8 +88,8 @@ public class RobotContainer {
         //! ACTUAL FINAL BUTTON CONFIGS
 
         //^ DriveTrain (Shifting)
-        // left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
-        // right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
+        left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
+        right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
     }
 
     /**
@@ -139,15 +139,12 @@ public class RobotContainer {
             lastLeftTrig = isLeftTriggerPressed();
             if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.CONTROL_P) {
                 // the left trigger is pressed and we are in Control Panel mode
-
             } else if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.CLIMB) {
                 // the left trigger is pressed and we are in Climb mode
             } else if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.NEUTRAL) {
                 // the left trigger is pressed and we are in Neutral mode
-
             } else if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.AUTO_SHOOT) {
                 // the left trigger is pressed and we are in Auto Shoot mode
-
             }
         }
 
@@ -157,7 +154,7 @@ public class RobotContainer {
                 // Top
                 // currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
                 // System.out.println("In Control Panel mode");
-                // this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
+                this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
                 break;
             case 90:
                 // Right
@@ -168,7 +165,7 @@ public class RobotContainer {
                 // Bottom
                 // currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
                 // System.out.println("In Neutral mode");
-                // this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
+                this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
                 break;
             case 270:
                 currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;

@@ -42,7 +42,7 @@ public class CompressorController extends SubsystemBase {
      */
     @Override
     public void periodic() {
-        System.out.println("Pressure switch value:" + compressor.getPressureSwitchValue()); //$ TESTING
+        // System.out.println("Pressure switch value:" + compressor.getPressureSwitchValue()); //$ TESTING
         if (!this.manualControl) { // If not in manual control mode
             // if (compressor.getPressureSwitchValue()) {
             //     if (this.currentMode != CompressorMode.ENABLED) {
