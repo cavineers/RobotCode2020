@@ -46,6 +46,15 @@
                             "_source0": "network_table:///FMSInfo",
                             "_title": "FMSInfo"
                         }
+                    },
+                    "3,2": {
+                        "size": [3, 1],
+                        "content": {
+                            "_type": "Boolean Box",
+                            "_title": "Shooter Aligned",
+                            "Colors/Color when true": "71E500",
+                            "Colors/Color when false": "#DF0000"
+                        }
                     }
                 }
             }

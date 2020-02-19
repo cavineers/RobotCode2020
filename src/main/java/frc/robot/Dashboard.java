@@ -12,7 +12,7 @@ public class Dashboard {
         this.rc = rc;
         this.configureDashboard();
         this.configureTuner();
-    }   
+    }
 
     private void configureDashboard() {
         // // Setup Power Distribution Panel (PDP)
@@ -49,6 +49,12 @@ public class Dashboard {
         .withPosition(3, 0)
         .withSize(3, 1)
         .withProperties(Map.of("source", "network_table:///FMSInfo"));
+
+        Shuffleboard.getTab("Dashboard")
+        .add("Shooter", this.rc.turnTable.atTarget())
+        .withWidget(BuiltInWidgets.kBooleanBox)
+        .withPosition(3, 3)
+        .withSize(3, 1);
     }
 
     private void configureTuner() {
