@@ -15,9 +15,7 @@ import frc.robot.subsystems.Drum;
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class AutonomousCommand2 extends SequentialCommandGroup {
-  /**
-   * Creates a new AutonomousCommand2.
-   */
+
   public AutonomousCommand2(DriveTrain dt, Drum d) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());

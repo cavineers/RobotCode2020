@@ -1,9 +1,6 @@
 package frc.robot.commands;
 
-import java.util.Map;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.SelectCommand;
 import frc.lib.Limelight;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Drum;
@@ -45,8 +42,6 @@ public class AutonomousSelector extends InstantCommand {
     return AutonomousSet.NONE;
   }
   
-    
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     if (select() == AutonomousSet.ONE) {

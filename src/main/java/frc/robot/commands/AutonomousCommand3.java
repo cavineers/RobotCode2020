@@ -14,13 +14,10 @@ import frc.robot.subsystems.DriveTrain;
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class AutonomousCommand3 extends SequentialCommandGroup {
-  /**
-   * Creates a new AutonomousCommand3.
-   */
   
   public AutonomousCommand3(DriveTrain dt) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new AutoDrive(dt, 1, 0, 3));
+    super(new AutoDrive(dt, 1, .5, 3), new AutoDrive (dt, 1, 0, 4));
   }
 }
