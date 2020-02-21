@@ -28,6 +28,22 @@ public final class Constants {
         public static int ControlPanel1 = 0;
         public static int ControlPanel2 = 1;
     }
+
+    // PDP power mapping
+    public static class PDPPorts {
+        public static int DriveTrainMotor1 = 0;
+        public static int DriveTrainMotor2 = 0;
+        public static int DriveTrainMotor3 = 0;
+        public static int DriveTrainMotor4 = 0;
+        public static int ShooterMotor = 0;
+        public static int ClimberMotor = 0;
+        public static int DrumMotor = 0;
+        public static int ShooterVerticalPitch = 0;
+        public static int FeederMotor = 0;
+        public static int IntakeMotor = 0;
+        public static int ControlPanelMotor = 0;
+        public static int TurretRotationMotor = 0;
+    }
     
     // VISION
     public static class Vision {
@@ -104,5 +120,15 @@ public final class Constants {
     // Color Sensor
     public static class ColorSensor {
         public static int SerialBaudRate = 9600; // 9600 or 115200 (source: https://www.chiefdelphi.com/t/roborio-and-serial-data/144312/2)
+    }
+
+    // Intake
+    public static class Intake {
+        public static int MotorID = CANIds.IntakeMotor;
+        public static double InSpeed = 0.5; // percent output
+        public static double OutSpeed = -0.2; // percent output
+        public static double MaxCurrentDraw = 25; // in amps
+        public static double MaxDrawTime = 1.0; // in seconds
+        public static double ReverseTime = 2.0; // in seconds
     }
 }

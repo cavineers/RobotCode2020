@@ -10,6 +10,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CompressorController;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turntable;
 
@@ -39,16 +40,17 @@ public class RobotContainer {
     public CONTROLLER_MODE currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
 
     // Subsystems
+    public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
+    public CompressorController compressor = new CompressorController(false);
     public DriveTrain drivetrain = new DriveTrain(this.getJoystick());
     public Turntable turnTable = new Turntable();
     public Limelight limelight = new Limelight();
     public Shooter shooter = new Shooter();
     public Climber climber = new Climber();
     public ControlPanel controlPanel = new ControlPanel();
-    public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
     public Dashboard dashboard = new Dashboard(this);
+    public Intake intake = new Intake(this);
     // public ColorSensor colorSensor = new ColorSensor();
-    public CompressorController compressor = new CompressorController(false);
 
     /**
      * RobotContainer
@@ -193,5 +195,14 @@ public class RobotContainer {
      */
     public Joystick getJoystick() {
         return joy;
+    }
+
+    /**
+     * get the current power draw of pdp port x
+     * @param port pdp port
+     * @return the current draw (in amps)
+     */
+    public double getCurrentDrawOfPort(int port) {
+        return this.PDP.getCurrent(port);
     }
 }
