@@ -32,31 +32,22 @@ public class CompressorController extends SubsystemBase {
      * @param allowManualControl allow manual control of compressor
      */
     public CompressorController(boolean manualMode) {
-        // Default to disabled (safety)
-        this.makeMode(CompressorMode.DISABLED);
         this.manualControl = manualMode;
+
+        if (manualMode) {
+            // Default to disabled (safety)
+            this.makeMode(CompressorMode.DISABLED);
+        } else {
+            // If not in manuel, enable closed loop with the pressure switch
+            this.compressor.setClosedLoopControl(true);
+        }
     }
 
     /**
      * compressor periodic
      */
     @Override
-    public void periodic() {
-        // System.out.println("Pressure switch value:" + compressor.getPressureSwitchValue()); //$ TESTING
-        if (!this.manualControl) { // If not in manual control mode
-            // if (compressor.getPressureSwitchValue()) {
-            //     if (this.currentMode != CompressorMode.ENABLED) {
-            //         this.makeMode(CompressorMode.ENABLED);
-            //         System.out.println("Started compressor");
-            //     }
-            // } else {
-            //     if (this.currentMode != CompressorMode.DISABLED) {
-            //         this.makeMode(CompressorMode.DISABLED);
-            //         System.out.println("Stopped compressor");
-            //     }
-            // }
-        }
-    }
+    public void periodic() {}
 
     /**
      * set the compressor mode
@@ -86,5 +77,13 @@ public class CompressorController extends SubsystemBase {
      */
     public boolean isEnabled() {
         return this.compressor.enabled();
+    }
+
+    /**
+     * set the closed loop state
+     * @param clc wanted closed loop state
+     */
+    public void setClosedLoop(boolean clc) {
+        this.compressor.setClosedLoopControl(clc);
     }
 }

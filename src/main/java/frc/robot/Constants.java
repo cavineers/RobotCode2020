@@ -6,11 +6,11 @@ public final class Constants {
     // CAN network mapping
     public static class CANIds {
         public static int PCM                    = 0;  // Pneumatic Control Module (PCM)
-        public static int DriveTrainMotor2       = 1;  // Right 1 (neo)
+        public static int DriveTrainMotor2       = 1;  // Right 1 (neo) (was 1)
         public static int DriveTrainMotor4       = 2;  // Right 2 (neo)
         public static int DriveTrainMotor3       = 3;  // Left 2 (neo)
         public static int DriveTrainMotor1       = 4;  // Left 1 (neo)
-        public static int ShooterMotor           = 6;  // The shooter's fly wheel motor
+        public static int ShooterMotor           = 6;  // The shooter's fly wheel motor (was 6)
         public static int ClimberMotor           = 5;  // Climber motor
         public static int DrumMotor              = 7;  // Intakes drum motor
         public static int ShooterVerticalPitch   = 8;  // Shooter's vertical pitch

@@ -35,6 +35,9 @@ public class Shooter extends SubsystemBase {
     // Current shooter mode
     private ShooterMode currentMode = ShooterMode.DISABLED;
 
+    // Current speed
+    private double speed = 0;
+
     /**
      * Shooter
      */
@@ -80,7 +83,8 @@ public class Shooter extends SubsystemBase {
         }
 
         if (this.currentMode == ShooterMode.ENABLED) {
-            pidController.setReference(Constants.Shooter.MaxRPM, ControlType.kVelocity);
+            pidController.setReference(-Constants.Shooter.MaxRPM, ControlType.kVelocity);
+            pidController.setReference(-speed, ControlType.kVelocity);
         } else {
             pidController.setReference(0, ControlType.kVelocity);
         }
@@ -88,5 +92,16 @@ public class Shooter extends SubsystemBase {
         // Add the setpoint and actual to smart dashboard
         SmartDashboard.putNumber("SetPoint", Constants.Shooter.MaxRPM);
         SmartDashboard.putNumber("ProcessVariable", flyingEncoder.getVelocity());
+    }
+
+    public void enable() {
+        this.currentMode = ShooterMode.ENABLED;
+    }
+
+    public void disable() {
+        this.currentMode = ShooterMode.DISABLED;
+    }
+    public void setSpeed(double speed) {
+        this.speed = speed;
     }
 }

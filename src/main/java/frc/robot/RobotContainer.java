@@ -4,19 +4,14 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
-import frc.robot.subsystems.ColorSensor;
-import frc.robot.commands.ExtendControlPanel;
-import frc.robot.commands.RetractControlPanel;
 import frc.robot.commands.ShiftGear;
-import frc.robot.commands.StartSpinning;
-import frc.robot.commands.StopSpinning;
-import frc.robot.commands.TeleopDrive;
+import frc.robot.commands.Shoot;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.CompressorController;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turntable;
-import frc.robot.subsystems.CompressorController;
 
 public class RobotContainer {
     // Controller
@@ -53,7 +48,7 @@ public class RobotContainer {
     public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
     public Dashboard dashboard = new Dashboard(this);
     // public ColorSensor colorSensor = new ColorSensor();
-    public CompressorController compressor = new CompressorController(true);
+    public CompressorController compressor = new CompressorController(false);
 
     /**
      * RobotContainer
@@ -74,10 +69,10 @@ public class RobotContainer {
         // a_button.whenPressed(new StopElevator(this.climber));
 
         // ^ Control Panel
-        b_button.whenPressed(new StartSpinning(this.controlPanel));
-        x_button.whenPressed(new StopSpinning(this.controlPanel));
-        y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
-        a_button.whenPressed(new RetractControlPanel(this.controlPanel));
+        // b_button.whenPressed(new StartSpinning(this.controlPanel));
+        // x_button.whenPressed(new StopSpinning(this.controlPanel));
+        // y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
+        // a_button.whenPressed(new RetractControlPanel(this.controlPanel));
 
         //^ Vision
         // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
@@ -85,11 +80,16 @@ public class RobotContainer {
         // a_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
         // b_button.whenPressed(new StopTurntable(this.turnTable));
 
+        //^ Shooty Things
+        a_button.whenPressed(new Shoot(this.limelight, this.shooter));
+        // a_button.whenPressed(new ShooterOn(this.shooter));
+        // b_button.whenPressed(new ShooterOff(this.shooter));
+
         //! ACTUAL FINAL BUTTON CONFIGS
 
         //^ DriveTrain (Shifting)
-        left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
-        right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
+        left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
+        right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
     }
 
     /**
@@ -158,8 +158,9 @@ public class RobotContainer {
                 break;
             case 90:
                 // Right
-                currentTriggerSetting = CONTROLLER_MODE.CLIMB;
-                System.out.println("In Climb mode");
+                // currentTriggerSetting = CONTROLLER_MODE.CLIMB;
+                // System.out.println("In Climb mode");
+                this.compressor.setClosedLoop(true);
                 break;
             case 180:
                 // Bottom
@@ -168,8 +169,10 @@ public class RobotContainer {
                 this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
                 break;
             case 270:
-                currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;
-                System.out.println("In Auto Shoot mode");
+                // Left
+                // currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;
+                // System.out.println("In Auto Shoot mode");
+                this.compressor.setClosedLoop(false);
                 break;
             default:
                 System.out.println("Nothing is pressed, hopefully");
