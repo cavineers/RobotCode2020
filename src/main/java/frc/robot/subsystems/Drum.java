@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -42,7 +43,12 @@ public class Drum extends SubsystemBase {
 
      @Override
      public void periodic() {
-          
+          if (this.currentPosition == DrumPosition.HOMING && !this.homingSwitch.get()) {
+               this.drumMotor.set(ControlMode.PercentOutput, 0);
+               this.homed = true;
+               drumMotor.setSelectedSensorPosition(0); // reset encoder
+               this.goToPos(DrumPosition.POS_1);
+          }
      }
 
      public boolean withinRange(DrumPosition pos, int sensorPos) {
@@ -72,7 +78,7 @@ public class Drum extends SubsystemBase {
 
      public void home() {
           this.currentPosition = DrumPosition.HOMING;
-          // drumMotor.set(ControlMode.Velocity, 0.2);
+          drumMotor.set(ControlMode.Velocity, 0.2);
           drumMotor.setSelectedSensorPosition(0); // reset encoder
      }
 
