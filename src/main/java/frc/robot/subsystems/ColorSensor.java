@@ -24,24 +24,34 @@ public class ColorSensor extends SubsystemBase {
     @Override
     public void periodic() {
         switch (this.readSerial()) {
+            case "R":
             case "r":
                 // red
                 this.currentColor = ControlPanelColor.RED;
                 break;
+            case "G":
             case "g":
                 // green
                 this.currentColor = ControlPanelColor.GREEN;
                 break;
+            case "B":
             case "b":
                 // blue
                 this.currentColor = ControlPanelColor.BLUE;
                 break;
+            case "Y":
             case "y":
                 // yellow
                 this.currentColor = ControlPanelColor.YELLOW;
                 break;
             case "unknown":
+            case "Unknown":
             case "null":
+            case "Null":
+            case "N":
+            case "n":
+            case "U":
+            case "u":
                 // unknown or null
                 this.currentColor = ControlPanelColor.UNKNOWN;
                 break;
