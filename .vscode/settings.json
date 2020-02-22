@@ -15,7 +15,7 @@
     "cSpell.userWords": ["wpilib", "spalding"],
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
     "pretty-formatter.correct": true,
     "editor.autoClosingBrackets": "always",
     "editor.autoIndent": true,
@@ -67,13 +67,5 @@
             "backgroundColor": "transparent"
         }
     ],
-    "cSpell.words": [
-        "AHRS",
-        "CANPID",
-        "Deadzone",
-        "Dpad",
-        "setpoint",
-        "teleop",
-        "yeet"
-    ]
+    "cSpell.words": ["AHRS", "CANPID", "Deadzone", "Dpad", "setpoint", "teleop", "yeet"]
 }
