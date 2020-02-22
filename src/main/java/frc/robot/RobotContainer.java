@@ -7,6 +7,7 @@ import frc.lib.Limelight;
 import frc.robot.commands.ShiftGear;
 import frc.robot.commands.Shoot;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.CompressorController;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
@@ -50,7 +51,7 @@ public class RobotContainer {
     public ControlPanel controlPanel = new ControlPanel();
     public Dashboard dashboard = new Dashboard(this);
     public Intake intake = new Intake(this);
-    // public ColorSensor colorSensor = new ColorSensor();
+    public ColorSensor colorSensor = new ColorSensor();
 
     /**
      * RobotContainer
