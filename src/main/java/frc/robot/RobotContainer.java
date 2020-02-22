@@ -140,32 +140,37 @@ public class RobotContainer {
 
         if (lastDpad != joy.getPOV()) {
             switch (joy.getPOV()) {
-            case 0:
-                // Top
-                currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
-                System.out.println("In Control Panel mode");
-                break;
-            case 90:
-                // Right
-                currentTriggerSetting = CONTROLLER_MODE.CLIMB;
-                System.out.println("In Climb mode");
-                break;
-            case 180:
-                // Bottom
-                currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
-                System.out.println("In Neutral mode");
-                break;
-            case 270:
-                currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;
-                System.out.println("In Auto Shoot mode");
-                break;
-            default:
-                System.out.println("Nothing is pressed, hopefully");
-                break;
+                case 0:
+                    // Top
+                    currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
+                    System.out.println("In Control Panel mode");
+                    break;
+                case 90:
+                    // Right
+                    currentTriggerSetting = CONTROLLER_MODE.CLIMB;
+                    System.out.println("In Climb mode");
+                    break;
+                case 180:
+                    // Bottom
+                    currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
+                    System.out.println("In Neutral mode");
+                    break;
+                case 270:
+                    currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;
+                    System.out.println("In Auto Shoot mode");
+                    break;
+                default:
+                    System.out.println("Nothing is pressed, hopefully");
+                    break;
             }
         }
         lastDpad = joy.getPOV();
     }
+    
+    public double getCurrentDrawOfPort(int port) {
+        return this.PDP.getCurrent(port);
+    }
+
 
     public void teleInit() {
         new TeleopDrive(this.drivetrain, this.joy);

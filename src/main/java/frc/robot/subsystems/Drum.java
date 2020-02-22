@@ -29,13 +29,27 @@ public class Drum extends SubsystemBase {
      private DrumPosition currentPosition = DrumPosition.UNKNOWN;
      private DrumPosition wantedPosition;
 
+      // Limit switch
+      DigitalInput homingSwitch = new DigitalInput(Constants.Drum.LimitSwitch);
+
+      // Homing data
+      private boolean homed = false;
+ 
+
      public Drum() {
           // Configure motor
           drumMotor.setNeutralMode(NeutralMode.Brake);
      }
 
      @Override
-     public void periodic() {}
+     public void periodic() {
+          if (this.currentPosition == DrumPosition.HOMING && !this.homingSwitch.get()) {
+               this.drumMotor.set(ControlMode.PercentOutput, 0);
+               this.homed = true;
+               drumMotor.setSelectedSensorPosition(0); // reset encoder
+               this.goToPos(DrumPosition.POS_1);
+          }
+     }
 
      public boolean getPos1() {
           return photoSensor1.getValue();
@@ -84,7 +98,11 @@ public class Drum extends SubsystemBase {
 
      public void home() {
           this.currentPosition = DrumPosition.HOMING;
-          // drumMotor.set(ControlMode.Velocity, 0.2);
+          drumMotor.set(ControlMode.Velocity, 0.2);
           drumMotor.setSelectedSensorPosition(0); // reset encoder
+     }
+
+     public boolean isHomed() {
+          return this.homed;
      }
 }

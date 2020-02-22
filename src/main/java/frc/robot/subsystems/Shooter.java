@@ -35,6 +35,8 @@ public class Shooter extends PIDSubsystem {
 
     private ShooterMode currentMode = ShooterMode.DISABLED;
 
+    private double speed = 0;
+
     public Shooter() {
         super(new PIDController(Constants.Shooter.PIDp, Constants.Shooter.PIDi, Constants.Shooter.PIDd));
 
@@ -79,7 +81,8 @@ public class Shooter extends PIDSubsystem {
         }
 
         if (this.currentMode == ShooterMode.ENABLED) {
-            pidController.setReference(Constants.Shooter.MaxRPM, ControlType.kVelocity);
+            pidController.setReference(-Constants.Shooter.MaxRPM, ControlType.kVelocity);
+            pidController.setReference(-speed, ControlType.kVelocity);
         } else {
             pidController.setReference(0, ControlType.kVelocity);
         }
@@ -89,6 +92,17 @@ public class Shooter extends PIDSubsystem {
         SmartDashboard.putNumber("ProcessVariable", flyingEncoder.getVelocity());
     }
 
+    public void enable() {
+        this.currentMode = ShooterMode.ENABLED;
+    }
+
+    public void disable() {
+        this.currentMode = ShooterMode.DISABLED;
+    }
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
     @Override
     public void useOutput(double output, double setpoint) {}
 
@@ -96,4 +110,5 @@ public class Shooter extends PIDSubsystem {
     public double getMeasurement() {
         return flyingEncoder.getPosition();
     }
+
 }
