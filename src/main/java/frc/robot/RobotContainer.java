@@ -198,6 +198,6 @@ public class RobotContainer {
     }
 
     public void autoInit() {
-        new AutonomousSelector(this.drivetrain, this.drum, this.turnTable, this.limelight);
+        new AutonomousSelector(this.drivetrain, this.drum, this.turnTable, this.limelight, this.shooter);
     }
 }

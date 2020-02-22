@@ -4,30 +4,31 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.lib.Limelight;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Drum;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turntable;
 
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class AutonomousSelector extends InstantCommand {
   DriveTrain dt;
   Drum d;
   Turntable tt;
   Limelight ll;
-  AutonomousCommand1 auto1 = new AutonomousCommand1(dt, d, tt, ll);
-  AutonomousCommand2 auto2 = new AutonomousCommand2(dt, d, tt, ll);
-  AutonomousCommand3 auto3 = new AutonomousCommand3(dt, d, tt, ll);
+  Shooter s;
+  AutonomousCommand1 auto1 = new AutonomousCommand1(dt, d, tt, ll, s);
+  AutonomousCommand2 auto2 = new AutonomousCommand2(dt, d, tt, ll, s);
+  AutonomousCommand3 auto3 = new AutonomousCommand3(dt, d, tt, ll, s);
 
-  public AutonomousSelector(DriveTrain dt, Drum d, Turntable tt, Limelight ll) {
+  public AutonomousSelector(DriveTrain dt, Drum d, Turntable tt, Limelight ll, Shooter s) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.dt = dt;
     this.d = d;
     this.tt = tt;
     this.ll = ll;
+    this.s = s;
     addRequirements(dt);
     addRequirements(d);
     addRequirements(tt);
+    addRequirements(s);
   }
 
   // The enum used as keys for selecting the command to run.
