@@ -80,30 +80,30 @@ void loop() {
     if((DataR>=60 && DataR<=80) && (DataG>= 100 && DataG <= 125) && (DataB>=65 && DataB<=85) && Counter <= 3 ){
         CurrentColor = "Red";
         Counter = 0;
-        Serial.println("R");
+        Serial.println("-R");
     }
     else if ((DataR>=90 && DataR<=110) && (DataG>=75 && DataG<=90) && (DataB>=40 && DataB<=60) && Counter <= 3) {
         CurrentColor ="Blue";
         Counter = 0;
-        Serial.println("B");
+        Serial.println("-B");
     }
     else if ((DataR>=90 && DataR<=120) && (DataG>=90 && DataG<=100) && (DataB>=65 && DataB<=75) && Counter <= 3){
         CurrentColor = "Green";
         Counter = 0;
-        Serial.println("G");
+        Serial.println("-G");
     }
     else if ((DataR>=55 && DataR<=65) && (DataG>=65 && DataG<=75) && (DataB>=60 && DataB<=73) && Counter <= 3){
         CurrentColor = "Yellow";
         Counter = 0;
-        Serial.println("Y");
+        Serial.println("-Y");
     }
     else if (Counter >= 3) {
-        Serial.println("N");
+        Serial.println("-N");
         Counter = 0; 
     }
     else{
         if(CurrentColor.equals("Unknown")){
-            Serial.println("U");
+            Serial.println("-U");
         }
         else{
             Counter++;

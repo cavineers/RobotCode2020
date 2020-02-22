@@ -69,8 +69,10 @@ public class ColorSensor extends SubsystemBase {
      * @return serial string
      */
     public String readSerial() {
+        // get string
+        String r = this.usbController.readString();
         // return the serial string
-        return this.usbController.readString();
+        return r.substring(r.lastIndexOf("-") + 1);
     }
 
     /**
