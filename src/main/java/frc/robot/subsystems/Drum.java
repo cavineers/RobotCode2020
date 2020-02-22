@@ -13,7 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class Drum extends SubsystemBase {
-    public TalonSRX rotatingDrumMotor = new TalonSRX(Constants.kDrumMotorCANid);
+    public TalonSRX rotatingDrumMotor = new TalonSRX(Constants.CANIds.DrumMotor);
     DigitalInput limitSwitch;
 
     AnalogInput irSensor;
@@ -31,9 +31,9 @@ public class Drum extends SubsystemBase {
     }
 
     public Drum() {
-        limitSwitch = new DigitalInput(Constants.kDrumLimitSwitch);
+        limitSwitch = new DigitalInput(Constants.Drum.LimitSwitch);
 
-        irSensor = new AnalogInput(Constants.kIrSensor);
+        irSensor = new AnalogInput(Constants.Drum.IrSensor);
         // set the neutral mode to brake
         this.getDrumMotor().setNeutralMode(NeutralMode.Brake);
     }
