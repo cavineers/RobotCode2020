@@ -18,7 +18,8 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         robotContainer = new RobotContainer();
 
-        // ! THE LOG LEVEL SHOULD ALWAYS BE SET. UNCOMMENT EACH OF THE FOLLOWING LINE AFTER COMMENTING ALL
+        // ! THE LOG LEVEL SHOULD ALWAYS BE SET. UNCOMMENT EACH OF THE FOLLOWING LINE
+        // AFTER COMMENTING ALL
         // logger = new CLogger(CLogger.cLoggerMode.COMPETITION);
         // logger = new CLogger(CLogger.cLoggerMode.PRACTICE);
         logger = new CLogger(CLogger.cLoggerMode.TESTING);
@@ -29,18 +30,21 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
-        if (Robot.getCurrentTime()-lastLime > .5) {
+        if (Robot.getCurrentTime() - lastLime > 1) {
             lastLime = Robot.getCurrentTime();
+            System.out.println(robotContainer.arduino.receiveSerial());
             // Log the limelight distance
             // logger.logln("Distance: " + robotContainer.limelight.getDistance());
         }
     }
 
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+    }
 
     @Override
-    public void disabledPeriodic() {}
+    public void disabledPeriodic() {
+    }
 
     @Override
     public void autonomousInit() {
@@ -53,7 +57,8 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void autonomousPeriodic() {}
+    public void autonomousPeriodic() {
+    }
 
     @Override
     public void teleopInit() {
@@ -76,7 +81,8 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void testPeriodic() {}
+    public void testPeriodic() {
+    }
 
     public static double getCurrentTime() {
         return Timer.getFPGATimestamp();
