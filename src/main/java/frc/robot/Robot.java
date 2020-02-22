@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
 import frc.robot.subsystems.Drum;
+import frc.robot.subsystems.Intake;
 
 public class Robot extends TimedRobot {
     // private Command autonomousCommand;
@@ -24,6 +25,7 @@ public class Robot extends TimedRobot {
         // logger = new CLogger(CLogger.cLoggerMode.PRACTICE);
         logger = new CLogger(CLogger.cLoggerMode.TESTING);
         // logger = new CLogger(CLogger.cLoggerMode.DEVELOPMENT);
+    intake = new Intake();
 
     }
 
