@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.hal.sim.DriverStationSim;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -205,5 +207,25 @@ public class RobotContainer {
      */
     public double getCurrentDrawOfPort(int port) {
         return this.PDP.getCurrent(port);
+    }
+
+    public ColorSensor.ControlPanelColor getControlPanelColor() {
+        String msg = DriverStation.getInstance().getGameSpecificMessage();
+        if (msg.length()>0) {
+            switch (msg) {
+                case "R":
+                    return ColorSensor.ControlPanelColor.RED;
+                case "G":
+                    return ColorSensor.ControlPanelColor.GREEN;
+                case "B":
+                    return ColorSensor.ControlPanelColor.BLUE;
+                case "Y":
+                    return ColorSensor.ControlPanelColor.YELLOW;
+                default:
+                    return ColorSensor.ControlPanelColor.UNKNOWN;
+            }
+        } else {
+            return ColorSensor.ControlPanelColor.UNKNOWN;
+        }
     }
 }
