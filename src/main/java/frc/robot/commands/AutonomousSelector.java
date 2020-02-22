@@ -16,8 +16,8 @@ public class AutonomousSelector extends InstantCommand {
   Turntable tt;
   Limelight ll;
   AutonomousCommand1 auto1 = new AutonomousCommand1(dt, d, tt, ll);
-  AutonomousCommand2 auto2 = new AutonomousCommand2(dt, d);
-  AutonomousCommand3 auto3 = new AutonomousCommand3(dt);
+  AutonomousCommand2 auto2 = new AutonomousCommand2(dt, d, tt, ll);
+  AutonomousCommand3 auto3 = new AutonomousCommand3(dt, d, tt, ll);
 
   public AutonomousSelector(DriveTrain dt, Drum d, Turntable tt, Limelight ll) {
     // Use addRequirements() here to declare subsystem dependencies.
