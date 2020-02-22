@@ -25,6 +25,7 @@ public class Drum extends SubsystemBase {
     public double numberStopperIR = 0;
     public double drumPosition = 1;
     public double counter = 0;
+    public double slotNumber = 1;
 
     public enum DrumPosition {
         HOLE1, HOLE2, HOLE3, HOLE4, HOLE5, FULL, INVALID;
@@ -45,8 +46,6 @@ public class Drum extends SubsystemBase {
         } else if (drumReady == true) {
             // when the robot inits or after the robot is ready to shoot the variable should
             // be false to stop it from stalling when shooting
-            goToDesiredPosition(getDesiredPosition());
-            System.out.println(rotatingDrumMotor.getSelectedSensorPosition());
         } else {
             // System.out.println("Drum not ready");
         }
@@ -77,18 +76,11 @@ public class Drum extends SubsystemBase {
         } else {
             System.out.println("error");
         }
-        // if (getLimitSwitch() == true) {
-        // if (counter == 1) {
-        // drumPosition = drumPosition + 1;
-        // counter = 0;
-        // }
-        // }
-        // if (getLimitSwitch() == false) {
-        // counter = 1;
-        // }
+
         if (numberOfBalls > 4 & irSensor.getVoltage() < 1.5) {
             numberOfBalls = 0;
         }
+
     }
 
     // Get the drum motor
@@ -133,27 +125,24 @@ public class Drum extends SubsystemBase {
         switch (position) {
         case HOLE1:
             nextPosition();
+            slotNumber = 1;
             break;
         case HOLE2:
             nextPosition();
+            slotNumber = 2;
             break;
         case HOLE3:
-
             nextPosition();
+            slotNumber = 3;
             break;
 
         case HOLE4:
             nextPosition();
+            slotNumber = 4;
             break;
         case HOLE5:
-
-            while (rotatingDrumMotor.getSelectedSensorPosition() != 800) {
-                if (rotatingDrumMotor.getSelectedSensorPosition() > 800) {
-                    rotatingDrumMotor.set(ControlMode.PercentOutput, .5);
-                } else {
-                    rotatingDrumMotor.set(ControlMode.PercentOutput, -.5);
-                }
-            }
+            nextPosition();
+            slotNumber = 5;
             break;
         case FULL:
             readyToShoot = true;

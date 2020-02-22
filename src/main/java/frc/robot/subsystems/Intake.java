@@ -11,7 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class Intake extends SubsystemBase {
 
-    public TalonSRX ballIntakeMotor = new TalonSRX(Constants.kIntakeMotorCANid);
+    public TalonSRX ballIntakeMotor = new TalonSRX(Constants.CANIds.IntakeMotor);
 
     public boolean isOn = false;
     public boolean drumON = false;
