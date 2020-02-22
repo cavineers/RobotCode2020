@@ -1,12 +1,11 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ColorSensor extends SubsystemBase {
     // Create the color sensor usb controller to go between the arduino and rio
-    // private SerialPort usbController = new SerialPort(9600, SerialPort.Port.kUSB1);
+    private SerialPort usbController = new SerialPort(9600, SerialPort.Port.kUSB1);
     
     // Control Panel Controls
     public enum ControlPanelColor {
@@ -24,25 +23,79 @@ public class ColorSensor extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // Read the string that's given from the arduino
-        // String dataBack = usbController.readString();
-        
-        // Print the data given by the controller
-        // Robot.logger.logln(dataBack);
-
-        // Reset the input
-        // usbController.reset(); //? maybe, untested
+        switch (this.readSerial()) {
+            case "r":
+                // red
+                this.currentColor = ControlPanelColor.RED;
+                break;
+            case "g":
+                // green
+                this.currentColor = ControlPanelColor.GREEN;
+                break;
+            case "b":
+                // blue
+                this.currentColor = ControlPanelColor.BLUE;
+                break;
+            case "y":
+                // yellow
+                this.currentColor = ControlPanelColor.YELLOW;
+                break;
+            case "unknown":
+            case "null":
+                // unknown or null
+                this.currentColor = ControlPanelColor.UNKNOWN;
+                break;
+            default:
+                // whoops...
+                this.currentColor = ControlPanelColor.UNKNOWN;
+                break;
+        }
+        // reset serial string
+        this.resetSerial();
     }
 
+    /**
+     * read the serial string
+     * @return serial string
+     */
+    public String readSerial() {
+        // return the serial string
+        return this.usbController.readString();
+    }
+
+    /**
+     * reset the serial data
+     */
+    public void resetSerial() {
+        // reset the serial string
+        this.usbController.reset();
+    }
+
+    /**
+     * get the current color according to our robot
+     * @return color the robot sees
+     */
     public ControlPanelColor getColor() {
+        // return the current color
         return this.currentColor;
     }
 
+    /**
+     * get the field color
+     * @return transposed value from our robot
+     */
     public ControlPanelColor getFieldColor() {
+        // get the field color through transpose
         return this.transpose(this.currentColor);
     }
 
+    /**
+     * transpose between our color sensor and the fields
+     * @param panelColor color before
+     * @return color after
+     */
     public ControlPanelColor transpose(ControlPanelColor panelColor) {
+        // quickly transpose
         switch (panelColor) {
             case RED:
                 return ControlPanelColor.BLUE;
