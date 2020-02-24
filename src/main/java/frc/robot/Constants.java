@@ -6,18 +6,18 @@ public final class Constants {
     // CAN network mapping
     public static class CANIds {
         public static int PCM                    = 0;  // Pneumatic Control Module (PCM)
-        public static int DriveTrainMotor2       = 1;  // Right 1 (neo) (was 1)
-        public static int DriveTrainMotor4       = 2;  // Right 2 (neo)
-        public static int DriveTrainMotor3       = 3;  // Left 2 (neo)
-        public static int DriveTrainMotor1       = 4;  // Left 1 (neo)
+        public static int DriveTrainMotor2       = 3;  // Right 1 (neo) (was 1)
+        public static int DriveTrainMotor4       = 4;  // Right 2 (neo)
+        public static int DriveTrainMotor3       = 2;  // Left 2 (neo)
+        public static int DriveTrainMotor1       = 1;  // Left 1 (neo)
         public static int ShooterMotor           = 6;  // The shooter's fly wheel motor (was 6)
         public static int ClimberMotor           = 5;  // Climber motor
-        public static int DrumMotor              = 7;  // Intakes drum motor
+        public static int DrumMotor              = 10;  // Intakes drum motor
         public static int ShooterVerticalPitch   = 8;  // Shooter's vertical pitch
-        public static int FeederMotor            = 9;  // Feeder motor
-        public static int IntakeMotor            = 10; // Intake motor
-        public static int ControlPanelMotor      = 11; // Control Panel rotator
-        public static int TurretRotationMotor    = 12; // Turret rotation motor
+        public static int FeederMotor            = 11;  // Feeder motor
+        public static int IntakeMotor            = 12; // Intake motor
+        public static int ControlPanelMotor      = 9; // Control Panel rotator
+        public static int TurretRotationMotor    = 7; // Turret rotation motor
         public static int PowerDistributionPanel = 30; // Power Distribution Panel (PDP)
     }
 
@@ -125,8 +125,8 @@ public final class Constants {
     // Intake
     public static class Intake {
         public static int MotorID = CANIds.IntakeMotor;
-        public static double InSpeed = 0.5; // percent output
-        public static double OutSpeed = -0.2; // percent output
+        public static double InSpeed = 1; // percent output
+        public static double OutSpeed = -1; // percent output
         public static double MaxCurrentDraw = 25; // in amps
         public static double MaxDrawTime = 1.0; // in seconds
         public static double ReverseTime = 2.0; // in seconds
