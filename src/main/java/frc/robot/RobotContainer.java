@@ -1,13 +1,12 @@
 package frc.robot;
 
-import edu.wpi.first.hal.sim.DriverStationSim;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
-import frc.robot.commands.ShiftGear;
-import frc.robot.commands.Shoot;
+import frc.robot.commands.IntakeOff;
+import frc.robot.commands.IntakeOn;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.CompressorController;
@@ -53,7 +52,7 @@ public class RobotContainer {
     public ControlPanel controlPanel = new ControlPanel();
     public Dashboard dashboard = new Dashboard(this);
     public Intake intake = new Intake(this);
-    public ColorSensor colorSensor = new ColorSensor();
+    // public ColorSensor colorSensor = new ColorSensor();
 
     /**
      * RobotContainer
@@ -86,15 +85,19 @@ public class RobotContainer {
         // b_button.whenPressed(new StopTurntable(this.turnTable));
 
         //^ Shooty Things
-        a_button.whenPressed(new Shoot(this.limelight, this.shooter));
+        // a_button.whenPressed(new Shoot(this.limelight, this.shooter));
         // a_button.whenPressed(new ShooterOn(this.shooter));
         // b_button.whenPressed(new ShooterOff(this.shooter));
 
         //! ACTUAL FINAL BUTTON CONFIGS
 
         //^ DriveTrain (Shifting)
-        left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
-        right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
+        // left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
+        // right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
+
+        //^ Intake
+        a_button.whenPressed(new IntakeOn(this.intake));
+        b_button.whenPressed(new IntakeOff(this.intake));
     }
 
     /**
@@ -206,7 +209,8 @@ public class RobotContainer {
      * @return the current draw (in amps)
      */
     public double getCurrentDrawOfPort(int port) {
-        return this.PDP.getCurrent(port);
+        // return this.PDP.getCurrent(port);
+        return 0.0;
     }
 
     public ColorSensor.ControlPanelColor getControlPanelColor() {

@@ -131,4 +131,10 @@ public final class Constants {
         public static double MaxDrawTime = 1.0; // in seconds
         public static double ReverseTime = 2.0; // in seconds
     }
+
+    // Feeder
+    public static class Feeder {
+        public static int MotorID = CANIds.FeederMotor;
+        public static double Speed = 0.75;
+    }
 }

@@ -40,27 +40,27 @@ public class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // If over draw limit..
-        if (this.rc.getCurrentDrawOfPort(Constants.PDPPorts.IntakeMotor) > Constants.Intake.MaxCurrentDraw) {
-            // if the draw just began, set time
-            if (this.overdrawTime == 0) {
-                this.overdrawTime = Timer.getFPGATimestamp();
-            } else
-            if (Timer.getFPGATimestamp()-this.overdrawTime > Constants.Intake.MaxDrawTime) {
-                // if over the max current draw time, reverse the rollers
-                this.setState(IntakeState.REVERSED);
-            }
-        } else
-        if (this.reverseTime != 0) {
-            // if it's in the reverse state
-            if (Timer.getFPGATimestamp()-this.reverseTime > Constants.Intake.ReverseTime) {
-                // and the time is done, turn off the motor
-                this.setState(IntakeState.OFF);
-            }
-        } else {
-            // default to no overdraw
-            this.overdrawTime = 0;
-        }
+        // // If over draw limit..
+        // if (this.rc.getCurrentDrawOfPort(Constants.PDPPorts.IntakeMotor) > Constants.Intake.MaxCurrentDraw) {
+        //     // if the draw just began, set time
+        //     if (this.overdrawTime == 0) {
+        //         this.overdrawTime = Timer.getFPGATimestamp();
+        //     } else
+        //     if (Timer.getFPGATimestamp()-this.overdrawTime > Constants.Intake.MaxDrawTime) {
+        //         // if over the max current draw time, reverse the rollers
+        //         this.setState(IntakeState.REVERSED);
+        //     }
+        // } else
+        // if (this.reverseTime != 0) {
+        //     // if it's in the reverse state
+        //     if (Timer.getFPGATimestamp()-this.reverseTime > Constants.Intake.ReverseTime) {
+        //         // and the time is done, turn off the motor
+        //         this.setState(IntakeState.OFF);
+        //     }
+        // } else {
+        //     // default to no overdraw
+        //     this.overdrawTime = 0;
+        // }
     }
 
     /**
