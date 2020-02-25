@@ -6,11 +6,11 @@ public final class Constants {
     // CAN network mapping
     public static class CANIds {
         public static int PCM                    = 0;  // Pneumatic Control Module (PCM)
-        public static int DriveTrainMotor2       = 3;  // Right 1 (neo) (was 1)
+        public static int DriveTrainMotor2       = 3;  // Right 1 (neo)
         public static int DriveTrainMotor4       = 4;  // Right 2 (neo)
         public static int DriveTrainMotor3       = 2;  // Left 2 (neo)
         public static int DriveTrainMotor1       = 1;  // Left 1 (neo)
-        public static int ShooterMotor           = 6;  // The shooter's fly wheel motor (was 6)
+        public static int ShooterMotor           = 6;  // The shooter's fly wheel motor
         public static int ClimberMotor           = 5;  // Climber motor
         public static int DrumMotor              = 10;  // Intakes drum motor
         public static int ShooterVerticalPitch   = 8;  // Shooter's vertical pitch
@@ -78,15 +78,12 @@ public final class Constants {
     // Drum
     public static class Drum {
         public static int MotorID = CANIds.DrumMotor;
-        public static double kDrumDiameter   = 22.0; // in inches
-        public static double kDrumEncoderPPI = (4096 / (kDrumDiameter * Math.PI)); // PPI
-        public static int PhotoSensor1 = 0;
-        public static int PhotoSensor2 = 1;
-        public static int PhotoSensor3 = 2;
-        public static int PhotoSensor4 = 3;
-        public static int PhotoSensor5 = 4;
+        public static double DrumDiameter   = 22.0; // in inches
+        public static double DrumEncoderPPI = (4096 / (DrumDiameter * Math.PI)); // PPI
+        public static int IRSensor = 0;
         public static int DrumLocationOffset = 10;
         public static int LimitSwitch = 0;
+        public static double PositionOffset =  100.0;
     }
     
     // Control Panel
@@ -130,11 +127,19 @@ public final class Constants {
         public static double MaxCurrentDraw = 25; // in amps
         public static double MaxDrawTime = 1.0; // in seconds
         public static double ReverseTime = 2.0; // in seconds
+        public static double BallDetectionVoltage = 1.0;
     }
 
     // Feeder
     public static class Feeder {
         public static int MotorID = CANIds.FeederMotor;
         public static double Speed = 0.75;
+    }
+
+    // Hood
+    public static class Hood {
+        public static int MotorID = CANIds.ShooterVerticalPitch;
+        public static int LimitSwitch = 3;
+        public static double HomingSpeed = -0.3;
     }
 }

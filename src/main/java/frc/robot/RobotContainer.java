@@ -2,16 +2,18 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
-import frc.robot.commands.IntakeOff;
-import frc.robot.commands.IntakeOn;
+import frc.robot.commands.HomeHood;
+import frc.robot.commands.ShiftGear;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.CompressorController;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Drum;
+import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turntable;
@@ -42,7 +44,7 @@ public class RobotContainer {
     public CONTROLLER_MODE currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
 
     // Subsystems
-    public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
+    // public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
     public CompressorController compressor = new CompressorController(false);
     public DriveTrain drivetrain = new DriveTrain(this.getJoystick());
     public Turntable turnTable = new Turntable();
@@ -52,6 +54,9 @@ public class RobotContainer {
     public ControlPanel controlPanel = new ControlPanel();
     public Dashboard dashboard = new Dashboard(this);
     public Intake intake = new Intake(this);
+    public Drum drum = new Drum();
+    public Feeder feeder = new Feeder();
+    public Hood hood = new Hood();
     // public ColorSensor colorSensor = new ColorSensor();
 
     /**
@@ -89,15 +94,28 @@ public class RobotContainer {
         // a_button.whenPressed(new ShooterOn(this.shooter));
         // b_button.whenPressed(new ShooterOff(this.shooter));
 
+        //^ Intake
+        // a_button.whenPressed(new IntakeOn(this.intake));
+        // b_button.whenPressed(new IntakeOff(this.intake));
+
+        //^ Feeder
+        // a_button.whenPressed(new FeederOn(this.feeder));
+        // b_button.whenPressed(new FeederOff(this.feeder));
+        
+        //^ Drum
+        // a_button.whenPressed(new SpinDrum(this.drum));
+        // b_button.whenPressed(new DrumStop(this.drum));
+
+        //^ Hood
+        a_button.whenPressed(new HomeHood(this.hood));
+
         //! ACTUAL FINAL BUTTON CONFIGS
 
         //^ DriveTrain (Shifting)
-        // left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
-        // right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
+        left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
+        right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
 
-        //^ Intake
-        a_button.whenPressed(new IntakeOn(this.intake));
-        b_button.whenPressed(new IntakeOff(this.intake));
+        
     }
 
     /**
@@ -162,25 +180,25 @@ public class RobotContainer {
                 // Top
                 // currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
                 // System.out.println("In Control Panel mode");
-                this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
+                // this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
                 break;
             case 90:
                 // Right
                 // currentTriggerSetting = CONTROLLER_MODE.CLIMB;
                 // System.out.println("In Climb mode");
-                this.compressor.setClosedLoop(true);
+                // this.compressor.setClosedLoop(true);
                 break;
             case 180:
                 // Bottom
                 // currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
                 // System.out.println("In Neutral mode");
-                this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
+                // this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
                 break;
             case 270:
                 // Left
                 // currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;
                 // System.out.println("In Auto Shoot mode");
-                this.compressor.setClosedLoop(false);
+                // this.compressor.setClosedLoop(false);
                 break;
             default:
                 System.out.println("Nothing is pressed, hopefully");

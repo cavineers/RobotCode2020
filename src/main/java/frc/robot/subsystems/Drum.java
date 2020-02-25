@@ -10,7 +10,7 @@ import frc.robot.Constants;
 
 public class Drum extends SubsystemBase {
      // Drum motor
-     private WPI_TalonSRX drumMotor = new WPI_TalonSRX(Constants.Drum.MotorID);
+     public WPI_TalonSRX drumMotor = new WPI_TalonSRX(Constants.Drum.MotorID);
 
      // DrumPosition
      public enum DrumPosition {
@@ -47,33 +47,11 @@ public class Drum extends SubsystemBase {
                this.drumMotor.set(ControlMode.PercentOutput, 0);
                this.homed = true;
                drumMotor.setSelectedSensorPosition(0); // reset encoder
-               this.goToPos(DrumPosition.POS_1);
           }
      }
 
-     public boolean withinRange(DrumPosition pos, int sensorPos) {
-          int desiredSensorPosition = 0;
-          if (pos == DrumPosition.POS_1) {
-               desiredSensorPosition = 1000;
-          } else
-          if (pos == DrumPosition.POS_2) {
-               desiredSensorPosition = 2000;
-          } else
-          if (pos == DrumPosition.POS_3) {
-               desiredSensorPosition = 3000;
-          } else
-          if (pos == DrumPosition.POS_4) {
-               desiredSensorPosition = 4000;
-          } else
-          if (pos == DrumPosition.POS_5) {
-               desiredSensorPosition = 5000;
-          }
-
-          return (desiredSensorPosition - Constants.Drum.DrumLocationOffset < sensorPos && sensorPos < desiredSensorPosition + Constants.Drum.DrumLocationOffset);
-     }
-
-     public void goToPos(DrumPosition position) {
-          this.wantedPosition = position;
+     public void rotateNext() {
+          this.drumMotor.set(ControlMode.Position, this.drumMotor.getSelectedSensorPosition()+Constants.Drum.PositionOffset);
      }
 
      public void home() {

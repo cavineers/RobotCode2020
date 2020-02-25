@@ -44,10 +44,10 @@ public class DriveTrain extends SubsystemBase {
         this.differentialDrive.setRightSideInverted(true);
 
         // Set default mode
-        this.left1.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        this.left2.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        this.right1.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        this.right2.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        this.left1.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        this.left2.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        this.right1.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        this.right2.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
         // 2nd motors follow the 1st motors
         this.left2.follow(left1);

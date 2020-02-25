@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -29,6 +30,9 @@ public class Intake extends SubsystemBase {
     private double reverseTime = 0;
     private double overdrawTime = 0;
 
+    // IR Sensor
+    private AnalogInput ir = new AnalogInput(Constants.Drum.IRSensor);
+
     // Constructor
     public Intake(RobotContainer rc) {
         // local robot container
@@ -41,7 +45,7 @@ public class Intake extends SubsystemBase {
     @Override
     public void periodic() {
         // // If over draw limit..
-        // if (this.rc.getCurrentDrawOfPort(Constants.PDPPorts.IntakeMotor) > Constants.Intake.MaxCurrentDraw) {
+        // if (this.motor.getMotorOutputVoltage() > Constants.Intake.MaxCurrentDraw) {
         //     // if the draw just began, set time
         //     if (this.overdrawTime == 0) {
         //         this.overdrawTime = Timer.getFPGATimestamp();
@@ -57,6 +61,11 @@ public class Intake extends SubsystemBase {
         //         // and the time is done, turn off the motor
         //         this.setState(IntakeState.OFF);
         //     }
+        // } else
+        // if (this.ir.getVoltage() >= Constants.Intake.BallDetectionVoltage) {
+        //     // When a ball enters the intake, turn it off
+        //     this.setState(IntakeState.OFF);
+        //     this.rc.drum.rotateNext();
         // } else {
         //     // default to no overdraw
         //     this.overdrawTime = 0;
@@ -68,9 +77,9 @@ public class Intake extends SubsystemBase {
      * @param state wanted intake state
      */
     public void setState(IntakeState state) {
+        System.out.println("intake");
         // set the current state
         this.currentState = state;
-
         // set motor state
         switch (state) {
             case ON:

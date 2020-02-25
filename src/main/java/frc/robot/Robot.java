@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
+import frc.robot.subsystems.Intake;
 
 public class Robot extends TimedRobot {
     // private Command autonomousCommand;
@@ -65,7 +66,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        robotContainer.updateController();
+        this.robotContainer.updateController();
+        // this.robotContainer.intake.setState(Intake.IntakeState.ON);
     }
 
     @Override

@@ -8,6 +8,7 @@ public class IntakeOn extends CommandBase {
     private Intake in;
 
     public IntakeOn(Intake in) {
+        System.out.println("intake on");
         addRequirements(in);
         this.in = in;
     }
@@ -27,6 +28,6 @@ public class IntakeOn extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return true;
+        return this.in.getState() == IntakeState.ON;
     }
 }
