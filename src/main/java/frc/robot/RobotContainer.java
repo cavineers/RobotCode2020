@@ -17,6 +17,7 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turntable;
 import frc.robot.subsystems.CompressorController;
+import frc.robot.subsystems.Drum;
 
 public class RobotContainer {
     // Controller
@@ -54,6 +55,7 @@ public class RobotContainer {
     public Dashboard dashboard = new Dashboard(this);
     // public ColorSensor colorSensor = new ColorSensor();
     public CompressorController compressor = new CompressorController(true);
+    public Drum drum = new Drum();
 
     /**
      * RobotContainer
@@ -66,9 +68,9 @@ public class RobotContainer {
      * configureButtonBindings
      */
     private void configureButtonBindings() {
-        //! TESTING BUTTON CONFIGS
+        // ! TESTING BUTTON CONFIGS
 
-        //^ Elevator
+        // ^ Elevator
         // y_button.whenPressed(new ExtendElevator(this.climber));
         // b_button.whenPressed(new RetractElevator(this.climber));
         // a_button.whenPressed(new StopElevator(this.climber));
@@ -79,21 +81,24 @@ public class RobotContainer {
         y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
         a_button.whenPressed(new RetractControlPanel(this.controlPanel));
 
-        //^ Vision
-        // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
+        // ^ Vision
+        // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable,
+        // this.limelight));
         // a_button.whenPressed(new TurntableToTarget(this.turnTable, 90));
-        // a_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
+        // a_button.whenPressed(new TurntableToTarget(this.turnTable,
+        // this.limelight.getHorizontalOffset()));
         // b_button.whenPressed(new StopTurntable(this.turnTable));
 
-        //! ACTUAL FINAL BUTTON CONFIGS
+        // ! ACTUAL FINAL BUTTON CONFIGS
 
-        //^ DriveTrain (Shifting)
+        // ^ DriveTrain (Shifting)
         left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
         right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
     }
 
     /**
      * isRightTriggerPressed
+     * 
      * @return if it's pressed
      */
     private boolean isRightTriggerPressed() {
@@ -103,6 +108,7 @@ public class RobotContainer {
 
     /**
      * isLeftTriggerPressed
+     * 
      * @return if it's pressed
      */
     private boolean isLeftTriggerPressed() {
@@ -111,8 +117,7 @@ public class RobotContainer {
     }
 
     /**
-     * updateController
-     * Periodic to update controller
+     * updateController Periodic to update controller
      */
     public void updateController() {
         // new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset());
@@ -150,30 +155,30 @@ public class RobotContainer {
 
         if (lastDpad != joy.getPOV()) {
             switch (joy.getPOV()) {
-            case 0:
-                // Top
-                // currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
-                // System.out.println("In Control Panel mode");
-                this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
-                break;
-            case 90:
-                // Right
-                currentTriggerSetting = CONTROLLER_MODE.CLIMB;
-                System.out.println("In Climb mode");
-                break;
-            case 180:
-                // Bottom
-                // currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
-                // System.out.println("In Neutral mode");
-                this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
-                break;
-            case 270:
-                currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;
-                System.out.println("In Auto Shoot mode");
-                break;
-            default:
-                System.out.println("Nothing is pressed, hopefully");
-                break;
+                case 0:
+                    // Top
+                    // currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
+                    // System.out.println("In Control Panel mode");
+                    this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
+                    break;
+                case 90:
+                    // Right
+                    currentTriggerSetting = CONTROLLER_MODE.CLIMB;
+                    System.out.println("In Climb mode");
+                    break;
+                case 180:
+                    // Bottom
+                    // currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
+                    // System.out.println("In Neutral mode");
+                    this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
+                    break;
+                case 270:
+                    currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;
+                    System.out.println("In Auto Shoot mode");
+                    break;
+                default:
+                    System.out.println("Nothing is pressed, hopefully");
+                    break;
             }
         }
         lastDpad = joy.getPOV();
@@ -186,6 +191,7 @@ public class RobotContainer {
 
     /**
      * getJoystick
+     * 
      * @return returns the joystick
      */
     public Joystick getJoystick() {

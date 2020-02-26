@@ -16,25 +16,25 @@ public class Dashboard {
 
     private void configureDashboard() {
         // // Setup Power Distribution Panel (PDP)
-        // Shuffleboard.getTab("Dashboard")
-        // .add("PDP", this.rc.PDP)
-        // .withWidget(BuiltInWidgets.kPowerDistributionPanel)
-        // .withPosition(0, 1)
-        // .withSize(3, 2);
+        Shuffleboard.getTab("Dashboard")
+        .add("PDP", this.rc.PDP)
+        .withWidget(BuiltInWidgets.kPowerDistributionPanel)
+        .withPosition(0, 1)
+        .withSize(3, 2);
 
-        // // Setup differential drive
-        // Shuffleboard.getTab("Dashboard")
-        // .add("DriveTrain", this.rc.drivetrain.getDifferentialDrive())
-        // .withWidget(BuiltInWidgets.kDifferentialDrive)
-        // .withPosition(6, 1)
-        // .withSize(3, 2);
+        // Setup differential drive
+        Shuffleboard.getTab("Dashboard")
+        .add("DriveTrain", this.rc.drivetrain.getDifferentialDrive())
+        .withWidget(BuiltInWidgets.kDifferentialDrive)
+        .withPosition(6, 1)
+        .withSize(3, 2);
 
         // // Setup compressor
-        // Shuffleboard.getTab("Dashboard")
-        // .add("Compressor", this.rc.compressor.isEnabled())
-        // .withWidget(BuiltInWidgets.kBooleanBox)
-        // .withPosition(0, 3)
-        // .withSize(1, 1);
+        Shuffleboard.getTab("Dashboard")
+        .add("Compressor", this.rc.compressor.isEnabled())
+        .withWidget(BuiltInWidgets.kBooleanBox)
+        .withPosition(0, 3)
+        .withSize(1, 1);
 
         // // Add limelight
         // Shuffleboard.getTab("Dashboard")
@@ -46,15 +46,20 @@ public class Dashboard {
         Shuffleboard.getTab("Dashboard")
         .add("FMS", "network_table:///FMSInfo")
         .withWidget("Basic FMS Info")
-        .withPosition(3, 0)
-        .withSize(3, 1)
+        .withPosition(3, 0).withSize(3, 1)
         .withProperties(Map.of("source", "network_table:///FMSInfo"));
 
         Shuffleboard.getTab("Dashboard")
         .add("Shooter", this.rc.turnTable.atTarget())
         .withWidget(BuiltInWidgets.kBooleanBox)
-        .withPosition(3, 3)
+        .withPosition(3, 2)
         .withSize(3, 1);
+
+        Shuffleboard.getTab("Dashboard") //this is to show whether the sensors in the drum are working
+        .add("Drum", this.rc.drum)
+        .withWidget(BuiltInWidgets.kBooleanBox)
+        .withPosition(3, 3)
+        .withSize(2, 1);
     }
 
     private void configureTuner() {

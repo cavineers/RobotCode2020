@@ -11,7 +11,10 @@
                 "vgap": 16.0,
                 "tiles": {
                     "0,3": {
-                        "size": [1, 1],
+                        "size": [
+                            1,
+                            1
+                        ],
                         "content": {
                             "_type": "Boolean Box",
                             "_source0": "network_table:///LiveWindow/Ungrouped/Compressor[0]/Enabled",
@@ -21,7 +24,10 @@
                         }
                     },
                     "6,1": {
-                        "size": [3, 2],
+                        "size": [
+                            3,
+                            2
+                        ],
                         "content": {
                             "_type": "Differential Drivebase",
                             "_source0": "network_table:///LiveWindow/Ungrouped/DifferentialDrive[1]",
@@ -32,7 +38,10 @@
                         }
                     },
                     "0,1": {
-                        "size": [3, 2],
+                        "size": [
+                            3,
+                            2
+                        ],
                         "content": {
                             "_type": "PDP",
                             "_title": "PDP",
@@ -40,7 +49,10 @@
                         }
                     },
                     "3,1": {
-                        "size": [3, 1],
+                        "size": [
+                            3,
+                            1
+                        ],
                         "content": {
                             "_type": "Basic FMS Info",
                             "_source0": "network_table:///FMSInfo",
@@ -48,10 +60,25 @@
                         }
                     },
                     "3,2": {
-                        "size": [3, 1],
+                        "size": [
+                            3,
+                            1
+                        ],
                         "content": {
                             "_type": "Boolean Box",
                             "_title": "Shooter Aligned",
+                            "Colors/Color when true": "71E500",
+                            "Colors/Color when false": "#DF0000"
+                        }
+                    },
+                    "3,3": {
+                        "size": [
+                            2,
+                            1
+                        ],
+                        "content": {
+                            "_type": "Boolean Box",
+                            "_title": "Drum",
                             "Colors/Color when true": "71E500",
                             "Colors/Color when false": "#DF0000"
                         }
