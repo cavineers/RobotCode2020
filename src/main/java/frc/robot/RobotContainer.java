@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
 import frc.robot.commands.AutoAlign;
@@ -63,6 +64,8 @@ public class RobotContainer {
     public Compressor compressor = new Compressor();
     public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
     public Dashboard dashboard = new Dashboard(this);
+    
+    private final AutonomousSelector autoSelector = new AutonomousSelector(this.drivetrain, this.drum, this.turnTable, this.limelight, this.shooter);
  
     public enum CompressorMode {
         ENABLED,
@@ -197,7 +200,8 @@ public class RobotContainer {
         return joy;
     }
 
-    public void autoInit() {
-        new AutonomousSelector(this.drivetrain, this.drum, this.turnTable, this.limelight, this.shooter);
+
+    public Command getAutonomousCommand() {
+        return autoSelector;
     }
 }

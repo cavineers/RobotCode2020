@@ -2,13 +2,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
+import frc.robot.commands.AutonomousSelector;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Turntable;
 
 public class Robot extends TimedRobot {
-    // private Command autonomousCommand;
+    private Command autonomousCommand;
 
     private RobotContainer robotContainer;
 
@@ -55,11 +57,12 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+        autonomousCommand = robotContainer.getAutonomousCommand();
 
-        // // schedule the autonomous command (example)
-        // if (m_autonomousCommand != null) {
-        // m_autonomousCommand.schedule();
-        // }
+        // schedule the autonomous command (example)
+        if (autonomousCommand != null) {
+            autonomousCommand.schedule();
+         }
     }
 
     @Override
