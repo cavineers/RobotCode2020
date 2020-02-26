@@ -5,6 +5,7 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -39,11 +40,17 @@ public class Shooter extends SubsystemBase {
     private double speed = 0;
 
     /**
-     * Shooter
+     * Shooter constructor
      */
     public Shooter() {
-        // Configure the spark max
-        this.flyWheel.setSmartCurrentLimit(Constants.Shooter.ShooterCurrentLimit);
+        // Restore factory defaults
+        this.flyWheel.restoreFactoryDefaults();
+
+        // Set to coast mode
+        this.flyWheel.setIdleMode(IdleMode.kCoast);
+
+        // Current limit
+        this.flyWheel.setSmartCurrentLimit(Constants.Shooter.CurrentLimit);
 
         // Add PID values to controller
         pidController.setP(kP);
@@ -63,6 +70,31 @@ public class Shooter extends SubsystemBase {
         SmartDashboard.putNumber("Min Output", Constants.Shooter.MinOutput);
     }
 
+    /**
+     * Turn on the shooter
+     */
+    public void enable() {
+        this.currentMode = ShooterMode.ENABLED;
+    }
+
+    /**
+     * Turn off the shooter
+     */
+    public void disable() {
+        this.currentMode = ShooterMode.DISABLED;
+    }
+
+    /**
+     * Set the shooter speed
+     * @param speed wanted speed
+     */
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    /**
+     * Shooter periodic
+     */
     @Override
     public void periodic() {
         super.periodic();
@@ -92,16 +124,5 @@ public class Shooter extends SubsystemBase {
         // Add the setpoint and actual to smart dashboard
         SmartDashboard.putNumber("SetPoint", Constants.Shooter.MaxRPM);
         SmartDashboard.putNumber("ProcessVariable", flyingEncoder.getVelocity());
-    }
-
-    public void enable() {
-        this.currentMode = ShooterMode.ENABLED;
-    }
-
-    public void disable() {
-        this.currentMode = ShooterMode.DISABLED;
-    }
-    public void setSpeed(double speed) {
-        this.speed = speed;
     }
 }

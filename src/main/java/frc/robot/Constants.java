@@ -72,7 +72,7 @@ public final class Constants {
         public static double MaxOutput = 1.0;
         public static double MinOutput = -1.0;
         public static double MaxRPM = 5800;
-        public static int ShooterCurrentLimit = 39;
+        public static int CurrentLimit = 38;
     }
    
     // Drum
@@ -104,6 +104,7 @@ public final class Constants {
         public static int DriveTrainMotor3 = CANIds.DriveTrainMotor3;
         public static int DriveTrainMotor4 = CANIds.DriveTrainMotor4;
         public static int WheelDiameter = 0;
+        public static int CurrentLimit = 38;
     }
 
     // Climber

@@ -13,17 +13,17 @@ import frc.robot.commands.TeleopDrive;
 
 public class DriveTrain extends SubsystemBase {
     // Inst motors
-    private CANSparkMax left1 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor1, MotorType.kBrushless);
-    private CANSparkMax right1 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor2, MotorType.kBrushless);
-    private CANSparkMax left2 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor3, MotorType.kBrushless);
-    private CANSparkMax right2 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor4, MotorType.kBrushless);
+    public CANSparkMax left1 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor1, MotorType.kBrushless);
+    public CANSparkMax right1 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor2, MotorType.kBrushless);
+    public CANSparkMax left2 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor3, MotorType.kBrushless);
+    public CANSparkMax right2 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor4, MotorType.kBrushless);
 
     // Differential drive
     private DifferentialDrive differentialDrive;
 
     // Encoders
     CANEncoder leftEncoder = new CANEncoder(left1);
-    CANEncoder rightEncoder = new CANEncoder(left2);
+    CANEncoder rightEncoder = new CANEncoder(right1);
 
     // Gear mode
     public enum DriveGear {
@@ -43,11 +43,23 @@ public class DriveTrain extends SubsystemBase {
         // Invert the right side
         this.differentialDrive.setRightSideInverted(true);
 
+        // Factory Defaults
+        this.left1.restoreFactoryDefaults();
+        this.left2.restoreFactoryDefaults();
+        this.right1.restoreFactoryDefaults();
+        this.right2.restoreFactoryDefaults();
+
+        // Current limiting
+        this.left1.setSmartCurrentLimit(Constants.DriveTrain.CurrentLimit);
+        this.left2.setSmartCurrentLimit(Constants.DriveTrain.CurrentLimit);
+        this.right1.setSmartCurrentLimit(Constants.DriveTrain.CurrentLimit);
+        this.right2.setSmartCurrentLimit(Constants.DriveTrain.CurrentLimit);
+
         // Set default mode
-        this.left1.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        this.left2.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        this.right1.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        this.right2.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        this.left1.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        this.left2.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        this.right1.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        this.right2.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         // 2nd motors follow the 1st motors
         this.left2.follow(left1);
@@ -113,10 +125,8 @@ public class DriveTrain extends SubsystemBase {
     }
 
     /**
-     * get the drivetrain differential drive
-     * @return the drivetrain differential drive
+     * DriveTrain periodic
      */
-    public DifferentialDrive getDifferentialDrive() {
-        return this.differentialDrive;
-    }
+    @Override
+    public void periodic() {}
 }

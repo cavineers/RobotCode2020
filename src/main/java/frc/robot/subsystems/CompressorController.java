@@ -44,12 +44,6 @@ public class CompressorController extends SubsystemBase {
     }
 
     /**
-     * compressor periodic
-     */
-    @Override
-    public void periodic() {}
-
-    /**
      * set the compressor mode
      * @param mode the defined mode
      */
@@ -86,4 +80,10 @@ public class CompressorController extends SubsystemBase {
     public void setClosedLoop(boolean clc) {
         this.compressor.setClosedLoopControl(clc);
     }
+
+    /**
+     * Compressor periodic
+     */
+    @Override
+    public void periodic() {}
 }

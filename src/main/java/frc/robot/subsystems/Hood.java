@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -21,22 +22,12 @@ public class Hood extends SubsystemBase {
     // Current angle
     private double currentAngle = 0.0;
 
-    public Hood() {
+    private double lastPrint = 0.0;
 
-    }
-
-    @Override
-    public void periodic() {
-        System.out.println(this.limitSwitch.get());
-        if (this.isHoming) {
-            if (!this.limitSwitch.get()) {
-                this.motor.set(ControlMode.PercentOutput, 0);
-                this.isHomed = true;
-                this.isHoming = false;
-                this.currentAngle = 0.0;
-            }
-        }
-    }
+    /**
+     * Constructor
+     */
+    public Hood() {}
 
     /**
      * home the hood
@@ -63,5 +54,26 @@ public class Hood extends SubsystemBase {
      */
     public double getAngle() {
         return  this.currentAngle;
+    }
+
+    /**
+     * Hood periodic
+     */
+    @Override
+    public void periodic() {
+        // Print limit switch value every half second
+        if (Timer.getFPGATimestamp()-this.lastPrint > 0.5) {
+            System.out.println("Hood Limit Switch: " + this.limitSwitch.get());
+            this.lastPrint = Timer.getFPGATimestamp();
+        }
+        // Homing method
+        if (this.isHoming) {
+            if (!this.limitSwitch.get()) {
+                this.motor.set(ControlMode.PercentOutput, 0);
+                this.isHomed = true;
+                this.isHoming = false;
+                this.currentAngle = 0.0;
+            }
+        }
     }
 }

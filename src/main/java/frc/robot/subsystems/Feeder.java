@@ -19,13 +19,18 @@ public class Feeder extends SubsystemBase {
     // Current feeder state
     private FeederState currentState = FeederState.DISABLED;
 
+    /**
+     * constructor
+     * defaults to disabled
+     */
     public Feeder() {
         this.setState(FeederState.DISABLED);
     }
 
-    @Override
-    public void periodic() {}
-
+    /**
+     * Set the feeder state
+     * @param state current state
+     */
     public void setState(FeederState state) {
         switch (state) {
             case ENABLED:
@@ -38,7 +43,17 @@ public class Feeder extends SubsystemBase {
         this.currentState = state;
     }
 
+    /**
+     * get the current state
+     * @return current state
+     */
     public FeederState getState() {
         return this.currentState;
     }
+
+    /**
+     * Feeder periodic
+     */
+    @Override
+    public void periodic() {}
 }

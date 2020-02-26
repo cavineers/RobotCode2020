@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -21,12 +22,11 @@ public class Climber extends SubsystemBase {
 
     // Constructor
     public Climber() {
-        // Configure current limiting on the NEO (38amps)
+        // Config Climber
+        this.climberMotor.restoreFactoryDefaults();
+        this.climberMotor.setIdleMode(IdleMode.kBrake);
         this.climberMotor.setSmartCurrentLimit(Constants.Climber.CurrentLimit);
     }
-
-    @Override
-    public void periodic() {} // Empty periodic
 
     /**
      * setMode
@@ -52,4 +52,10 @@ public class Climber extends SubsystemBase {
     public ClimberMode getMode() {
         return this.currentMode;
     }
+
+    /**
+     * Climber periodic
+     */
+    @Override
+    public void periodic() {}
 }

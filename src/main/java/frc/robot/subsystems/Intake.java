@@ -42,36 +42,6 @@ public class Intake extends SubsystemBase {
         this.setState(IntakeState.OFF);
     }
 
-    @Override
-    public void periodic() {
-        // // If over draw limit..
-        // if (this.motor.getMotorOutputVoltage() > Constants.Intake.MaxCurrentDraw) {
-        //     // if the draw just began, set time
-        //     if (this.overdrawTime == 0) {
-        //         this.overdrawTime = Timer.getFPGATimestamp();
-        //     } else
-        //     if (Timer.getFPGATimestamp()-this.overdrawTime > Constants.Intake.MaxDrawTime) {
-        //         // if over the max current draw time, reverse the rollers
-        //         this.setState(IntakeState.REVERSED);
-        //     }
-        // } else
-        // if (this.reverseTime != 0) {
-        //     // if it's in the reverse state
-        //     if (Timer.getFPGATimestamp()-this.reverseTime > Constants.Intake.ReverseTime) {
-        //         // and the time is done, turn off the motor
-        //         this.setState(IntakeState.OFF);
-        //     }
-        // } else
-        // if (this.ir.getVoltage() >= Constants.Intake.BallDetectionVoltage) {
-        //     // When a ball enters the intake, turn it off
-        //     this.setState(IntakeState.OFF);
-        //     this.rc.drum.rotateNext();
-        // } else {
-        //     // default to no overdraw
-        //     this.overdrawTime = 0;
-        // }
-    }
-
     /**
      * set the desired intake state
      * @param state wanted intake state
@@ -110,5 +80,38 @@ public class Intake extends SubsystemBase {
     public IntakeState getState() {
         // return the current motor state
         return this.currentState;
+    }
+
+    /**
+     * Intake periodic
+     */
+    @Override
+    public void periodic() {
+        // // If over draw limit..
+        // if (this.motor.getMotorOutputVoltage() > Constants.Intake.MaxCurrentDraw) {
+        //     // if the draw just began, set time
+        //     if (this.overdrawTime == 0) {
+        //         this.overdrawTime = Timer.getFPGATimestamp();
+        //     } else
+        //     if (Timer.getFPGATimestamp()-this.overdrawTime > Constants.Intake.MaxDrawTime) {
+        //         // if over the max current draw time, reverse the rollers
+        //         this.setState(IntakeState.REVERSED);
+        //     }
+        // } else
+        // if (this.reverseTime != 0) {
+        //     // if it's in the reverse state
+        //     if (Timer.getFPGATimestamp()-this.reverseTime > Constants.Intake.ReverseTime) {
+        //         // and the time is done, turn off the motor
+        //         this.setState(IntakeState.OFF);
+        //     }
+        // } else
+        // if (this.ir.getVoltage() >= Constants.Intake.BallDetectionVoltage) {
+        //     // When a ball enters the intake, turn it off
+        //     this.setState(IntakeState.OFF);
+        //     this.rc.drum.rotateNext();
+        // } else {
+        //     // default to no overdraw
+        //     this.overdrawTime = 0;
+        // }
     }
 }

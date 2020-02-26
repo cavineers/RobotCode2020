@@ -41,6 +41,33 @@ public class Drum extends SubsystemBase {
           drumMotor.setNeutralMode(NeutralMode.Brake);
      }
 
+     /**
+      * rotate to the next position
+      */
+     public void rotateNext() {
+          this.drumMotor.set(ControlMode.Position, this.drumMotor.getSelectedSensorPosition()+Constants.Drum.PositionOffset);
+     }
+
+     /**
+      * home the drum
+      */
+     public void home() {
+          this.currentPosition = DrumPosition.HOMING;
+          drumMotor.set(ControlMode.Velocity, 0.2);
+          drumMotor.setSelectedSensorPosition(0); // reset encoder
+     }
+
+     /**
+      * Is the drum homed
+      * @return
+      */
+     public boolean isHomed() {
+          return this.homed;
+     }
+
+     /**
+      * Drum periodic
+      */
      @Override
      public void periodic() {
           if (this.currentPosition == DrumPosition.HOMING && !this.homingSwitch.get()) {
@@ -48,19 +75,5 @@ public class Drum extends SubsystemBase {
                this.homed = true;
                drumMotor.setSelectedSensorPosition(0); // reset encoder
           }
-     }
-
-     public void rotateNext() {
-          this.drumMotor.set(ControlMode.Position, this.drumMotor.getSelectedSensorPosition()+Constants.Drum.PositionOffset);
-     }
-
-     public void home() {
-          this.currentPosition = DrumPosition.HOMING;
-          drumMotor.set(ControlMode.Velocity, 0.2);
-          drumMotor.setSelectedSensorPosition(0); // reset encoder
-     }
-
-     public boolean isHomed() {
-          return this.homed;
      }
 }

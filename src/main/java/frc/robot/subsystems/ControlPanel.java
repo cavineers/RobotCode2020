@@ -23,10 +23,17 @@ public class ControlPanel extends SubsystemBase {
     // Current position
     private ControlPanelPosition currentPos = ControlPanelPosition.UNKNOWN;
 
+    /**
+     * constructor
+     * Defaults to retracted mode
+     */
     public ControlPanel() {
         this.retract();
     }
 
+    /**
+     * Extend the piston
+     */
     public void extend() {
         if (this.currentPos != ControlPanelPosition.EXTENDED) {
             controlSolenoid.set(Value.kForward);
@@ -34,6 +41,9 @@ public class ControlPanel extends SubsystemBase {
         }
     }
 
+    /**
+     * Retract the piston
+     */
     public void retract(){
         if (this.currentPos != ControlPanelPosition.RETRACTED) {
             controlSolenoid.set(Value.kReverse);
@@ -41,11 +51,18 @@ public class ControlPanel extends SubsystemBase {
         }
     }
 
+    /**
+     * set the spinner speed
+     * @param speed
+     */
     public void setSpin(double speed) {
         System.out.println("set spin");
         this.controlMotor.set(speed);
     }
 
+    /**
+     * ControlPanel periodic
+     */
     @Override
     public void periodic() {}
 }

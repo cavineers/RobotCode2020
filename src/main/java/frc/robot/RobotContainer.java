@@ -6,9 +6,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
 import frc.robot.commands.HomeHood;
 import frc.robot.commands.ShiftGear;
+import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.CompressorController;
+import frc.robot.subsystems.CompressorController.CompressorMode;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Drum;
@@ -63,6 +65,8 @@ public class RobotContainer {
      * RobotContainer
      */
     public RobotContainer() {
+        this.compressor.setClosedLoop(false);
+        this.compressor.setMode(CompressorMode.DISABLED);
         configureButtonBindings(); // Config Buttons
     }
 
@@ -107,7 +111,7 @@ public class RobotContainer {
         // b_button.whenPressed(new DrumStop(this.drum));
 
         //^ Hood
-        a_button.whenPressed(new HomeHood(this.hood));
+        // a_button.whenPressed(new HomeHood(this.hood));
 
         //! ACTUAL FINAL BUTTON CONFIGS
 
@@ -210,7 +214,7 @@ public class RobotContainer {
 
     // Tele init
     public void teleInit() {
-        // new TeleopDrive(this.drivetrain, this.joy);
+        new TeleopDrive(this.drivetrain, this.joy);
     }
 
     /**
