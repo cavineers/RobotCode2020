@@ -78,15 +78,12 @@ public final class Constants {
     // Drum
     public static class Drum {
         public static int MotorID = CANIds.DrumMotor;
-        public static double kDrumDiameter   = 22.0; // in inches
-        public static double kDrumEncoderPPI = (4096 / (kDrumDiameter * Math.PI)); // PPI
-        public static int PhotoSensor1 = 0;
-        public static int PhotoSensor2 = 1;
-        public static int PhotoSensor3 = 2;
-        public static int PhotoSensor4 = 3;
-        public static int PhotoSensor5 = 4;
+        public static double DrumDiameter   = 22.0; // in inches
+        public static double DrumEncoderPPI = (4096 / (DrumDiameter * Math.PI)); // PPI
+        public static int IRSensor = 0;
         public static int DrumLocationOffset = 10;
         public static int LimitSwitch = 0;
+        public static double PositionOffset =  100.0;
     }
     
     // Control Panel

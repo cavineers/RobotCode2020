@@ -20,7 +20,7 @@ public class AutonomousCommand2 extends SequentialCommandGroup {
   public AutonomousCommand2(DriveTrain dt, Drum d, Turntable tt, Limelight ll, Shooter s) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super(new AutoDrive(dt, 1, .5, 2), new AutoDrive(dt, 1, 0, 4), new DrumInit(d), new MoveIntoShootDistance(dt), 
+    super(new AutoDrive(dt, 1, .5, 2), new AutoDrive(dt, 1, 0, 4), new SpinDrum(d), new DrumStop(d), new MoveIntoShootDistance(dt), 
           new AutoAlign(dt, tt, ll), new ShooterOn(s), new Shoot(ll, s), new ShooterOff(s));
   }
 }
