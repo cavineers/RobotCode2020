@@ -1,7 +1,9 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpiutil.math.MathUtil;
@@ -15,6 +17,11 @@ public class Turntable extends PIDSubsystem {
 
     // Current setpoint
     private int currentSetpoint;
+
+    private DigitalInput limitSwitch = new DigitalInput(Constants.Turntable.LimitSwitch);
+
+    private boolean isHoming = false;
+    private boolean isHomed = true; //! Switch back
 
     /**
      * Turntable constructor
@@ -36,7 +43,7 @@ public class Turntable extends PIDSubsystem {
      */
     public void turnToAngle(double angle) {
         Robot.logger.logln(angle);
-        this.currentSetpoint = (int)((4096/360)*angle);
+        this.currentSetpoint = (int)((16384/360)*angle);
         setSetpoint(this.currentSetpoint);
         getController().setSetpoint(this.currentSetpoint);
     }
@@ -60,12 +67,28 @@ public class Turntable extends PIDSubsystem {
     @Override
     public void useOutput(double output, double setpoint) {
         // Debugging logs
-        Robot.logger.logln("CurrentPos: " + getMeasurement());
-        Robot.logger.logln("Wanted: " + this.currentSetpoint);
-        Robot.logger.logln("OUTPUT: " +  output);
+        System.out.println("CurrentPos: " + getMeasurement());
+        System.out.println("Wanted: " + this.currentSetpoint);
+        System.out.println("OUTPUT: " +  output);
 
         // Output
-        tableMotor.set(MathUtil.clamp(output,-0.1,0.1));
+        // if (!this.isHoming && this.isHomed) {
+        tableMotor.set(MathUtil.clamp(output,-Constants.Turntable.speed,Constants.Turntable.speed));
+        // } else {
+        //     if (this.isHoming) {
+        //         System.out.println(this.limitSwitch.get());
+        //         if (this.limitSwitch.get()) {
+        //             System.out.println("Homed");
+        //             this.tableMotor.pidWrite(0);
+        //             this.tableMotor.setSelectedSensorPosition(0);
+        //             this.isHomed = true;
+        //             this.isHoming = false;
+        //         } else {
+        //             System.out.println("Homing");
+        //             this.tableMotor.pidWrite(-1);
+        //         }
+        //     }
+        // }
     }
 
     /**
@@ -74,5 +97,18 @@ public class Turntable extends PIDSubsystem {
     @Override
     public double getMeasurement() {
         return tableMotor.getSelectedSensorPosition();
+    }
+
+    public void turntablePeriodic() {
+        System.out.println(getMeasurement());
+    }
+
+    /**
+     * Home the turntable
+     */
+    public void home() {
+        System.out.println("Starting homing..");
+        this.enable();
+        this.isHoming = true;
     }
 }

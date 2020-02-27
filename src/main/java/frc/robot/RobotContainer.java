@@ -7,6 +7,7 @@ import frc.lib.Limelight;
 import frc.robot.commands.HomeHood;
 import frc.robot.commands.ShiftGear;
 import frc.robot.commands.TeleopDrive;
+import frc.robot.commands.TurntableToTarget;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.CompressorController;
@@ -112,6 +113,10 @@ public class RobotContainer {
 
         //^ Hood
         // a_button.whenPressed(new HomeHood(this.hood));
+
+        //^ Turntable
+        a_button.whenPressed(new HomeHood(this.hood));
+        b_button.whenPressed(new TurntableToTarget(this.turnTable, 10));
 
         //! ACTUAL FINAL BUTTON CONFIGS
 

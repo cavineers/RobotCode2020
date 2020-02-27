@@ -5,6 +5,13 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.Constants;
 
 public class Limelight {
+    public enum LEDMode {
+        ON,
+        OFF,
+        DEFAULT,
+        BLINK
+    }
+
     private NetworkTable llTable;
 
     public Limelight() {
@@ -31,8 +38,21 @@ public class Limelight {
         return this.llTable.getEntry("ta").getDouble(0.0);
     }
 
-    public void setLightMode(int mode) {
-        this.llTable.getEntry("ledMode").setNumber(mode);
+    public void setLightMode(LEDMode mode) {
+        switch (mode) {
+            case ON:
+                this.llTable.getEntry("ledMode").setNumber(3);
+                break;
+            case BLINK:
+                this.llTable.getEntry("ledMode").setNumber(2);
+                break;
+            case OFF:
+                this.llTable.getEntry("ledMode").setNumber(1);
+                break;
+            case DEFAULT:
+                this.llTable.getEntry("ledMode").setNumber(0);
+                break;
+        }
     }
 
     private double llCatch(double a) {

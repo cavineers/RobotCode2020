@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -26,6 +27,8 @@ public class Drum extends SubsystemBase {
      // Current and wanted position
      private DrumPosition currentPosition = DrumPosition.UNKNOWN;
      private DrumPosition wantedPosition;
+
+     private double lastTime = 0.0;
 
      // Limit switch
      DigitalInput homingSwitch = new DigitalInput(Constants.Drum.LimitSwitch);
@@ -75,5 +78,9 @@ public class Drum extends SubsystemBase {
                this.homed = true;
                drumMotor.setSelectedSensorPosition(0); // reset encoder
           }
+          if (Timer.getFPGATimestamp()-this.lastTime > 0.25) {
+               // System.out.println("Limit Switch:" + this.homingSwitch.get());
+               this.lastTime = Timer.getFPGATimestamp();
+           }
      }
 }

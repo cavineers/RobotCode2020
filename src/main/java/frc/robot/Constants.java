@@ -55,11 +55,12 @@ public final class Constants {
     // Turntable
     public static class Turntable {
         public static int MotorID  = CANIds.TurretRotationMotor;
-        public static double speed = 0.09;
-        public static double kP = 0.1; // was 10
+        public static double speed = 1;
+        public static double kP = 0.001; // was 10
         public static double kI = 0.0; // was 1
-        public static double kD = 0.014; // was 1.4
+        public static double kD = 0; // was 1.4
         public static double tolerance = 55.0; //! Don't change this or everything will break for some reason
+        public static int LimitSwitch = 1;
     }
 
     // Shooter
@@ -82,7 +83,7 @@ public final class Constants {
         public static double DrumEncoderPPI = (4096 / (DrumDiameter * Math.PI)); // PPI
         public static int IRSensor = 0;
         public static int DrumLocationOffset = 10;
-        public static int LimitSwitch = 0;
+        public static int LimitSwitch = 2;
         public static double PositionOffset =  100.0;
     }
     
@@ -142,5 +143,9 @@ public final class Constants {
         public static int MotorID = CANIds.ShooterVerticalPitch;
         public static int LimitSwitch = 3;
         public static double HomingSpeed = -0.3;
+        public static double kP = 0.0005;
+        public static double kI = 0.0;
+        public static double kD = 0.0;
+        public static double tolerance = 55.0;
     }
 }
