@@ -82,6 +82,14 @@ public class CompressorController extends SubsystemBase {
     }
 
     /**
+     * get the manual state of the compressor
+     * @return current state
+     */
+    public CompressorMode getCurrentMode() {
+        return this.currentMode;
+    }
+
+    /**
      * Compressor periodic
      */
     @Override

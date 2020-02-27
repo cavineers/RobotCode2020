@@ -26,7 +26,6 @@ public class Drum extends SubsystemBase {
 
      // Current and wanted position
      private DrumPosition currentPosition = DrumPosition.UNKNOWN;
-     private DrumPosition wantedPosition;
 
      private double lastTime = 0.0;
 

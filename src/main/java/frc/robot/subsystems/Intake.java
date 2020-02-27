@@ -113,5 +113,9 @@ public class Intake extends SubsystemBase {
         //     // default to no overdraw
         //     this.overdrawTime = 0;
         // }
+        if (this.ir.getValue() >= Constants.Intake.BallDetectionVoltage) {
+            this.setState(IntakeState.OFF);
+            this.rc.drum.rotateNext();
+        }
     }
 }
