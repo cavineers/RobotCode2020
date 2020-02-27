@@ -2,12 +2,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
 import frc.robot.commands.HomeHood;
 import frc.robot.commands.ShiftGear;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.commands.TurntableToTarget;
+import frc.robot.subsystems.Arduino;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.CompressorController;
@@ -22,7 +24,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turntable;
 
 public class RobotContainer {
-    // Controller
+    //* Controller
     public Joystick joy = new Joystick(0);
     public JoystickButton a_button = new JoystickButton(joy, 1);
     public JoystickButton b_button = new JoystickButton(joy, 2);
@@ -46,29 +48,33 @@ public class RobotContainer {
 
     public CONTROLLER_MODE currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
 
-    // Subsystems
+    //* Subsystems
     // public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
     public CompressorController compressor = new CompressorController(false);
+    public ColorSensor colorSensor = new ColorSensor(this.colorSensorNano);
+    public Arduino colorSensorNano = new Arduino(SerialPort.Port.kUSB1);
     public DriveTrain drivetrain = new DriveTrain(this.getJoystick());
-    public Turntable turnTable = new Turntable();
-    public Limelight limelight = new Limelight();
-    public Shooter shooter = new Shooter();
-    public Climber climber = new Climber();
     public ControlPanel controlPanel = new ControlPanel();
     public Dashboard dashboard = new Dashboard(this);
+    public Turntable turnTable = new Turntable();
+    public Limelight limelight = new Limelight();
     public Intake intake = new Intake(this);
-    public Drum drum = new Drum();
+    public Shooter shooter = new Shooter();
+    public Climber climber = new Climber();
     public Feeder feeder = new Feeder();
+    public Drum drum = new Drum();
     public Hood hood = new Hood();
-    // public ColorSensor colorSensor = new ColorSensor();
 
     /**
      * RobotContainer
      */
     public RobotContainer() {
+        //^ Turn of the compressor during just motor testing
         this.compressor.setClosedLoop(false);
         this.compressor.setMode(CompressorMode.DISABLED);
-        configureButtonBindings(); // Config Buttons
+
+        // Config the controller
+        configureButtonBindings();
     }
 
     /**
@@ -217,7 +223,9 @@ public class RobotContainer {
         lastDpad = joy.getPOV();
     }
 
-    // Tele init
+    /**
+     * Start drive on teleop
+     */
     public void teleInit() {
         new TeleopDrive(this.drivetrain, this.joy);
     }
@@ -240,17 +248,25 @@ public class RobotContainer {
         return 0.0;
     }
 
+    /**
+     * Get the wanted control panel color
+     * @return get color given by FMS
+     */
     public ColorSensor.ControlPanelColor getControlPanelColor() {
         String msg = DriverStation.getInstance().getGameSpecificMessage();
         if (msg.length()>0) {
             switch (msg) {
                 case "R":
+                case "r":
                     return ColorSensor.ControlPanelColor.RED;
                 case "G":
+                case "g":
                     return ColorSensor.ControlPanelColor.GREEN;
                 case "B":
+                case "b":
                     return ColorSensor.ControlPanelColor.BLUE;
                 case "Y":
+                case "y":
                     return ColorSensor.ControlPanelColor.YELLOW;
                 default:
                     return ColorSensor.ControlPanelColor.UNKNOWN;

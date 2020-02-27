@@ -1,12 +1,8 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ColorSensor extends SubsystemBase {
-    // Create the color sensor usb controller to go between the arduino and rio
-    private SerialPort usbController = new SerialPort(9600, SerialPort.Port.kUSB1);
-    
+public class ColorSensor extends SubsystemBase {    
     // Control Panel Controls
     public enum ControlPanelColor {
         RED,
@@ -19,41 +15,31 @@ public class ColorSensor extends SubsystemBase {
     // Current color
     private ControlPanelColor currentColor = ControlPanelColor.UNKNOWN;
 
-    public ColorSensor() {}
+    // Arduino
+    private Arduino arduino;
 
     /**
-     * read the serial string
-     * @return serial string
+     * Constructor
+     * @param arduino
      */
-    public String readSerial() {
-        // get string
-        String r = this.usbController.readString();
-        // return the serial string
-        return r.substring(r.lastIndexOf("-") + 1);
-    }
-
-    /**
-     * reset the serial data
-     */
-    public void resetSerial() {
-        // reset the serial string
-        this.usbController.reset();
+    public ColorSensor(Arduino arduino) {
+        this.arduino = arduino;
     }
 
     /**
      * get the current color according to our robot
      * @return color the robot sees
      */
-    public ControlPanelColor getColor() {
+    public ControlPanelColor getColorAccordingToRobot() {
         // return the current color
         return this.currentColor;
     }
 
     /**
-     * get the field color
+     * get the current color according to our field
      * @return transposed value from our robot
      */
-    public ControlPanelColor getFieldColor() {
+    public ControlPanelColor getColorAccordingToField() {
         // get the field color through transpose
         return this.transpose(this.currentColor);
     }
@@ -83,7 +69,8 @@ public class ColorSensor extends SubsystemBase {
      * ColorSensor periodic
      */
     public void periodic() {
-        switch (this.readSerial()) {
+        String r = this.arduino.receiveSerial();
+        switch (r.substring(r.lastIndexOf("-") + 1)) {
             case "R":
             case "r":
                 // red
@@ -120,7 +107,5 @@ public class ColorSensor extends SubsystemBase {
                 this.currentColor = ControlPanelColor.UNKNOWN;
                 break;
         }
-        // reset serial string
-        this.resetSerial();
     }
 }
