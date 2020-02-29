@@ -1,9 +1,11 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpiutil.math.MathUtil;
@@ -13,7 +15,7 @@ import frc.robot.Robot;
 
 public class Turntable extends PIDSubsystem {
     // turntable motor
-    private WPI_TalonSRX tableMotor = new WPI_TalonSRX(Constants.Turntable.MotorID);
+    public WPI_TalonSRX tableMotor = new WPI_TalonSRX(Constants.Turntable.MotorID);
 
     // Current setpoint
     private int currentSetpoint;
@@ -21,7 +23,9 @@ public class Turntable extends PIDSubsystem {
     private DigitalInput limitSwitch = new DigitalInput(Constants.Turntable.LimitSwitch);
 
     private boolean isHoming = false;
-    private boolean isHomed = true; //! Switch back
+    private boolean isHomed = false;
+
+    private double lastTime = 0.0;
 
     /**
      * Turntable constructor
@@ -34,7 +38,10 @@ public class Turntable extends PIDSubsystem {
         getController().setTolerance(Constants.Turntable.tolerance);
 
         // Encoder
-        tableMotor.setSelectedSensorPosition(0);
+        this.tableMotor.setSelectedSensorPosition(0);
+
+        // Break Mode
+        this.tableMotor.setNeutralMode(NeutralMode.Brake);
     }
 
     /**
@@ -42,8 +49,9 @@ public class Turntable extends PIDSubsystem {
      * @param angle angle to turn to (in degrees)
      */
     public void turnToAngle(double angle) {
-        Robot.logger.logln(angle);
+        System.out.println("Wanted Angle: " + angle);
         this.currentSetpoint = (int)((16384/360)*angle);
+        System.out.println("Current setpoint: " + this.currentSetpoint);
         setSetpoint(this.currentSetpoint);
         getController().setSetpoint(this.currentSetpoint);
     }
@@ -53,7 +61,7 @@ public class Turntable extends PIDSubsystem {
      * @return whether we are at target
      */
     public boolean atTarget() {
-        boolean r = (this.currentSetpoint-5<getMeasurement() && this.currentSetpoint+5>getMeasurement());
+        boolean r = (this.currentSetpoint<getMeasurement() && this.currentSetpoint>getMeasurement());
         if (r) {
             disable();
             tableMotor.set(0);
@@ -72,23 +80,9 @@ public class Turntable extends PIDSubsystem {
         System.out.println("OUTPUT: " +  output);
 
         // Output
-        // if (!this.isHoming && this.isHomed) {
-        tableMotor.set(MathUtil.clamp(output,-Constants.Turntable.speed,Constants.Turntable.speed));
-        // } else {
-        //     if (this.isHoming) {
-        //         System.out.println(this.limitSwitch.get());
-        //         if (this.limitSwitch.get()) {
-        //             System.out.println("Homed");
-        //             this.tableMotor.pidWrite(0);
-        //             this.tableMotor.setSelectedSensorPosition(0);
-        //             this.isHomed = true;
-        //             this.isHoming = false;
-        //         } else {
-        //             System.out.println("Homing");
-        //             this.tableMotor.pidWrite(-1);
-        //         }
-        //     }
-        // }
+        if (!this.isHoming) {
+            tableMotor.set(MathUtil.clamp(output,-Constants.Turntable.speed,Constants.Turntable.speed));
+        }
     }
 
     /**
@@ -100,7 +94,10 @@ public class Turntable extends PIDSubsystem {
     }
 
     public void turntablePeriodic() {
-        System.out.println(getMeasurement());
+        if (Timer.getFPGATimestamp()-this.lastTime > 0.5) {
+            // System.out.println(getMeasurement());
+            this.lastTime = Timer.getFPGATimestamp();
+        }
     }
 
     /**
@@ -110,5 +107,13 @@ public class Turntable extends PIDSubsystem {
         System.out.println("Starting homing..");
         this.enable();
         this.isHoming = true;
+    }
+
+    public boolean isLimitPressed() {
+        return !this.limitSwitch.get();
+    }
+
+    public WPI_TalonSRX getMotor() {
+        return this.tableMotor;
     }
 }

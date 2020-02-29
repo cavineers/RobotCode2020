@@ -14,6 +14,8 @@ public class Limelight {
 
     private NetworkTable llTable;
 
+    private LEDMode currentLedMode = LEDMode.OFF;
+
     public Limelight() {
         this.llTable = NetworkTableInstance.getDefault().getTable("limelight");
     }
@@ -23,7 +25,8 @@ public class Limelight {
     }
 
     public double getHorizontalOffset() {
-        return this.llTable.getEntry("tx").getDouble(0.0);
+        double tx = this.llTable.getEntry("tx").getDouble(0.0);
+        return tx;
     }
 
     public double getVerticalOffset() {
@@ -39,6 +42,7 @@ public class Limelight {
     }
 
     public void setLightMode(LEDMode mode) {
+        this.currentLedMode = mode;
         switch (mode) {
             case ON:
                 this.llTable.getEntry("ledMode").setNumber(3);
@@ -70,5 +74,9 @@ public class Limelight {
         double angle2 = this.llTable.getEntry("ty").getDouble(0.0);
         double distance = (height2-height1) * (1 / Math.tan(Math.toRadians(angle1+angle2)));
         return (int)Math.round(this.llCatch(distance));
+    }
+
+    public void periodic() {
+        this.setLightMode(this.currentLedMode);
     }
 }

@@ -56,23 +56,23 @@ public final class Constants {
     public static class Turntable {
         public static int MotorID  = CANIds.TurretRotationMotor;
         public static double speed = 1;
-        public static double kP = 0.001; // was 10
-        public static double kI = 0.0; // was 1
-        public static double kD = 0; // was 1.4
-        public static double tolerance = 55.0; //! Don't change this or everything will break for some reason
+        public static double kP = 0.002;
+        public static double kI = 0.0;
+        public static double kD = 0.0001;
+        public static double tolerance = 0;
         public static int LimitSwitch = 1;
     }
 
     // Shooter
     public static class Shooter {
         public static int ShootID = CANIds.ShooterMotor;
-        public static double PIDp = 0.0005;
+        public static double PIDp = 0.000018;
         public static double PIDi = 0.0;
         public static double PIDd = 0.0001;
         public static double PIDiz = 0.0;
         public static double MaxOutput = 1.0;
         public static double MinOutput = -1.0;
-        public static double MaxRPM = 5800;
+        public static double MaxRPM = 5200;
         public static int CurrentLimit = 38;
     }
    
@@ -81,10 +81,15 @@ public final class Constants {
         public static int MotorID = CANIds.DrumMotor;
         public static double DrumDiameter   = 22.0; // in inches
         public static double DrumEncoderPPI = (4096 / (DrumDiameter * Math.PI)); // PPI
-        public static int IRSensor = 0;
+        public static int IRSensor = 1;
         public static int DrumLocationOffset = 10;
         public static int LimitSwitch = 2;
         public static double PositionOffset =  100.0;
+        public static double kP = 0.05;
+        public static double kI = 0;
+        public static double kD = 0;
+        public static double tolerance = 55.0;
+        public static double speed = 1;
     }
     
     // Control Panel
@@ -129,7 +134,7 @@ public final class Constants {
         public static double MaxCurrentDraw = 25; // in amps
         public static double MaxDrawTime = 1.0; // in seconds
         public static double ReverseTime = 2.0; // in seconds
-        public static double BallDetectionVoltage = 1.0;
+        public static double BallDetectionVoltage = 1675;
     }
 
     // Feeder

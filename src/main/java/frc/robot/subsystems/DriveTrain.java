@@ -56,10 +56,12 @@ public class DriveTrain extends SubsystemBase {
         this.right2.setSmartCurrentLimit(Constants.DriveTrain.CurrentLimit);
 
         // Set default mode
-        this.left1.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        this.left2.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        this.right1.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        this.right2.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        // CANSparkMax.IdleMode idleMode = CANSparkMax.IdleMode.kCoast;
+        CANSparkMax.IdleMode idleMode = CANSparkMax.IdleMode.kBrake;
+        this.left1.setIdleMode(idleMode);
+        this.left2.setIdleMode(idleMode);
+        this.right1.setIdleMode(idleMode);
+        this.right2.setIdleMode(idleMode);
 
         // 2nd motors follow the 1st motors
         this.left2.follow(left1);

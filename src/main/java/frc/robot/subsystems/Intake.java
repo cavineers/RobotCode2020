@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -30,6 +31,8 @@ public class Intake extends SubsystemBase {
     private double reverseTime = 0;
     private double overdrawTime = 0;
 
+    private double lastTime = 0.0;
+
     // IR Sensor
     private AnalogInput ir = new AnalogInput(Constants.Drum.IRSensor);
 
@@ -40,6 +43,8 @@ public class Intake extends SubsystemBase {
         
         // Default to off
         this.setState(IntakeState.OFF);
+
+        this.motor.setNeutralMode(NeutralMode.Brake);
     }
 
     /**
@@ -47,7 +52,7 @@ public class Intake extends SubsystemBase {
      * @param state wanted intake state
      */
     public void setState(IntakeState state) {
-        System.out.println("intake");
+        // System.out.println("intake");
         // set the current state
         this.currentState = state;
         // set motor state
@@ -113,6 +118,12 @@ public class Intake extends SubsystemBase {
         //     // default to no overdraw
         //     this.overdrawTime = 0;
         // }
+
+        if (Timer.getFPGATimestamp()-this.lastTime>0.75) {
+            // System.out.println(this.ir.getValue());
+            this.lastTime = Timer.getFPGATimestamp();
+        }
+
         if (this.ir.getValue() >= Constants.Intake.BallDetectionVoltage) {
             this.setState(IntakeState.OFF);
             this.rc.drum.rotateNext();

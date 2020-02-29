@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -9,11 +10,11 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 import frc.robot.Robot;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Hood extends PIDSubsystem {
     // turntable motor
-    private WPI_TalonSRX hoodMotor = new WPI_TalonSRX(Constants.Hood.MotorID);
+    public WPI_TalonSRX hoodMotor = new WPI_TalonSRX(Constants.Hood.MotorID);
 
     // Current setpoint
     private int currentSetpoint;
@@ -36,6 +37,9 @@ public class Hood extends PIDSubsystem {
         hoodMotor.setSelectedSensorPosition(0);
 
         this.lastTime = Timer.getFPGATimestamp();
+
+        // BRAKE
+        this.hoodMotor.setNeutralMode(NeutralMode.Brake);
     }
 
     /**
@@ -44,7 +48,7 @@ public class Hood extends PIDSubsystem {
      */
     public void turnToAngle(double angle) {
         Robot.logger.logln(angle);
-        this.currentSetpoint = (int)((4096/360)*angle);
+        this.currentSetpoint = ((int)((4096/360)*angle));
         setSetpoint(this.currentSetpoint);
         getController().setSetpoint(this.currentSetpoint);
     }
@@ -55,18 +59,12 @@ public class Hood extends PIDSubsystem {
      */
     public boolean atTarget() {
         boolean r = (this.currentSetpoint-5<getMeasurement() && this.currentSetpoint+5>getMeasurement());
-        if (r) {
-            disable();
-            hoodMotor.set(0);
-        }
+        // if (r) {
+        //     System.out.println("At target");
+        //     disable();
+        //     hoodMotor.set(0);
+        // }
         return r;
-    }
-
-    /**
-     * Home the hood
-     */
-    public void home() {
-
     }
 
     /**
@@ -75,12 +73,12 @@ public class Hood extends PIDSubsystem {
     @Override
     public void useOutput(double output, double setpoint) {
         // Debugging logs
-        Robot.logger.logln("CurrentPos: " + getMeasurement());
-        Robot.logger.logln("Wanted: " + this.currentSetpoint);
-        Robot.logger.logln("OUTPUT: " +  output);
+        System.out.println("CurrentPos: " + getMeasurement());
+        System.out.println("Wanted: " + this.currentSetpoint);
+        System.out.println("OUTPUT: " +  output);
 
         // Output
-        hoodMotor.set(MathUtil.clamp(output,-0.1,0.1));
+        this.hoodMotor.set(MathUtil.clamp(-output,-1,1));
     }
 
     /**
@@ -88,13 +86,24 @@ public class Hood extends PIDSubsystem {
      */
     @Override
     public double getMeasurement() {
-        return hoodMotor.getSelectedSensorPosition();
+        return -hoodMotor.getSelectedSensorPosition();
     }
 
     public void hoodPeriodic() {
-        if (Timer.getFPGATimestamp()-this.lastTime > 0.5) {
+        if (Timer.getFPGATimestamp()-this.lastTime > 0.2) {
             // System.out.println("Limit Switch:" + this.limitSwitch.get());
+            System.out.println(this.hoodMotor.getSelectedSensorPosition());
             this.lastTime = Timer.getFPGATimestamp();
         }
+
+        getController().setP(0.00276);
+        getController().setI(0.000000000000000000000000000000000000000000000000000000000000000000001);
+        getController().setD(0.0);
+
+        // System.out.println("Actual: " + this.hoodMotor.getSelectedSensorPosition());
+    }
+
+    public boolean getLimitSwitch() {
+        return !this.limitSwitch.get();
     }
 }

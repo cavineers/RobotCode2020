@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -13,6 +14,8 @@ public class ControlPanel extends SubsystemBase {
     private DoubleSolenoid controlSolenoid = new DoubleSolenoid(Constants.ControlPanel.PCMChannel1, Constants.ControlPanel.PCMChannel2);
     private WPI_TalonSRX controlMotor = new WPI_TalonSRX(Constants.ControlPanel.MotorID);
     
+    private double lastTime = 0.0;
+
     // Control Panel Position
     public enum ControlPanelPosition {
         EXTENDED,
@@ -64,5 +67,10 @@ public class ControlPanel extends SubsystemBase {
      * ControlPanel periodic
      */
     @Override
-    public void periodic() {}
+    public void periodic() {
+        if (Timer.getFPGATimestamp()-this.lastTime>0.5) {
+            // System.out.println(this.controlMotor.getSelectedSensorPosition());
+            this.lastTime = Timer.getFPGATimestamp();
+        }
+    }
 }

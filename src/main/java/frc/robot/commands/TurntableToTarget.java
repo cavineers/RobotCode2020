@@ -1,22 +1,23 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.lib.Limelight;
 import frc.robot.subsystems.Turntable;
 
 public class TurntableToTarget extends CommandBase {
-    private double target;
+    private Limelight ll;
 
     private Turntable table;
 
-    public TurntableToTarget(Turntable tt, double target) {
-        addRequirements(tt);
-        this.target = target;
+    public TurntableToTarget(Turntable tt, Limelight ll) {
+        this.ll = ll;
         this.table = tt;
+        addRequirements(tt);
     }
 
     @Override
     public void initialize() {
-        table.turnToAngle(this.target);
+        table.turnToAngle(this.ll.getHorizontalOffset());
         table.enable();
     }
 

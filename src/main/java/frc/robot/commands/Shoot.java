@@ -22,7 +22,7 @@ public class Shoot extends CommandBase {
 
     @Override
     public void initialize() {
-        System.out.println(this.ll.getDistance());
+        // System.out.println(this.ll.getDistance());
         this.table.getEntry("data_in").setString("[]");
         this.table.getEntry("data_out").setString("{\"tx\": \""+this.ll.getHorizontalOffset()+"\", \"ty\": \""+this.ll.getVerticalOffset()+"\", \"distance\": \""+this.ll.getDistance()+"\"}");
     }

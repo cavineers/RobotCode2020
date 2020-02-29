@@ -2,14 +2,18 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
+import frc.robot.commands.FeederOff;
+import frc.robot.commands.FeederOn;
 import frc.robot.commands.HomeHood;
+import frc.robot.commands.HomeTurntable;
+import frc.robot.commands.HoodToAngle;
 import frc.robot.commands.ShiftGear;
+import frc.robot.commands.ShooterOff;
+import frc.robot.commands.ShooterOn;
 import frc.robot.commands.TeleopDrive;
-import frc.robot.commands.TurntableToTarget;
-import frc.robot.subsystems.Arduino;
+import frc.robot.commands.TurnTableToAngle;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.CompressorController;
@@ -51,8 +55,8 @@ public class RobotContainer {
     //* Subsystems
     // public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
     public CompressorController compressor = new CompressorController(false);
-    public ColorSensor colorSensor = new ColorSensor(this.colorSensorNano);
-    public Arduino colorSensorNano = new Arduino(SerialPort.Port.kUSB1);
+    // public ColorSensor colorSensor = new ColorSensor(this.colorSensorNano);
+    // public Arduino colorSensorNano = new Arduino(SerialPort.Port.kUSB1);
     public DriveTrain drivetrain = new DriveTrain(this.getJoystick());
     public ControlPanel controlPanel = new ControlPanel();
     public Dashboard dashboard = new Dashboard(this);
@@ -102,27 +106,27 @@ public class RobotContainer {
 
         //^ Shooty Things
         // a_button.whenPressed(new Shoot(this.limelight, this.shooter));
-        // a_button.whenPressed(new ShooterOn(this.shooter));
-        // b_button.whenPressed(new ShooterOff(this.shooter));
+        a_button.whenPressed(new ShooterOn(this.shooter));
+        b_button.whenPressed(new ShooterOff(this.shooter));
 
         //^ Intake
         // a_button.whenPressed(new IntakeOn(this.intake));
         // b_button.whenPressed(new IntakeOff(this.intake));
 
         //^ Feeder
-        // a_button.whenPressed(new FeederOn(this.feeder));
-        // b_button.whenPressed(new FeederOff(this.feeder));
+        r_bump.whenPressed(new FeederOn(this.feeder));
+        l_bump.whenPressed(new FeederOff(this.feeder));
         
         //^ Drum
-        // a_button.whenPressed(new SpinDrum(this.drum));
-        // b_button.whenPressed(new DrumStop(this.drum));
+        // x_button.whenPressed(new DrumRotateNext(this.drum));
 
         //^ Hood
-        // a_button.whenPressed(new HomeHood(this.hood));
+        right_menu.whenPressed(new HomeHood(this.hood));
+        y_button.whenPressed(new HoodToAngle(this.hood, 20*(4096/360)));
 
         //^ Turntable
-        a_button.whenPressed(new HomeHood(this.hood));
-        b_button.whenPressed(new TurntableToTarget(this.turnTable, 10));
+        // b_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight));
+        x_button.whenPressed(new TurnTableToAngle(this.turnTable, this.limelight));
 
         //! ACTUAL FINAL BUTTON CONFIGS
 
@@ -130,7 +134,7 @@ public class RobotContainer {
         left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
         right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
 
-        
+        left_menu.whenPressed(new HomeTurntable(this.turnTable));
     }
 
     /**
@@ -196,6 +200,7 @@ public class RobotContainer {
                 // currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
                 // System.out.println("In Control Panel mode");
                 // this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
+                // this.hood.enable();
                 break;
             case 90:
                 // Right
@@ -208,6 +213,7 @@ public class RobotContainer {
                 // currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
                 // System.out.println("In Neutral mode");
                 // this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
+                // this.hood.disable();
                 break;
             case 270:
                 // Left

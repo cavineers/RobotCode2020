@@ -26,11 +26,11 @@ public class Robot extends TimedRobot {
         logger = new CLogger(CLogger.cLoggerMode.TESTING);
         // logger = new CLogger(CLogger.cLoggerMode.DEVELOPMENT);
 
-        SmartDashboard.putNumber("hood_angle", 0);
+        SmartDashboard.putNumber("hood_angle", 10);
         SmartDashboard.putNumber("shooter_speed", 0);
 
         // Turn off LEDs
-        this.robotContainer.limelight.setLightMode(Limelight.LEDMode.OFF);
+        this.robotContainer.limelight.setLightMode(Limelight.LEDMode.ON);
     }
 
     @Override
@@ -43,10 +43,12 @@ public class Robot extends TimedRobot {
         }
         this.robotContainer.hood.hoodPeriodic();
         this.robotContainer.turnTable.turntablePeriodic();
+        this.robotContainer.limelight.periodic();
     }
 
     @Override
     public void disabledInit() {
+        this.robotContainer.turnTable.disable();
     }
 
     @Override
@@ -73,6 +75,8 @@ public class Robot extends TimedRobot {
         this.robotContainer.teleInit();
         // this.robotContainer.hood.enable();
         // this.robotContainer.shooter.enable();
+        // this.robotContainer.hood.turnToAngle(10);
+        // this.robotContainer.hood.enable();
     }
 
     @Override
@@ -80,12 +84,20 @@ public class Robot extends TimedRobot {
         // Update controller data
         this.robotContainer.updateController();
 
+        this.robotContainer.drum.DrumPeriodic();
+
         //! THIS IS FOR ML TRAINING
         this.robotContainer.hood.turnToAngle(SmartDashboard.getNumber("hood_angle", 0));
         this.robotContainer.shooter.setSpeed(SmartDashboard.getNumber("shooter_speed", 0));
         SmartDashboard.putNumber("tx", this.robotContainer.limelight.getHorizontalOffset());
         SmartDashboard.putNumber("ty", this.robotContainer.limelight.getVerticalOffset());
         SmartDashboard.putNumber("td", this.robotContainer.limelight.getDistance());
+
+        if (this.robotContainer.joy.getRawAxis(2) > 0.05) {
+            this.robotContainer.turnTable.tableMotor.set(-this.robotContainer.joy.getRawAxis(2)/2);
+        } else {
+            this.robotContainer.turnTable.tableMotor.set(this.robotContainer.joy.getRawAxis(3)/2);
+        }
     }
 
     @Override

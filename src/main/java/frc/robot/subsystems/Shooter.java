@@ -115,14 +115,13 @@ public class Shooter extends SubsystemBase {
         }
 
         if (this.currentMode == ShooterMode.ENABLED) {
-            pidController.setReference(-Constants.Shooter.MaxRPM, ControlType.kVelocity);
-            pidController.setReference(-speed, ControlType.kVelocity);
+            pidController.setReference(-speed, ControlType.kCurrent);
         } else {
             pidController.setReference(0, ControlType.kVelocity);
         }
 
         // Add the setpoint and actual to smart dashboard
-        SmartDashboard.putNumber("SetPoint", Constants.Shooter.MaxRPM);
+        SmartDashboard.putNumber("SetPoint", speed);
         SmartDashboard.putNumber("ProcessVariable", flyingEncoder.getVelocity());
     }
 }
