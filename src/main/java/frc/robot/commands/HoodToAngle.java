@@ -22,8 +22,8 @@ public class HoodToAngle extends CommandBase {
     public void execute() {
         System.out.println("Setpoint: " + this.setpoint);
         // System.out.println("Actual: " + this.hood.getMeasurement());
-        double highSpeed = 0.26;
-        double lowSpeed = 0.2;
+        double highSpeed = 0.6;
+        double lowSpeed = 0.5;
         if  (Math.abs(this.hood.getMeasurement()) > 20) {
             if (this.hood.getMeasurement() < this.setpoint) {
                 System.out.println("Up");

@@ -75,7 +75,6 @@ public class Robot extends TimedRobot {
         this.robotContainer.teleInit();
         // this.robotContainer.hood.enable();
         // this.robotContainer.shooter.enable();
-        // this.robotContainer.hood.turnToAngle(10);
         // this.robotContainer.hood.enable();
     }
 

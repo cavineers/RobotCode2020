@@ -9,6 +9,7 @@ import frc.robot.commands.FeederOn;
 import frc.robot.commands.HomeHood;
 import frc.robot.commands.HomeTurntable;
 import frc.robot.commands.HoodToAngle;
+import frc.robot.commands.IntakeOn;
 import frc.robot.commands.ShiftGear;
 import frc.robot.commands.ShooterOff;
 import frc.robot.commands.ShooterOn;
@@ -122,7 +123,7 @@ public class RobotContainer {
 
         //^ Hood
         right_menu.whenPressed(new HomeHood(this.hood));
-        y_button.whenPressed(new HoodToAngle(this.hood, 20*(4096/360)));
+        // y_button.whenPressed(new HoodToAngle(this.hood, 20*(4096/360)));
 
         //^ Turntable
         // b_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight));
@@ -200,7 +201,8 @@ public class RobotContainer {
                 // currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
                 // System.out.println("In Control Panel mode");
                 // this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
-                // this.hood.enable();
+                this.hood.enable();
+                // new IntakeOn(this.intake);
                 break;
             case 90:
                 // Right
@@ -213,7 +215,7 @@ public class RobotContainer {
                 // currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
                 // System.out.println("In Neutral mode");
                 // this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
-                // this.hood.disable();
+                this.hood.disable();
                 break;
             case 270:
                 // Left

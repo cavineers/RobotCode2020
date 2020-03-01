@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Hood extends PIDSubsystem {
     // turntable motor
@@ -96,9 +95,9 @@ public class Hood extends PIDSubsystem {
             this.lastTime = Timer.getFPGATimestamp();
         }
 
-        getController().setP(0.00276);
-        getController().setI(0.000000000000000000000000000000000000000000000000000000000000000000001);
-        getController().setD(0.0);
+        getController().setP(0.007);
+        getController().setI(0);
+        getController().setD(0.000000006);
 
         // System.out.println("Actual: " + this.hoodMotor.getSelectedSensorPosition());
     }
