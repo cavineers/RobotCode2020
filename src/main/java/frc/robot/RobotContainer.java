@@ -1,5 +1,10 @@
 package frc.robot;
 
+<<<<<<< Updated upstream
+=======
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.DriverStation;
+>>>>>>> Stashed changes
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -11,12 +16,21 @@ import frc.robot.commands.ShiftGear;
 import frc.robot.commands.StartSpinning;
 import frc.robot.commands.StopSpinning;
 import frc.robot.commands.TeleopDrive;
+<<<<<<< Updated upstream
+=======
+import frc.robot.commands.TurnTableToAngle;
+import frc.robot.commands.EnableLED;
+import frc.robot.commands.DisableLED;
+>>>>>>> Stashed changes
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turntable;
+<<<<<<< Updated upstream
 import frc.robot.subsystems.CompressorController;
+=======
+>>>>>>> Stashed changes
 import frc.robot.subsystems.Arduino;
 
 public class RobotContainer {
@@ -44,6 +58,7 @@ public class RobotContainer {
 
     public CONTROLLER_MODE currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
 
+<<<<<<< Updated upstream
     // Subsystems
     // public DriveTrain drivetrain = new DriveTrain(this.getJoystick());
     // public Turntable turnTable = new Turntable();
@@ -57,12 +72,39 @@ public class RobotContainer {
     public Arduino arduino = new Arduino();
     // public ColorSensor colorSensor = new ColorSensor();
     // public CompressorController compressor = new CompressorController(true);
+=======
+    //* Subsystems
+    // public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
+    // public CompressorController compressor = new CompressorController(false);
+    // public ColorSensor colorSensor = new ColorSensor(this.colorSensorNano);
+    public Arduino colorSensorNano = new Arduino(SerialPort.Port.kUSB1);
+    // public DriveTrain drivetrain = new DriveTrain(this.getJoystick());
+    // public ControlPanel controlPanel = new ControlPanel();
+    // public Dashboard dashboard = new Dashboard(this);
+    // public Turntable turnTable = new Turntable();
+    // public Limelight limelight = new Limelight();
+    // public Intake intake = new Intake(this);
+    // public Shooter shooter = new Shooter();
+    // public Climber climber = new Climber();
+    // public Feeder feeder = new Feeder();
+    // public Drum drum = new Drum();
+    // public Hood hood = new Hood();
+>>>>>>> Stashed changes
 
     /**
      * RobotContainer
      */
     public RobotContainer() {
+<<<<<<< Updated upstream
         configureButtonBindings(); // Config Buttons
+=======
+        //^ Turn of the compressor during just motor testing
+        // this.compressor.setClosedLoop(false);
+        // this.compressor.setMode(CompressorMode.DISABLED);
+
+        // Config the controller
+        configureButtonBindings();
+>>>>>>> Stashed changes
     }
 
     /**
@@ -77,6 +119,7 @@ public class RobotContainer {
         // a_button.whenPressed(new StopElevator(this.climber));
 
         // ^ Control Panel
+<<<<<<< Updated upstream
         /*
          * b_button.whenPressed(new StartSpinning(this.controlPanel));
          * x_button.whenPressed(new StopSpinning(this.controlPanel));
@@ -86,11 +129,23 @@ public class RobotContainer {
         // ^ Vision
         // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable,
         // this.limelight));
+=======
+        // b_button.whenPressed(new StartSpinning(this.controlPanel));
+        // x_button.whenPressed(new StopSpinning(this.controlPanel));
+        // y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
+        // a_button.whenPressed(new RetractControlPanel(this.controlPanel));
+        a_button.whenPressed(new EnableLED(this.colorSensorNano));
+        b_button.whenPressed(new DisableLED(this.colorSensorNano));
+
+        //^ Vision
+        // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
+>>>>>>> Stashed changes
         // a_button.whenPressed(new TurntableToTarget(this.turnTable, 90));
         // a_button.whenPressed(new TurntableToTarget(this.turnTable,
         // this.limelight.getHorizontalOffset()));
         // b_button.whenPressed(new StopTurntable(this.turnTable));
 
+<<<<<<< Updated upstream
         // ! ACTUAL FINAL BUTTON CONFIGS
 
         // ^ DriveTrain (Shifting)
@@ -98,6 +153,39 @@ public class RobotContainer {
         // DriveTrain.DriveGear.HIGH_GEAR));
         // right_stick.whenPressed(new ShiftGear(this.drivetrain,
         // DriveTrain.DriveGear.LOW_GEAR));
+=======
+        //^ Shooty Things
+        // a_button.whenPressed(new Shoot(this.limelight, this.shooter));
+        // a_button.whenPressed(new ShooterOn(this.shooter));
+        // b_button.whenPressed(new ShooterOff(this.shooter));
+
+        //^ Intake
+        // a_button.whenPressed(new IntakeOn(this.intake));
+        // b_button.whenPressed(new IntakeOff(this.intake));
+
+        //^ Feeder
+        // r_bump.whenPressed(new FeederOn(this.feeder));
+        // l_bump.whenPressed(new FeederOff(this.feeder));
+        
+        //^ Drum
+        // x_button.whenPressed(new DrumRotateNext(this.drum));
+
+        //^ Hood
+        // right_menu.whenPressed(new HomeHood(this.hood));
+        // y_button.whenPressed(new HoodToAngle(this.hood, 20*(4096/360)));
+
+        //^ Turntable
+        // b_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight));
+        // x_button.whenPressed(new TurnTableToAngle(this.turnTable, this.limelight));
+
+        //! ACTUAL FINAL BUTTON CONFIGS
+
+        //^ DriveTrain (Shifting)
+        // left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
+        // right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
+
+        // left_menu.whenPressed(new HomeTurntable(this.turnTable));
+>>>>>>> Stashed changes
     }
 
     /**
@@ -165,6 +253,11 @@ public class RobotContainer {
                 // currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
                 System.out.println("In Control Panel mode");
                 // this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
+<<<<<<< Updated upstream
+=======
+                // this.hood.enable();
+                // new IntakeOn(this.intake);
+>>>>>>> Stashed changes
                 break;
             case 90:
                 // Right
@@ -176,6 +269,10 @@ public class RobotContainer {
                 // currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
                 System.out.println("In Neutral mode");
                 // this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
+<<<<<<< Updated upstream
+=======
+                // this.hood.disable();
+>>>>>>> Stashed changes
                 break;
             case 270:
                 currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;

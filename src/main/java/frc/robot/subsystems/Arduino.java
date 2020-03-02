@@ -16,9 +16,32 @@ public class Arduino extends SubsystemBase {
    */
   private SerialPort serialPort;
 
+<<<<<<< Updated upstream
   public Arduino() {
     serialPort = new SerialPort(9600, SerialPort.Port.kUSB1);
   }
+=======
+    /**
+     * Read serial data from the arduino
+     * @return the serial string
+     */
+
+    public void enableLED() {
+        String State = "ON";
+        serialPort.writeString(State);
+        serialPort.reset();
+    }
+
+    public void disableLED() {
+        String State = "OFF";
+        serialPort.writeString(State);
+        serialPort.reset();
+    }
+
+    public String receiveSerial() {
+        // Read the string
+        String word = serialPort.readString();
+>>>>>>> Stashed changes
 
   public String receiveSerial() {
     String Word = serialPort.readString();
