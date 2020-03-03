@@ -54,9 +54,9 @@ public final class Constants {
     public static class TurnTable {
         public static int MotorID  = CANIds.TurretRotationMotor;
         public static double speed = 1;
-        public static double kP = 0.002;
+        public static double kP = 0.08;
         public static double kI = 0.0;
-        public static double kD = 0.0001;
+        public static double kD = 0.0;
         public static double tolerance = 0;
         public static int LimitSwitch = 1;
     }
@@ -64,14 +64,11 @@ public final class Constants {
     // Shooter
     public static class Shooter {
         public static int ShootID = CANIds.ShooterMotor;
-        public static double PIDp = 0.000018;
-        public static double PIDi = 0.0;
-        public static double PIDd = 0.0001;
-        public static double PIDiz = 0.0;
-        public static double MaxOutput = 1.0;
-        public static double MinOutput = -1.0;
-        public static double MaxRPM = 5200;
-        public static int CurrentLimit = 38;
+        public static double PIDp = 0.0000018; // was .000185
+        public static double PIDi = 0;
+        public static double PIDd = 0.000000045;
+        public static double MaxRPM = 5500;
+        public static int CurrentLimit = 39;
     }
    
     // Drum
@@ -84,8 +81,8 @@ public final class Constants {
         public static int LimitSwitch = 2;
         public static double PositionOffset =  100.0;
         public static double kP = 0.05;
-        public static double kI = 0;
-        public static double kD = 0;
+        public static double kI = 0.0;
+        public static double kD = 0.0;
         public static double tolerance = 55.0;
         public static double speed = 1;
     }
@@ -145,10 +142,11 @@ public final class Constants {
     public static class Hood {
         public static int MotorID = CANIds.ShooterVerticalPitch;
         public static int LimitSwitch = 3;
-        public static double HomingSpeed = -0.3;
-        public static double kP = 0.0005;
+        public static double HomingSpeed = 0.15;
+        public static double kP = 0.0007;//.00068
         public static double kI = 0.0;
-        public static double kD = 0.0;
-        public static double tolerance = 55.0;
+        public static double kD = 0.00000;//.000001
+        public static double tolerance = 0.0;
+        public static double MaxSpeed = 0.9;
     }
 }

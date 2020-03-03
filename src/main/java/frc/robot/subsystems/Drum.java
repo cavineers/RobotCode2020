@@ -94,7 +94,7 @@ public class Drum extends PIDSubsystem {
 
     public void DrumPeriodic() {
         if (Timer.getFPGATimestamp()-this.lastTime>0.75) {
-            System.out.println(this.motor.getSelectedSensorPosition());
+            // System.out.println(this.motor.getSelectedSensorPosition());
             this.lastTime = Timer.getFPGATimestamp();
         }
     }

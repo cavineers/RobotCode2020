@@ -17,6 +17,10 @@ public class Robot extends TimedRobot {
 
     public double lastLime;
 
+    public Robot() {
+        super(0.02); // Run the robot at 50Hz
+    }
+
     @Override
     public void robotInit() {
         robotContainer = new RobotContainer();
@@ -86,16 +90,18 @@ public class Robot extends TimedRobot {
         this.robotContainer.drum.DrumPeriodic();
 
         //! THIS IS FOR ML TRAINING
-        this.robotContainer.hood.turnToAngle(SmartDashboard.getNumber("hood_angle", 0));
+        // this.robotContainer.hood.turnToAngle(SmartDashboard.getNumber("hood_angle", 0));
         this.robotContainer.shooter.setSpeed(SmartDashboard.getNumber("shooter_speed", 0));
         SmartDashboard.putNumber("tx", this.robotContainer.limelight.getHorizontalOffset());
         SmartDashboard.putNumber("ty", this.robotContainer.limelight.getVerticalOffset());
         SmartDashboard.putNumber("td", this.robotContainer.limelight.getDistance());
 
         if (this.robotContainer.joy.getRawAxis(2) > 0.05) {
+            // System.out.println("A");
             this.robotContainer.turnTable.tableMotor.set(-this.robotContainer.joy.getRawAxis(2)/2);
         } else {
             this.robotContainer.turnTable.tableMotor.set(this.robotContainer.joy.getRawAxis(3)/2);
+            // System.out.println("B");
         }
     }
 

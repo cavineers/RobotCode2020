@@ -3,6 +3,7 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Hood;
 
 public class HomeHood extends CommandBase {
@@ -18,7 +19,7 @@ public class HomeHood extends CommandBase {
 
     @Override
     public void execute() {
-        this.hood.hoodMotor.set(ControlMode.PercentOutput, -0.15);
+        this.hood.hoodMotor.set(ControlMode.PercentOutput, Constants.Hood.HomingSpeed);
     }
 
     @Override

@@ -25,7 +25,6 @@ public class Shooter extends SubsystemBase {
     public double kP = Constants.Shooter.PIDp;
     public double kI = Constants.Shooter.PIDi;
     public double kD = Constants.Shooter.PIDd;
-    public double kIz = Constants.Shooter.PIDiz;
     
     // Shooter Mode
     public enum ShooterMode {
@@ -56,18 +55,14 @@ public class Shooter extends SubsystemBase {
         pidController.setP(kP);
         pidController.setI(kI);
         pidController.setD(kD);
-        pidController.setIZone(kIz);
-        pidController.setFF(1/Constants.Shooter.MaxRPM);
-        pidController.setOutputRange(Constants.Shooter.MinOutput, Constants.Shooter.MaxOutput);
+        pidController.setIZone(0.0);
+        pidController.setFF(0.02);
+        pidController.setOutputRange(-1, 1);
 
         // Add to smart dashboard
         SmartDashboard.putNumber("P Gain", kP);
         SmartDashboard.putNumber("I Gain", kI);
         SmartDashboard.putNumber("D Gain", kD);
-        SmartDashboard.putNumber("I Zone", kIz);
-        SmartDashboard.putNumber("Feed Forward", 1/Constants.Shooter.MaxRPM);
-        SmartDashboard.putNumber("Max Output", Constants.Shooter.MaxOutput);
-        SmartDashboard.putNumber("Min Output", Constants.Shooter.MinOutput);
     }
 
     /**
@@ -97,31 +92,20 @@ public class Shooter extends SubsystemBase {
      */
     @Override
     public void periodic() {
-        super.periodic();
         // Get PID values from smart dashboard
         double p = SmartDashboard.getNumber("P Gain", 0);
         double i = SmartDashboard.getNumber("I Gain", 0);
         double d = SmartDashboard.getNumber("D Gain", 0);
-        double iz = SmartDashboard.getNumber("I Zone", 0);
-        double max = SmartDashboard.getNumber("Max Output", 0);
-        double min = SmartDashboard.getNumber("Min Output", 0);
         if((p != kP)) { pidController.setP(p); kP = p; }
         if((i != kI)) { pidController.setI(i); kI = i; }
         if((d != kD)) { pidController.setD(d); kD = d; }
-        if((iz != kIz)) { pidController.setIZone(iz); kIz = iz; }
-        if((max != Constants.Shooter.MaxOutput) || (min != Constants.Shooter.MinOutput)) { 
-            pidController.setOutputRange(min, max); 
-            Constants.Shooter.MinOutput = min; Constants.Shooter.MaxOutput = max; 
-        }
 
-        if (this.currentMode == ShooterMode.ENABLED) {
-            pidController.setReference(-speed, ControlType.kCurrent);
-        } else {
-            pidController.setReference(0, ControlType.kVelocity);
-        }
+        pidController.setReference(-speed, ControlType.kCurrent);
+
+        pidController.setFF(0.97/speed);
 
         // Add the setpoint and actual to smart dashboard
         SmartDashboard.putNumber("SetPoint", speed);
-        SmartDashboard.putNumber("ProcessVariable", flyingEncoder.getVelocity());
+        SmartDashboard.putNumber("Actual", flyingEncoder.getVelocity());
     }
 }

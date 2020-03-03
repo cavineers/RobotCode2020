@@ -24,7 +24,8 @@ public class Hood extends PIDSubsystem {
 
     public enum HoodAngle {
         HIGH,
-        LOW
+        LOW,
+        MEDIUM
     }
 
     /**
@@ -55,17 +56,17 @@ public class Hood extends PIDSubsystem {
         this.currentSetpoint = ((int)((4096/360)*angle));
         if (this.currentSetpoint > 330) {
             getController().setP(0.0014);
-            getController().setI(0);
-            getController().setD(0);
+            getController().setI(0.0);
+            getController().setD(0.0);
         } else
         if (this.currentSetpoint > 220) {
             getController().setP(0.0014);
-            getController().setI(0);
-            getController().setD(0);
+            getController().setI(0.0);
+            getController().setD(0.0);
         } else {
             getController().setP(0.0014);
-            getController().setI(0);
-            getController().setD(0);
+            getController().setI(0.0);
+            getController().setD(0.0);
         }
         setSetpoint(this.currentSetpoint);
         getController().setSetpoint(this.currentSetpoint);
@@ -79,15 +80,22 @@ public class Hood extends PIDSubsystem {
         switch (ha) {
             case LOW:
                 this.currentSetpoint = 160;
-                getController().setP(0.0014);
-                getController().setI(0);
-                getController().setD(0);
+                getController().setP(0.0008991);
+                getController().setI(0.0);
+                getController().setD(0.0);
+                break;
+            case MEDIUM:
+                this.currentSetpoint = 255;
+                getController().setP(0.0015);
+                getController().setI(0.0);
+                getController().setD(0.0000000000000000000000000000000000000000001);
                 break;
             case HIGH:
+                //! Might wanna fix this at some point
                 this.currentSetpoint = 350;
-                getController().setP(0.0014);
-                getController().setI(0);
-                getController().setD(0);
+                getController().setP(0.001146);
+                getController().setI(0.0);
+                getController().setD(0.0000000000000000000000000000001);
                 break;
         }
         setSetpoint(this.currentSetpoint);
@@ -114,7 +122,7 @@ public class Hood extends PIDSubsystem {
         System.out.println("OUTPUT: " +  output);
 
         // Output
-        this.hoodMotor.set(MathUtil.clamp(-output,-1,1));
+        this.hoodMotor.set(MathUtil.clamp(-output,-Constants.Hood.MaxSpeed,Constants.Hood.MaxSpeed));
     }
 
     /**
@@ -128,13 +136,9 @@ public class Hood extends PIDSubsystem {
     public void hoodPeriodic() {
         if (Timer.getFPGATimestamp()-this.lastTime > 0.2) {
             // System.out.println("Limit Switch:" + this.limitSwitch.get());
-            System.out.println(this.hoodMotor.getSelectedSensorPosition());
+            // System.out.println(this.hoodMotor.getSelectedSensorPosition());
             this.lastTime = Timer.getFPGATimestamp();
         }
-
-        getController().setP(0.007);
-        getController().setI(0);
-        getController().setD(0.000000006);
 
         // System.out.println("Actual: " + this.hoodMotor.getSelectedSensorPosition());
     }

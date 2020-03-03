@@ -14,7 +14,7 @@ public class TurnTable extends SubsystemBase {
     public WPI_TalonSRX tableMotor = new WPI_TalonSRX(Constants.TurnTable.MotorID); 
 
     // PID Controller
-    private PIDController controller = new PIDController(Constants.TurnTable.kP, Constants.TurnTable.kI, Constants.TurnTable.kD);
+    private PIDController pidController = new PIDController(Constants.TurnTable.kP, Constants.TurnTable.kI, Constants.TurnTable.kD);
 
     // TurnTable state
     public enum TurnTableState {
@@ -44,6 +44,7 @@ public class TurnTable extends SubsystemBase {
      * @param state ON/OFF state
      */
     public void setState(TurnTableState state) {
+        System.out.println(state);
         this.currentState = state;
     }
 
@@ -69,7 +70,9 @@ public class TurnTable extends SubsystemBase {
     @Override
     public void periodic() {
         if (this.currentState == TurnTableState.ON) {
-            this.tableMotor.pidWrite(this.controller.calculate(this.ll.getHorizontalOffset(), 0));
+            double output = this.pidController.calculate(this.ll.getHorizontalOffset(), 0);
+            System.out.println(output);
+            this.tableMotor.pidWrite(output);
         } else {
             this.tableMotor.set(ControlMode.PercentOutput, 0);
         }

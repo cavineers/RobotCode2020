@@ -4,22 +4,20 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
+import frc.robot.commands.ExtendControlPanel;
 import frc.robot.commands.FeederOff;
 import frc.robot.commands.FeederOn;
 import frc.robot.commands.HomeHood;
 import frc.robot.commands.HomeTurnTable;
-import frc.robot.commands.HoodToAngle;
 import frc.robot.commands.IntakeOn;
+import frc.robot.commands.RetractControlPanel;
 import frc.robot.commands.ShiftGear;
+import frc.robot.commands.TeleopDrive;
 import frc.robot.commands.shoot.ShooterOff;
 import frc.robot.commands.shoot.ShooterOn;
-import frc.robot.commands.TeleopDrive;
-import frc.robot.commands.ToggleTurnTable;
-import frc.robot.commands.TurnTableToAngle;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.CompressorController;
-import frc.robot.subsystems.CompressorController.CompressorMode;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Drum;
@@ -60,7 +58,6 @@ public class RobotContainer {
     // public ColorSensor colorSensor = new ColorSensor(this.colorSensorNano);
     // public Arduino colorSensorNano = new Arduino(SerialPort.Port.kUSB1);
     public DriveTrain drivetrain = new DriveTrain(this.getJoystick());
-    public TurnTable turnTable = new TurnTable(this.limelight);
     public ControlPanel controlPanel = new ControlPanel();
     public Dashboard dashboard = new Dashboard(this);
     public Limelight limelight = new Limelight();
@@ -70,14 +67,15 @@ public class RobotContainer {
     public Feeder feeder = new Feeder();
     public Drum drum = new Drum();
     public Hood hood = new Hood();
+    public TurnTable turnTable = new TurnTable(this.limelight);
 
     /**
      * RobotContainer
      */
     public RobotContainer() {
-        //^ Turn of the compressor during just motor testing
-        this.compressor.setClosedLoop(false);
-        this.compressor.setMode(CompressorMode.DISABLED);
+        // //^ Turn of the compressor during just motor testing
+        // this.compressor.setClosedLoop(false);
+        // this.compressor.setMode(CompressorMode.DISABLED);
 
         // Config the controller
         configureButtonBindings();
@@ -97,8 +95,8 @@ public class RobotContainer {
         // ^ Control Panel
         // b_button.whenPressed(new StartSpinning(this.controlPanel));
         // x_button.whenPressed(new StopSpinning(this.controlPanel));
-        // y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
-        // a_button.whenPressed(new RetractControlPanel(this.controlPanel));
+        y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
+        x_button.whenPressed(new RetractControlPanel(this.controlPanel));
 
         //^ Vision
         // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
@@ -128,7 +126,7 @@ public class RobotContainer {
 
         //^ TurnTable
         // b_button.whenPressed(new TurnTableToTarget(this.turnTable, this.limelight));
-        x_button.whenPressed(new ToggleTurnTable(this.turnTable));
+        // x_button.whenPressed(new ToggleTurnTable(this.turnTable));
 
         //! ACTUAL FINAL BUTTON CONFIGS
 
@@ -202,21 +200,24 @@ public class RobotContainer {
                 // currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
                 // System.out.println("In Control Panel mode");
                 // this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
-                this.hood.enable();
-                // new IntakeOn(this.intake);
+                // this.hood.turnToAngle(Hood.HoodAngle.LOW);
+                // this.hood.enable();
+                this.turnTable.setState(TurnTable.TurnTableState.ON);
                 break;
             case 90:
                 // Right
                 // currentTriggerSetting = CONTROLLER_MODE.CLIMB;
                 // System.out.println("In Climb mode");
                 // this.compressor.setClosedLoop(true);
+                new IntakeOn(this.intake);
                 break;
             case 180:
                 // Bottom
                 // currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
                 // System.out.println("In Neutral mode");
                 // this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
-                this.hood.disable();
+                // this.hood.disable();
+                this.turnTable.setState(TurnTable.TurnTableState.OFF);
                 break;
             case 270:
                 // Left
@@ -225,7 +226,7 @@ public class RobotContainer {
                 // this.compressor.setClosedLoop(false);
                 break;
             default:
-                System.out.println("Nothing is pressed, hopefully");
+                // System.out.println("Nothing is pressed, hopefully");
                 break;
             }
         }
