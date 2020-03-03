@@ -54,16 +54,16 @@ public class Hood extends PIDSubsystem {
         Robot.logger.logln(angle);
         this.currentSetpoint = ((int)((4096/360)*angle));
         if (this.currentSetpoint > 330) {
-            getController().setP(0);
+            getController().setP(0.0014);
             getController().setI(0);
             getController().setD(0);
         } else
         if (this.currentSetpoint > 220) {
-            getController().setP(0);
+            getController().setP(0.0014);
             getController().setI(0);
             getController().setD(0);
         } else {
-            getController().setP(0);
+            getController().setP(0.0014);
             getController().setI(0);
             getController().setD(0);
         }
@@ -79,13 +79,13 @@ public class Hood extends PIDSubsystem {
         switch (ha) {
             case LOW:
                 this.currentSetpoint = 160;
-                getController().setP(0);
+                getController().setP(0.0014);
                 getController().setI(0);
                 getController().setD(0);
                 break;
             case HIGH:
                 this.currentSetpoint = 350;
-                getController().setP(0);
+                getController().setP(0.0014);
                 getController().setI(0);
                 getController().setD(0);
                 break;
