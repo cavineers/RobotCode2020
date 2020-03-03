@@ -67,5 +67,6 @@
             "backgroundColor": "transparent"
         }
     ],
-    "cSpell.words": ["AHRS", "CANPID", "Deadzone", "Dpad", "setpoint", "teleop", "yeet"]
+    "cSpell.words": ["AHRS", "CANPID", "Deadzone", "Dpad", "setpoint", "teleop", "yeet"],
+    "java.home": "C:\\Users\\Public\\wpilib\\2020\\jdk"
 }

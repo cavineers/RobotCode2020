@@ -7,13 +7,14 @@ import frc.lib.Limelight;
 import frc.robot.commands.FeederOff;
 import frc.robot.commands.FeederOn;
 import frc.robot.commands.HomeHood;
-import frc.robot.commands.HomeTurntable;
+import frc.robot.commands.HomeTurnTable;
 import frc.robot.commands.HoodToAngle;
 import frc.robot.commands.IntakeOn;
 import frc.robot.commands.ShiftGear;
-import frc.robot.commands.ShooterOff;
-import frc.robot.commands.ShooterOn;
+import frc.robot.commands.shoot.ShooterOff;
+import frc.robot.commands.shoot.ShooterOn;
 import frc.robot.commands.TeleopDrive;
+import frc.robot.commands.ToggleTurnTable;
 import frc.robot.commands.TurnTableToAngle;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
@@ -26,7 +27,7 @@ import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Turntable;
+import frc.robot.subsystems.TurnTable;
 
 public class RobotContainer {
     //* Controller
@@ -59,9 +60,9 @@ public class RobotContainer {
     // public ColorSensor colorSensor = new ColorSensor(this.colorSensorNano);
     // public Arduino colorSensorNano = new Arduino(SerialPort.Port.kUSB1);
     public DriveTrain drivetrain = new DriveTrain(this.getJoystick());
+    public TurnTable turnTable = new TurnTable(this.limelight);
     public ControlPanel controlPanel = new ControlPanel();
     public Dashboard dashboard = new Dashboard(this);
-    public Turntable turnTable = new Turntable();
     public Limelight limelight = new Limelight();
     public Intake intake = new Intake(this);
     public Shooter shooter = new Shooter();
@@ -101,9 +102,9 @@ public class RobotContainer {
 
         //^ Vision
         // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
-        // a_button.whenPressed(new TurntableToTarget(this.turnTable, 90));
-        // a_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
-        // b_button.whenPressed(new StopTurntable(this.turnTable));
+        // a_button.whenPressed(new TurnTableToTarget(this.turnTable, 90));
+        // a_button.whenPressed(new TurnTableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
+        // b_button.whenPressed(new StopTurnTable(this.turnTable));
 
         //^ Shooty Things
         // a_button.whenPressed(new Shoot(this.limelight, this.shooter));
@@ -125,9 +126,9 @@ public class RobotContainer {
         right_menu.whenPressed(new HomeHood(this.hood));
         // y_button.whenPressed(new HoodToAngle(this.hood, 20*(4096/360)));
 
-        //^ Turntable
-        // b_button.whenPressed(new TurntableToTarget(this.turnTable, this.limelight));
-        x_button.whenPressed(new TurnTableToAngle(this.turnTable, this.limelight));
+        //^ TurnTable
+        // b_button.whenPressed(new TurnTableToTarget(this.turnTable, this.limelight));
+        x_button.whenPressed(new ToggleTurnTable(this.turnTable));
 
         //! ACTUAL FINAL BUTTON CONFIGS
 
@@ -135,7 +136,7 @@ public class RobotContainer {
         left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
         right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
 
-        left_menu.whenPressed(new HomeTurntable(this.turnTable));
+        left_menu.whenPressed(new HomeTurnTable(this.turnTable));
     }
 
     /**
@@ -161,7 +162,7 @@ public class RobotContainer {
      * Periodic to update controller
      */
     public void updateController() {
-        // new TurntableToTarget(this.turnTable, this.limelight.getHorizontalOffset());
+        // new TurnTableToTarget(this.turnTable, this.limelight.getHorizontalOffset());
         if (lastRightTrig != isRightTriggerPressed()) {
             // the right trigger changed state
             lastRightTrig = isRightTriggerPressed();

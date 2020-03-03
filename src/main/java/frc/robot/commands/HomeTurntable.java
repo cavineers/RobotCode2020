@@ -3,12 +3,12 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Turntable;
+import frc.robot.subsystems.TurnTable;
 
-public class HomeTurntable extends CommandBase {
-    private Turntable tt;
+public class HomeTurnTable extends CommandBase {
+    private TurnTable tt;
 
-    public HomeTurntable(Turntable tt) {
+    public HomeTurnTable(TurnTable tt) {
         addRequirements(tt);
         this.tt = tt;
     }
@@ -18,14 +18,14 @@ public class HomeTurntable extends CommandBase {
 
     @Override
     public void execute() {
-        this.tt.getMotor().set(ControlMode.PercentOutput, 0.15);
+        this.tt.tableMotor.set(ControlMode.PercentOutput, 0.15);
     }
 
     @Override
     public void end(boolean interrupted) {
         System.out.println("Stopping");
-        this.tt.getMotor().set(ControlMode.PercentOutput, 0);
-        this.tt.getMotor().setSelectedSensorPosition(0);
+        this.tt.tableMotor.set(ControlMode.PercentOutput, 0);
+        this.tt.tableMotor.setSelectedSensorPosition(0);
     }
 
     @Override

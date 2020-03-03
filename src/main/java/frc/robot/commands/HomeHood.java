@@ -18,7 +18,7 @@ public class HomeHood extends CommandBase {
 
     @Override
     public void execute() {
-        this.hood.hoodMotor.set(ControlMode.PercentOutput, 0.40);
+        this.hood.hoodMotor.set(ControlMode.PercentOutput, -0.15);
     }
 
     @Override

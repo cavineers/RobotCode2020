@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
 import frc.lib.Limelight;
+import frc.robot.subsystems.TurnTable;
 
 public class Robot extends TimedRobot {
     // private Command autonomousCommand;
@@ -42,13 +43,12 @@ public class Robot extends TimedRobot {
             // logger.logln("Distance: " + robotContainer.limelight.getDistance());
         }
         this.robotContainer.hood.hoodPeriodic();
-        this.robotContainer.turnTable.turntablePeriodic();
         this.robotContainer.limelight.periodic();
     }
 
     @Override
     public void disabledInit() {
-        this.robotContainer.turnTable.disable();
+        this.robotContainer.turnTable.setState(TurnTable.TurnTableState.OFF);
     }
 
     @Override

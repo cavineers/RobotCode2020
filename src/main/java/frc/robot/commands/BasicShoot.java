@@ -39,7 +39,7 @@
 //         this.currentStage = Stage.INITIAL;
 
 //         // Move turntable
-//         new TurntableToTarget(this.rc.turnTable, this.rc.limelight.getHorizontalOffset());
+//         new TurnTableToTarget(this.rc.turnTable, this.rc.limelight.getHorizontalOffset());
 //         this.timeElapsed = Timer.getFPGATimestamp();
 //         this.currentStage = Stage.TUNING_TURNTABLE;
 //     }

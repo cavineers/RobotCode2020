@@ -4,27 +4,26 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.Limelight;
-import frc.robot.subsystems.Turntable;
+import frc.robot.subsystems.TurnTable;
 
 public class TurnTableToAngle extends CommandBase {
-    private Turntable tt;
+    private TurnTable tt;
     private Limelight ll;
 
-    public TurnTableToAngle(Turntable tt, Limelight ll) {
+    public TurnTableToAngle(TurnTable tt, Limelight ll) {
         addRequirements(tt);
         this.tt = tt;
         this.ll = ll;
     }
 
     @Override
-    public void initialize() {
-    }
+    public void initialize() {}
 
     @Override
     public void execute() {
         double highSpeed = 0.15;
         double lowSpeed = 0.095;
-        if  (Math.abs(this.ll.getHorizontalOffset()) > 7) {
+        if  (Math.abs(this.ll.getHorizontalOffset()) > 10) { //! WAS 7
             if (this.ll.getHorizontalOffset() > 0) {
                 System.out.println("Right");
                 this.tt.tableMotor.set(ControlMode.PercentOutput, highSpeed);

@@ -1,8 +1,6 @@
 package frc.robot;
  
 public final class Constants {
-    //? All constants begin with a lowercase 'k'
-
     // CAN network mapping
     public static class CANIds {
         public static int PCM                    = 0;  // Pneumatic Control Module (PCM)
@@ -23,26 +21,26 @@ public final class Constants {
 
     // PCM module mapping
     public static class PCMChannels {
-        public static int DriveShift1   = 6;
-        public static int DriveShift2   = 7;
+        public static int DriveShift1   = 2;
+        public static int DriveShift2   = 3;
         public static int ControlPanel1 = 0;
         public static int ControlPanel2 = 1;
     }
 
     // PDP power mapping
     public static class PDPPorts {
-        public static int DriveTrainMotor1 = 0;
-        public static int DriveTrainMotor2 = 0;
-        public static int DriveTrainMotor3 = 0;
-        public static int DriveTrainMotor4 = 0;
-        public static int ShooterMotor = 0;
+        public static int DriveTrainMotor1 = 12;
+        public static int DriveTrainMotor2 = 13;
+        public static int DriveTrainMotor3 = 3;
+        public static int DriveTrainMotor4 = 1;
+        public static int ShooterMotor = 15;
         public static int ClimberMotor = 0;
-        public static int DrumMotor = 0;
-        public static int ShooterVerticalPitch = 0;
-        public static int FeederMotor = 0;
-        public static int IntakeMotor = 0;
-        public static int ControlPanelMotor = 0;
-        public static int TurretRotationMotor = 0;
+        public static int DrumMotor = 9;
+        public static int ShooterVerticalPitch = 11;
+        public static int FeederMotor = 8;
+        public static int IntakeMotor = 2;
+        public static int ControlPanelMotor = 10;
+        public static int TurretRotationMotor = 14;
     }
     
     // VISION
@@ -52,8 +50,8 @@ public final class Constants {
         public static double kLimelightMountingAngle    = 25.0;
     }
 
-    // Turntable
-    public static class Turntable {
+    // TurnTable
+    public static class TurnTable {
         public static int MotorID  = CANIds.TurretRotationMotor;
         public static double speed = 1;
         public static double kP = 0.002;

@@ -22,8 +22,13 @@ public class Hood extends PIDSubsystem {
 
     private DigitalInput limitSwitch = new DigitalInput(Constants.Hood.LimitSwitch);
 
+    public enum HoodAngle {
+        HIGH,
+        LOW
+    }
+
     /**
-     * Turntable constructor
+     * TurnTable constructor
      */
     public Hood() {
         // Set our PID values
@@ -48,6 +53,43 @@ public class Hood extends PIDSubsystem {
     public void turnToAngle(double angle) {
         Robot.logger.logln(angle);
         this.currentSetpoint = ((int)((4096/360)*angle));
+        if (this.currentSetpoint > 330) {
+            getController().setP(0);
+            getController().setI(0);
+            getController().setD(0);
+        } else
+        if (this.currentSetpoint > 220) {
+            getController().setP(0);
+            getController().setI(0);
+            getController().setD(0);
+        } else {
+            getController().setP(0);
+            getController().setI(0);
+            getController().setD(0);
+        }
+        setSetpoint(this.currentSetpoint);
+        getController().setSetpoint(this.currentSetpoint);
+    }
+
+    /**
+     * turn to angle
+     * @param ha Desired hood position
+     */
+    public void turnToAngle(HoodAngle ha) {
+        switch (ha) {
+            case LOW:
+                this.currentSetpoint = 160;
+                getController().setP(0);
+                getController().setI(0);
+                getController().setD(0);
+                break;
+            case HIGH:
+                this.currentSetpoint = 350;
+                getController().setP(0);
+                getController().setI(0);
+                getController().setD(0);
+                break;
+        }
         setSetpoint(this.currentSetpoint);
         getController().setSetpoint(this.currentSetpoint);
     }
@@ -58,11 +100,6 @@ public class Hood extends PIDSubsystem {
      */
     public boolean atTarget() {
         boolean r = (this.currentSetpoint-5<getMeasurement() && this.currentSetpoint+5>getMeasurement());
-        // if (r) {
-        //     System.out.println("At target");
-        //     disable();
-        //     hoodMotor.set(0);
-        // }
         return r;
     }
 
