@@ -7,6 +7,7 @@ import frc.lib.Limelight;
 import frc.robot.commands.ExtendControlPanel;
 import frc.robot.commands.FeederOff;
 import frc.robot.commands.FeederOn;
+import frc.robot.commands.HomeDrum;
 import frc.robot.commands.HomeHood;
 import frc.robot.commands.HomeTurnTable;
 import frc.robot.commands.IntakeOn;
@@ -18,6 +19,7 @@ import frc.robot.commands.shoot.ShooterOn;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.CompressorController;
+import frc.robot.subsystems.CompressorController.CompressorMode;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Drum;
@@ -74,8 +76,8 @@ public class RobotContainer {
      */
     public RobotContainer() {
         // //^ Turn of the compressor during just motor testing
-        // this.compressor.setClosedLoop(false);
-        // this.compressor.setMode(CompressorMode.DISABLED);
+        this.compressor.setClosedLoop(false);
+        this.compressor.setMode(CompressorMode.DISABLED);
 
         // Config the controller
         configureButtonBindings();
@@ -134,7 +136,7 @@ public class RobotContainer {
         left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
         right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
 
-        left_menu.whenPressed(new HomeTurnTable(this.turnTable));
+        left_menu.whenPressed(new HomeDrum(this.drum));
     }
 
     /**
@@ -202,7 +204,8 @@ public class RobotContainer {
                 // this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
                 // this.hood.turnToAngle(Hood.HoodAngle.LOW);
                 // this.hood.enable();
-                this.turnTable.setState(TurnTable.TurnTableState.ON);
+                // this.turnTable.setState(TurnTable.TurnTableState.ON);
+                this.drum.rotateNext();
                 break;
             case 90:
                 // Right
@@ -217,7 +220,8 @@ public class RobotContainer {
                 // System.out.println("In Neutral mode");
                 // this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
                 // this.hood.disable();
-                this.turnTable.setState(TurnTable.TurnTableState.OFF);
+                // this.turnTable.setState(TurnTable.TurnTableState.OFF);
+                this.drum.disable();
                 break;
             case 270:
                 // Left

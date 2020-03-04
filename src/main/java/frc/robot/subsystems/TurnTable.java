@@ -74,7 +74,7 @@ public class TurnTable extends SubsystemBase {
             System.out.println(output);
             this.tableMotor.pidWrite(output);
         } else {
-            this.tableMotor.set(ControlMode.PercentOutput, 0);
+            this.tableMotor.pidWrite(0);
         }
     }
 }

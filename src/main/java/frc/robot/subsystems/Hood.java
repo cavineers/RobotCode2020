@@ -93,9 +93,9 @@ public class Hood extends PIDSubsystem {
             case HIGH:
                 //! Might wanna fix this at some point
                 this.currentSetpoint = 350;
-                getController().setP(0.001146);
+                getController().setP(0.00127);
                 getController().setI(0.0);
-                getController().setD(0.0000000000000000000000000000001);
+                getController().setD(0.000000000000000000000000000000000000000001);
                 break;
         }
         setSetpoint(this.currentSetpoint);

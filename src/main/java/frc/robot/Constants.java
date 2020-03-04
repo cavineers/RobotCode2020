@@ -80,11 +80,11 @@ public final class Constants {
         public static int DrumLocationOffset = 10;
         public static int LimitSwitch = 2;
         public static double PositionOffset =  100.0;
-        public static double kP = 0.05;
+        public static double kP = 0.000009;
         public static double kI = 0.0;
-        public static double kD = 0.0;
-        public static double tolerance = 55.0;
-        public static double speed = 1;
+        public static double kD = 0.0000000385;
+        public static double tolerance = 0.0;
+        public static double speed = 0.8;
     }
     
     // Control Panel

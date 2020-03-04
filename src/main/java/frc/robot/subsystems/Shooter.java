@@ -56,7 +56,7 @@ public class Shooter extends SubsystemBase {
         pidController.setI(kI);
         pidController.setD(kD);
         pidController.setIZone(0.0);
-        pidController.setFF(0.02);
+        // pidController.setFF(0.02);
         pidController.setOutputRange(-1, 1);
 
         // Add to smart dashboard
@@ -102,7 +102,7 @@ public class Shooter extends SubsystemBase {
 
         pidController.setReference(-speed, ControlType.kCurrent);
 
-        pidController.setFF(0.97/speed);
+        // pidController.setFF(0.97/speed);
 
         // Add the setpoint and actual to smart dashboard
         SmartDashboard.putNumber("SetPoint", speed);
