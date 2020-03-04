@@ -38,4 +38,4 @@
 
 **Left D-Pad** =>
 
-**Button D-Pad** =>
+**Bottom D-Pad** =>
