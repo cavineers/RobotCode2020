@@ -1,6 +1,6 @@
 # Robot Controls (name tbd)
 
-![Controller Format](https://github.com/cavineers/RobotCode2020/blob/TheMess/controller_mapped.png)
+![Controller Format](https://github.com/cavineers/RobotCode2020/blob/TheMess/sketches/controller_mapped.png)
 
 ### Buttons
 
