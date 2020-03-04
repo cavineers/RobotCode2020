@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -51,7 +52,7 @@ public class Drum extends SubsystemBase {
         }
         if (drumReady == false) {
             final long startTime = System.currentTimeMillis();
-            if (irSensor.getVoltage() > 1.75) {
+            if (irSensor.getVoltage() > Constants.Drum.IrSensorTrigger) {
                 if (numberStopperIR == 0) {
 
                     while (startTime + 500 > System.currentTimeMillis()) {
@@ -63,21 +64,21 @@ public class Drum extends SubsystemBase {
 
             }
         }
-        if (irSensor.getVoltage() < 1.75) {
+        if (irSensor.getVoltage() < Constants.Drum.IrSensorTrigger) {
             numberStopperIR = 0;
         }
 
         System.out.println(numberOfBalls);
         // System.out.println(irSensor.getVoltage());
-        if (irSensor.getVoltage() > 1.5) {
+        if (irSensor.getVoltage() > Constants.Drum.IrSensorTrigger) {
             System.out.println("true");
-        } else if (irSensor.getVoltage() < 1.5) {
+        } else if (irSensor.getVoltage() < Constants.Drum.IrSensorTrigger) {
             System.out.println("false");
         } else {
             System.out.println("error");
         }
 
-        if (numberOfBalls > 4 & irSensor.getVoltage() < 1.5) {
+        if (numberOfBalls > 4 & irSensor.getVoltage() < Constants.Drum.IrSensorTrigger) {
             numberOfBalls = 0;
         }
 

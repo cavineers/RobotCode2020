@@ -67,8 +67,9 @@ public final class Constants {
         public static int MotorID = CANIds.DrumMotor;
         public static double kDrumEncoderPPI = (4096 / (kDrumDiameter * Math.PI)); // PPI
         public static int LimitSwitch = 0;
-        public static int IrSensor = 0;
+        public static int IrSensor = 1;
         public static int DrumLocationOffset = 10;
+        public static double IrSensorTrigger = 1.75;
 
     }
 
