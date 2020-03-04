@@ -1,4 +1,4 @@
-# Robot Controls (name tbd)
+# Kronk Controls
 
 ![Controller Format](https://github.com/cavineers/RobotCode2020/blob/TheMess/sketches/controller_mapped.png)
 
@@ -12,25 +12,25 @@
 
 **Right stick button** => Low gear
 
-**Left bumper** =>
+**Left bumper** => Control Panel Manual Left
 
-**Right bumper** =>
+**Right bumper** => Control Panel Manual Right
 
-**X Button** =>
+**X Button** => Toggle Intake on/off
 
-**Y Button** =>
+**Y Button** => Toggle Control Panel piston
 
 **B Button** =>
 
-**A Button** =>
+**A Button** => Auto align & Shoot
 
 **Left Menu** =>
 
-**Right Menu** =>
+**Right Menu** => Home everything
 
-**Left Trigger** =>
-
-**Right Trigger** =>
+**Left Trigger** => Climber Up 
+ 
+**Right Trigger** => Climber Down
 
 **Top D-Pad** =>
 
