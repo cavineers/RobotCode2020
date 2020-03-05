@@ -45,34 +45,37 @@ public class DumbDrum extends SubsystemBase {
      */
     @Override
     public void periodic() {
-        // Traveling to the edge of the first hump
-        if (this.stage == 1) {
-            if (this.isLimitPressed()) {
+        switch (this.stage) {
+            case 1:
+                // Traveling to the edge of the first hump
+                if (this.isLimitPressed()) {
+                    this.motor.set(0);
+                    this.stage++;
+                } else {
+                    this.motor.set(-0.2);
+                }
+                break;
+            case 2:
+                // Crossing the hump
+                if (!this.isLimitPressed()) {
+                    this.motor.set(0);
+                    this.stage++;
+                } else {
+                    this.motor.set(-0.2);
+                }
+                break;
+            case 3:
+                // Traveling to the edge of the next hump
+                if (this.isLimitPressed()) {
+                    this.motor.set(0);
+                    this.stage = 0;
+                } else {
+                    this.motor.set(-0.2);
+                }
+                break;
+            default:
                 this.motor.set(0);
-                this.stage++;
-            } else {
-                this.motor.set(-0.2);
-            }
-        }
-
-        // Crossing the hump
-        if (this.stage == 2) {
-            if (!this.isLimitPressed()) {
-                this.motor.set(0);
-                this.stage++;
-            } else {
-                this.motor.set(-0.2);
-            }
-        }
-
-        // Traveling to the edge of the next hump
-        if (this.stage == 3) {
-            if (this.isLimitPressed()) {
-                this.motor.set(0);
-                this.stage = 0;
-            } else {
-                this.motor.set(-0.2);
-            }
+                break;
         }
     }
 }
