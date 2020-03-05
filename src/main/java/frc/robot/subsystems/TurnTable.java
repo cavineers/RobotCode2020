@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -65,13 +64,27 @@ public class TurnTable extends SubsystemBase {
     }
 
     /**
+     * Enable the PID loop
+     */
+    public void enable() {
+        this.setState(TurnTableState.ON);
+    }
+
+    /**
+     * Disable the PID loop
+     */
+    public void disable() {
+        this.setState(TurnTableState.OFF);
+    }
+
+    /**
      * Periodic
      */
     @Override
     public void periodic() {
         if (this.currentState == TurnTableState.ON) {
-            double output = this.pidController.calculate(this.ll.getHorizontalOffset(), 0);
-            System.out.println(output);
+            double output = this.pidController.calculate(-this.ll.getHorizontalOffset(), 0);
+            // System.out.println(output);
             this.tableMotor.pidWrite(output);
         } else {
             this.tableMotor.pidWrite(0);

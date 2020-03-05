@@ -19,39 +19,20 @@ public class HomeDrum extends CommandBase {
 
     @Override
     public void execute() {
-        if (stage == 0) {
-            if (this.drum.isLimitPressed()) {
-                this.stage++;
-                this.drum.motor.set(0);
-                this.drum.motor.setSelectedSensorPosition(-6426);
-                this.drum.makeSetpoint(0);
-                this.drum.enable();
-            }
-            this.drum.disable();
-            this.drum.motor.set(-0.3);
-        }
-        if (stage == 1) {
-            if (this.drum.motor.getSelectedSensorPosition() < 750 && this.drum.motor.getSelectedSensorPosition() > -750) {
-                this.stage++;
-            } else {
-                if (this.drum.motor.getSelectedSensorPosition() < 0) {
-                    this.drum.motor.set(0.2);
-                } else {
-                    this.drum.motor.set(0.2);
-                }
-            }
-        }
+        this.drum.motor.set(-0.2);
     }
 
     @Override
     public void end(boolean interrupted) {
         System.out.println("Homed");
         this.drum.motor.set(0.0);
-        
+        this.drum.motor.setSelectedSensorPosition(-15000);
+        this.drum.makeSetpoint(0) ;
+        this.drum.enable();
     }
 
     @Override
     public boolean isFinished() {
-        return this.stage == 2;
+        return this.drum.isLimitPressed();
     }
 }

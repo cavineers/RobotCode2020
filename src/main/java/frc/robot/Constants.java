@@ -54,9 +54,9 @@ public final class Constants {
     public static class TurnTable {
         public static int MotorID  = CANIds.TurretRotationMotor;
         public static double speed = 1;
-        public static double kP = 0.08;
-        public static double kI = 0.0;
-        public static double kD = 0.0;
+        public static double kP = 0.01;
+        public static double kI = 0.005;
+        public static double kD = 0.0007;
         public static double tolerance = 0;
         public static int LimitSwitch = 1;
     }
@@ -64,9 +64,10 @@ public final class Constants {
     // Shooter
     public static class Shooter {
         public static int ShootID = CANIds.ShooterMotor;
-        public static double PIDp = 0.0000018; // was .000185
-        public static double PIDi = 0;
-        public static double PIDd = 0.000000045;
+        public static double PIDp = 4.5;
+        public static double PIDi = 0.0;
+        public static double PIDd = 0.0;
+        public static double PIDf = 0.00002;
         public static double MaxRPM = 5500;
         public static int CurrentLimit = 39;
     }
@@ -80,9 +81,9 @@ public final class Constants {
         public static int DrumLocationOffset = 10;
         public static int LimitSwitch = 2;
         public static double PositionOffset =  100.0;
-        public static double kP = 0.000009;
+        public static double kP = 0.001;
         public static double kI = 0.0;
-        public static double kD = 0.0000000385;
+        public static double kD = 0.0001;
         public static double tolerance = 0.0;
         public static double speed = 0.8;
     }
@@ -129,7 +130,7 @@ public final class Constants {
         public static double MaxCurrentDraw = 25; // in amps
         public static double MaxDrawTime = 1.0; // in seconds
         public static double ReverseTime = 2.0; // in seconds
-        public static double BallDetectionVoltage = 1675;
+        public static double BallDetectionVoltage = 1800;
     }
 
     // Feeder

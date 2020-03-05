@@ -4,22 +4,15 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
-import frc.robot.commands.ExtendControlPanel;
-import frc.robot.commands.FeederOff;
-import frc.robot.commands.FeederOn;
+import frc.robot.commands.HomeAll;
 import frc.robot.commands.HomeDrum;
-import frc.robot.commands.HomeHood;
-import frc.robot.commands.HomeTurnTable;
-import frc.robot.commands.IntakeOn;
-import frc.robot.commands.RetractControlPanel;
 import frc.robot.commands.ShiftGear;
-import frc.robot.commands.TeleopDrive;
-import frc.robot.commands.shoot.ShooterOff;
-import frc.robot.commands.shoot.ShooterOn;
+import frc.robot.commands.ToggleControlPanel;
+import frc.robot.commands.ToggleIntake;
+import frc.robot.commands.shoot.Shoot;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.CompressorController;
-import frc.robot.subsystems.CompressorController.CompressorMode;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Drum;
@@ -76,8 +69,8 @@ public class RobotContainer {
      */
     public RobotContainer() {
         // //^ Turn of the compressor during just motor testing
-        this.compressor.setClosedLoop(false);
-        this.compressor.setMode(CompressorMode.DISABLED);
+        // this.compressor.setClosedLoop(false);
+        // this.compressor.setMode(CompressorMode.DISABLED);
 
         // Config the controller
         configureButtonBindings();
@@ -97,8 +90,8 @@ public class RobotContainer {
         // ^ Control Panel
         // b_button.whenPressed(new StartSpinning(this.controlPanel));
         // x_button.whenPressed(new StopSpinning(this.controlPanel));
-        y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
-        x_button.whenPressed(new RetractControlPanel(this.controlPanel));
+        // y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
+        // x_button.whenPressed(new RetractControlPanel(this.controlPanel));
 
         //^ Vision
         // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
@@ -108,22 +101,23 @@ public class RobotContainer {
 
         //^ Shooty Things
         // a_button.whenPressed(new Shoot(this.limelight, this.shooter));
-        a_button.whenPressed(new ShooterOn(this.shooter));
-        b_button.whenPressed(new ShooterOff(this.shooter));
+        // a_button.whenPressed(new ShooterOn(this.shooter));
+        // b_button.whenPressed(new ShooterOff(this.shooter));
 
         //^ Intake
         // a_button.whenPressed(new IntakeOn(this.intake));
         // b_button.whenPressed(new IntakeOff(this.intake));
 
         //^ Feeder
-        r_bump.whenPressed(new FeederOn(this.feeder));
-        l_bump.whenPressed(new FeederOff(this.feeder));
+        // r_bump.whenPressed(new FeederOn(this.feeder));
+        // l_bump.whenPressed(new FeederOff(this.feeder));
         
         //^ Drum
         // x_button.whenPressed(new DrumRotateNext(this.drum));
+        // left_menu.whenPressed(new HomeDrum(this.drum));
 
         //^ Hood
-        right_menu.whenPressed(new HomeHood(this.hood));
+        left_menu.whenPressed(new HomeDrum(this.drum));
         // y_button.whenPressed(new HoodToAngle(this.hood, 20*(4096/360)));
 
         //^ TurnTable
@@ -136,7 +130,17 @@ public class RobotContainer {
         left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
         right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
 
-        left_menu.whenPressed(new HomeDrum(this.drum));
+        //^ Intake
+        x_button.whenPressed(new ToggleIntake(this.intake));
+
+        //^ Control Panel
+        y_button.whenPressed(new ToggleControlPanel(this.controlPanel));
+
+        //^ Shooting
+        a_button.whenPressed(new Shoot(this));
+
+        //^ Homing
+        right_menu.whenPressed(new HomeAll(this));
     }
 
     /**
@@ -202,17 +206,19 @@ public class RobotContainer {
                 // currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
                 // System.out.println("In Control Panel mode");
                 // this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
-                // this.hood.turnToAngle(Hood.HoodAngle.LOW);
-                // this.hood.enable();
                 // this.turnTable.setState(TurnTable.TurnTableState.ON);
-                this.drum.rotateNext();
+                this.hood.enable();
+                // this.hood.turnToAngle(Hood.HoodAngle.HIGH);
+                this.hood.turnToAngle(20);
                 break;
             case 90:
                 // Right
                 // currentTriggerSetting = CONTROLLER_MODE.CLIMB;
                 // System.out.println("In Climb mode");
                 // this.compressor.setClosedLoop(true);
-                new IntakeOn(this.intake);
+                // this.hood.enable();
+                // this.hood.turnToAngle(Hood.HoodAngle.MEDIUM);
+                this.hood.disable();
                 break;
             case 180:
                 // Bottom
@@ -221,13 +227,17 @@ public class RobotContainer {
                 // this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
                 // this.hood.disable();
                 // this.turnTable.setState(TurnTable.TurnTableState.OFF);
-                this.drum.disable();
+                // this.turnTable.disable();
+                // this.hood.enable();
+                // this.hood.turnToAngle(Hood.HoodAngle.LOW);
+                this.turnTable.disable();
                 break;
             case 270:
                 // Left
                 // currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;
                 // System.out.println("In Auto Shoot mode");
                 // this.compressor.setClosedLoop(false);
+                this.turnTable.enable();
                 break;
             default:
                 // System.out.println("Nothing is pressed, hopefully");
@@ -235,13 +245,6 @@ public class RobotContainer {
             }
         }
         lastDpad = joy.getPOV();
-    }
-
-    /**
-     * Start drive on teleop
-     */
-    public void teleInit() {
-        new TeleopDrive(this.drivetrain, this.joy);
     }
 
     /**

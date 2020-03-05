@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.commands.HomeAll;
+import frc.robot.commands.HomeHood;
 
 public class Intake extends SubsystemBase {
     // Intake state
@@ -27,11 +29,14 @@ public class Intake extends SubsystemBase {
     // Robot Container
     private RobotContainer rc;
 
-    // Timing
-    private double reverseTime = 0;
-    private double overdrawTime = 0;
-
     private double lastTime = 0.0;
+
+    // Turn back on
+    private boolean turnBackOn = false;
+
+    private double offAt = 0;
+
+    private double delay = 0;
 
     // IR Sensor
     private AnalogInput ir = new AnalogInput(Constants.Drum.IRSensor);
@@ -60,20 +65,14 @@ public class Intake extends SubsystemBase {
             case ON:
                 // On
                 this.motor.set(ControlMode.PercentOutput, Constants.Intake.InSpeed);
-                this.reverseTime = 0;
-                this.overdrawTime = 0;
                 break;
             case OFF:
                 // Off
                 this.motor.set(ControlMode.PercentOutput, 0);
-                this.reverseTime = 0;
-                this.overdrawTime = 0;
                 break;
             case REVERSED:
                 // Reversed
                 this.motor.set(ControlMode.PercentOutput, Constants.Intake.OutSpeed);
-                this.reverseTime = Timer.getFPGATimestamp();
-                this.overdrawTime = 0;
                 break;
         }
     }
@@ -92,41 +91,35 @@ public class Intake extends SubsystemBase {
      */
     @Override
     public void periodic() {
-        // // If over draw limit..
-        // if (this.motor.getMotorOutputVoltage() > Constants.Intake.MaxCurrentDraw) {
-        //     // if the draw just began, set time
-        //     if (this.overdrawTime == 0) {
-        //         this.overdrawTime = Timer.getFPGATimestamp();
-        //     } else
-        //     if (Timer.getFPGATimestamp()-this.overdrawTime > Constants.Intake.MaxDrawTime) {
-        //         // if over the max current draw time, reverse the rollers
-        //         this.setState(IntakeState.REVERSED);
-        //     }
-        // } else
-        // if (this.reverseTime != 0) {
-        //     // if it's in the reverse state
-        //     if (Timer.getFPGATimestamp()-this.reverseTime > Constants.Intake.ReverseTime) {
-        //         // and the time is done, turn off the motor
-        //         this.setState(IntakeState.OFF);
-        //     }
-        // } else
-        // if (this.ir.getVoltage() >= Constants.Intake.BallDetectionVoltage) {
-        //     // When a ball enters the intake, turn it off
-        //     this.setState(IntakeState.OFF);
-        //     this.rc.drum.rotateNext();
-        // } else {
-        //     // default to no overdraw
-        //     this.overdrawTime = 0;
-        // }
-
         if (Timer.getFPGATimestamp()-this.lastTime>0.75) {
-            // System.out.println(this.ir.getValue());
+            System.out.println("IR:" + this.ir.getValue());
             this.lastTime = Timer.getFPGATimestamp();
         }
 
-        if (this.ir.getValue() >= Constants.Intake.BallDetectionVoltage) {
+        if (this.turnBackOn) {
+            if (!this.rc.drum.isTurning()) {
+                // this.setState(IntakeState.ON);
+                System.out.println("Intake wants to turn back on");
+                this.turnBackOn = false;
+            } else {
+                this.setState(IntakeState.OFF);
+            }
+        }
+
+        if (this.ir.getValue() >= Constants.Intake.BallDetectionVoltage && this.currentState == IntakeState.ON) {
+            System.out.println("off");
             this.setState(IntakeState.OFF);
+            this.rc.drum.addBall();
+            if (this.rc.drum.getBallCount() != 5) {
+                this.delay = Timer.getFPGATimestamp();
+                //this.offAt = Timer.getFPGATimestamp();
+                this.turnBackOn = true;
+            }
+        }
+
+        if (Timer.getFPGATimestamp()-this.delay > 2.0 && this.delay != 0) {
             this.rc.drum.rotateNext();
+            this.delay = 0;
         }
     }
 }

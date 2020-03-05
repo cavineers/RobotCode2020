@@ -1,9 +1,12 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.Deadzone;
 import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
@@ -51,6 +54,10 @@ public class Climber extends SubsystemBase {
      */
     public ClimberMode getMode() {
         return this.currentMode;
+    }
+
+    public void manual(double x) {
+        this.climberMotor.set(x);
     }
 
     /**

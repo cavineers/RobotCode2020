@@ -13,13 +13,13 @@ import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
     // Fly wheel motor
-    private CANSparkMax flyWheel = new CANSparkMax(Constants.Shooter.ShootID, MotorType.kBrushless);
+    private CANSparkMax shootMotor = new CANSparkMax(Constants.Shooter.ShootID, MotorType.kBrushless);
 
     // Fly wheel PID
-    private CANPIDController pidController = flyWheel.getPIDController();
+    private CANPIDController pidController = shootMotor.getPIDController();
     
     // Fly wheel encoder
-    private CANEncoder flyingEncoder = flyWheel.getEncoder();
+    private CANEncoder encoder = shootMotor.getEncoder();
 
     // Set initial PID values
     public double kP = Constants.Shooter.PIDp;
@@ -43,26 +43,20 @@ public class Shooter extends SubsystemBase {
      */
     public Shooter() {
         // Restore factory defaults
-        this.flyWheel.restoreFactoryDefaults();
+        this.shootMotor.restoreFactoryDefaults();
 
         // Set to coast mode
-        this.flyWheel.setIdleMode(IdleMode.kCoast);
+        this.shootMotor.setIdleMode(IdleMode.kCoast);
 
         // Current limit
-        this.flyWheel.setSmartCurrentLimit(Constants.Shooter.CurrentLimit);
+        this.shootMotor.setSmartCurrentLimit(Constants.Shooter.CurrentLimit);
 
         // Add PID values to controller
         pidController.setP(kP);
         pidController.setI(kI);
         pidController.setD(kD);
         pidController.setIZone(0.0);
-        // pidController.setFF(0.02);
         pidController.setOutputRange(-1, 1);
-
-        // Add to smart dashboard
-        SmartDashboard.putNumber("P Gain", kP);
-        SmartDashboard.putNumber("I Gain", kI);
-        SmartDashboard.putNumber("D Gain", kD);
     }
 
     /**
@@ -92,20 +86,12 @@ public class Shooter extends SubsystemBase {
      */
     @Override
     public void periodic() {
-        // Get PID values from smart dashboard
-        double p = SmartDashboard.getNumber("P Gain", 0);
-        double i = SmartDashboard.getNumber("I Gain", 0);
-        double d = SmartDashboard.getNumber("D Gain", 0);
-        if((p != kP)) { pidController.setP(p); kP = p; }
-        if((i != kI)) { pidController.setI(i); kI = i; }
-        if((d != kD)) { pidController.setD(d); kD = d; }
+        pidController.setReference(-speed, ControlType.kVelocity);
 
-        pidController.setReference(-speed, ControlType.kCurrent);
-
-        // pidController.setFF(0.97/speed);
+        pidController.setFF(Math.abs(speed*0.000000045));
 
         // Add the setpoint and actual to smart dashboard
         SmartDashboard.putNumber("SetPoint", speed);
-        SmartDashboard.putNumber("Actual", flyingEncoder.getVelocity());
+        SmartDashboard.putNumber("Actual", encoder.getVelocity());
     }
 }

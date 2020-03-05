@@ -68,5 +68,6 @@
         }
     ],
     "cSpell.words": ["AHRS", "CANPID", "Deadzone", "Dpad", "setpoint", "teleop", "yeet"],
-    "java.home": "C:\\Users\\Public\\wpilib\\2020\\jdk"
+    "java.home": "C:\\Users\\Public\\wpilib\\2020\\jdk",
+    "wpilib.autoSaveOnDeploy": true
 }

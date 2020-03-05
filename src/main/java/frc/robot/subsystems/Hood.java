@@ -52,22 +52,18 @@ public class Hood extends PIDSubsystem {
      * @param angle angle to turn to (in degrees)
      */
     public void turnToAngle(double angle) {
-        Robot.logger.logln(angle);
         this.currentSetpoint = ((int)((4096/360)*angle));
-        if (this.currentSetpoint > 330) {
-            getController().setP(0.0014);
-            getController().setI(0.0);
-            getController().setD(0.0);
-        } else
-        if (this.currentSetpoint > 220) {
-            getController().setP(0.0014);
-            getController().setI(0.0);
-            getController().setD(0.0);
-        } else {
-            getController().setP(0.0014);
-            getController().setI(0.0);
-            getController().setD(0.0);
-        }
+        //$ 40:1 Gearbox
+        // getController().setP(0.0014);
+        // getController().setI(0.0);
+        // getController().setD(0.0);
+
+        //$ 4:1 Gearbox
+        getController().setP(0.001);
+        getController().setI(0.0);
+        getController().setD(0.001);
+
+        // Setpoint
         setSetpoint(this.currentSetpoint);
         getController().setSetpoint(this.currentSetpoint);
     }
@@ -91,7 +87,6 @@ public class Hood extends PIDSubsystem {
                 getController().setD(0.0000000000000000000000000000000000000000001);
                 break;
             case HIGH:
-                //! Might wanna fix this at some point
                 this.currentSetpoint = 350;
                 getController().setP(0.00127);
                 getController().setI(0.0);
@@ -117,9 +112,9 @@ public class Hood extends PIDSubsystem {
     @Override
     public void useOutput(double output, double setpoint) {
         // Debugging logs
-        System.out.println("CurrentPos: " + getMeasurement());
-        System.out.println("Wanted: " + this.currentSetpoint);
-        System.out.println("OUTPUT: " +  output);
+        // System.out.println("CurrentPos: " + getMeasurement());
+        // System.out.println("Wanted: " + this.currentSetpoint);
+        // System.out.println("OUTPUT: " +  output);
 
         // Output
         this.hoodMotor.set(MathUtil.clamp(-output,-Constants.Hood.MaxSpeed,Constants.Hood.MaxSpeed));

@@ -6,7 +6,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
 import frc.lib.Limelight;
-import frc.robot.subsystems.TurnTable;
+import frc.robot.commands.TeleopClimb;
+import frc.robot.commands.TeleopDrive;
+import frc.robot.subsystems.Hood;
 
 public class Robot extends TimedRobot {
     // private Command autonomousCommand;
@@ -31,32 +33,43 @@ public class Robot extends TimedRobot {
         logger = new CLogger(CLogger.cLoggerMode.TESTING);
         // logger = new CLogger(CLogger.cLoggerMode.DEVELOPMENT);
 
-        SmartDashboard.putNumber("hood_angle", 10);
-        SmartDashboard.putNumber("shooter_speed", 0);
+        SmartDashboard.putNumber("shooter_speed", 4000);
 
-        // Turn off LEDs
-        this.robotContainer.limelight.setLightMode(Limelight.LEDMode.ON);
+        // == DEFAULTS ==
+
+        // Hood to low position
+        // this.robotContainer.hood.turnToAngle(Hood.HoodAngle.LOW);
+        this.robotContainer.hood.enable();
+
+        // Drum to zero
+        this.robotContainer.drum.enable();
+        this.robotContainer.drum.motor.setSelectedSensorPosition(0);
+
+        // Shooter
+        this.robotContainer.shooter.enable();
+        this.robotContainer.shooter.setSpeed(0);
+
+        // Turntable
+        this.robotContainer.turnTable.disable();
+
+        // Limelight
+        this.robotContainer.limelight.setLightMode(Limelight.LEDMode.OFF);
     }
 
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
-        if (Robot.getCurrentTime()-lastLime > .5) {
-            lastLime = Robot.getCurrentTime();
+        if (Timer.getFPGATimestamp()-lastLime > .5) {
+            lastLime = Timer.getFPGATimestamp();
             // Log the limelight distance
             // logger.logln("Distance: " + robotContainer.limelight.getDistance());
         }
         this.robotContainer.hood.hoodPeriodic();
         this.robotContainer.limelight.periodic();
-    }
+        this.robotContainer.drum.DrumPeriodic();
 
-    @Override
-    public void disabledInit() {
-        this.robotContainer.turnTable.setState(TurnTable.TurnTableState.OFF);
+        this.robotContainer.shooter.setSpeed(SmartDashboard.getNumber("shooter_speed", 0));
     }
-
-    @Override
-    public void disabledPeriodic() {}
 
     @Override
     public void autonomousInit() {
@@ -76,10 +89,9 @@ public class Robot extends TimedRobot {
         // if (m_autonomousCommand != null) {
         // m_autonomousCommand.cancel();
         // }
-        this.robotContainer.teleInit();
-        // this.robotContainer.hood.enable();
-        // this.robotContainer.shooter.enable();
-        // this.robotContainer.hood.enable();
+
+        new TeleopDrive(this.robotContainer.drivetrain, this.robotContainer.joy);
+        // new TeleopClimb(this.robotContainer.climber, this.robotContainer.joy);
     }
 
     @Override
@@ -87,35 +99,25 @@ public class Robot extends TimedRobot {
         // Update controller data
         this.robotContainer.updateController();
 
-        this.robotContainer.drum.DrumPeriodic();
-
         //! THIS IS FOR ML TRAINING
         // this.robotContainer.hood.turnToAngle(SmartDashboard.getNumber("hood_angle", 0));
-        this.robotContainer.shooter.setSpeed(SmartDashboard.getNumber("shooter_speed", 0));
+        // this.robotContainer.shooter.setSpeed(SmartDashboard.getNumber("shooter_speed", 0));
         SmartDashboard.putNumber("tx", this.robotContainer.limelight.getHorizontalOffset());
         SmartDashboard.putNumber("ty", this.robotContainer.limelight.getVerticalOffset());
         SmartDashboard.putNumber("td", this.robotContainer.limelight.getDistance());
-
-        if (this.robotContainer.joy.getRawAxis(2) > 0.05) {
-            // System.out.println("A");
-            this.robotContainer.turnTable.tableMotor.set(-this.robotContainer.joy.getRawAxis(2)/2);
-        } else {
-            this.robotContainer.turnTable.tableMotor.set(this.robotContainer.joy.getRawAxis(3)/2);
-            // System.out.println("B");
-        }
     }
 
     @Override
-    public void testInit() {
-        CommandScheduler.getInstance().cancelAll();
-
-        logger.updateLogLevel(CLogger.cLoggerMode.TESTING);
+    public void disabledInit() {
+        this.robotContainer.limelight.setLightMode(Limelight.LEDMode.ON);
     }
+
+    @Override
+    public void disabledPeriodic() {}
+
+    @Override
+    public void testInit() {}
 
     @Override
     public void testPeriodic() {}
-
-    public static double getCurrentTime() {
-        return Timer.getFPGATimestamp();
-    }
 }

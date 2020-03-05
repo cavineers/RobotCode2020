@@ -54,6 +54,10 @@ public class ControlPanel extends SubsystemBase {
         }
     }
 
+    public ControlPanelPosition getPistonPosition() {
+        return this.currentPos;
+    }
+
     /**
      * set the spinner speed
      * @param speed
