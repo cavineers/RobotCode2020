@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -7,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
 import frc.lib.Limelight;
 import frc.robot.commands.TeleopDrive;
-import frc.robot.subsystems.Hood;
 
 public class Robot extends TimedRobot {
     // private Command autonomousCommand;
@@ -17,6 +17,8 @@ public class Robot extends TimedRobot {
     public static CLogger logger;
 
     public double lastLime;
+
+    private boolean homeDrum = true;
 
     public Robot() {
         super(0.02); // Run the robot at 50Hz
@@ -82,6 +84,7 @@ public class Robot extends TimedRobot {
         this.robotContainer.drum.getController().setSetpoint(0);
         this.robotContainer.drum.setSetpoint(0);
         this.robotContainer.drum.currentSetpoint = 0;
+        this.homeDrum = false;
     }
 
     @Override
@@ -96,12 +99,15 @@ public class Robot extends TimedRobot {
         // Home drum
         this.robotContainer.drum.enable();
         this.robotContainer.hood.enable();
-        //TODO: If driver station is connected through fms, ignore the following line
-        this.robotContainer.drum.motor.setSelectedSensorPosition(0);
-        this.robotContainer.drum.getController().setSetpoint(0);
-        this.robotContainer.drum.setSetpoint(0);
-        this.robotContainer.drum.currentSetpoint = 0;
-
+        if (this.homeDrum) {
+            this.robotContainer.drum.motor.setSelectedSensorPosition(0);
+            this.robotContainer.drum.getController().setSetpoint(0);
+            this.robotContainer.drum.setSetpoint(0);
+            this.robotContainer.drum.currentSetpoint = 0;
+        } else {
+            this.homeDrum = true;
+        }
+        
         new TeleopDrive(this.robotContainer.drivetrain, this.robotContainer.joy);
     }
 
@@ -124,9 +130,6 @@ public class Robot extends TimedRobot {
         this.robotContainer.drum.disable();
         this.robotContainer.hood.disable();
         this.robotContainer.shooter.disable();
-        // this.robotContainer.drum.setSetpoint(0);
-        // this.robotContainer.drum.getController().setSetpoint(0);
-        // this.robotContainer.drum.currentSetpoint = 0;
     }
 
     @Override

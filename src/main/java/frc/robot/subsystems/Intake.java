@@ -98,7 +98,7 @@ public class Intake extends SubsystemBase {
     @Override
     public void periodic() {
         if (Timer.getFPGATimestamp()-this.lastTime>0.75) {
-            System.out.println("IR:" + this.getIRVal());
+            // System.out.println("IR:" + this.getIRVal());
             this.lastTime = Timer.getFPGATimestamp();
         }
 

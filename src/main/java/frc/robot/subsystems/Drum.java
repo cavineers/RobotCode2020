@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -20,9 +19,6 @@ public class Drum extends PIDSubsystem {
     public int currentSetpoint;
 
     private DigitalInput limitSwitch = new DigitalInput(Constants.Drum.LimitSwitch);
-
-    private boolean isHoming = false;
-    private boolean isHomed = false;
 
     private double lastTime = 0.0;
 
@@ -82,9 +78,9 @@ public class Drum extends PIDSubsystem {
     @Override
     public void useOutput(double output, double setpoint) {
         // Debugging logs
-        System.out.println("CurrentPos: " + getMeasurement());
-        System.out.println("Wanted: " + this.currentSetpoint);
-        System.out.println("OUTPUT: " +  output);
+        // System.out.println("CurrentPos: " + getMeasurement());
+        // System.out.println("Wanted: " + this.currentSetpoint);
+        // System.out.println("OUTPUT: " +  output);
 
         // Output
         // if (!this.isHoming) {
@@ -96,9 +92,6 @@ public class Drum extends PIDSubsystem {
             this.turning = false;
         } else {
             this.turning = true;
-        }
-        if (lastTurning != this.turning) {
-            System.out.println(this.turning);
         }
         // System.out.println(this.turning);
     }
@@ -117,7 +110,7 @@ public class Drum extends PIDSubsystem {
 
     public void DrumPeriodic() {
         if (Timer.getFPGATimestamp()-this.lastTime>0.75) {
-            System.out.println(this.motor.getSelectedSensorPosition());
+            // System.out.println(this.motor.getSelectedSensorPosition());
             this.lastTime = Timer.getFPGATimestamp();
         }
     }
