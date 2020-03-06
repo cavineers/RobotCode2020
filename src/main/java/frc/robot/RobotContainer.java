@@ -201,10 +201,10 @@ public class RobotContainer {
         }
 
         if (this.l_bump.get()) {
-            this.climber.climberMotor.set(1);
+            this.climber.climberMotor.set(-1);
         } else
         if (this.r_bump.get()) {
-            this.climber.climberMotor.set(-1);
+            this.climber.climberMotor.set(1);
         } else {
             this.climber.climberMotor.set(0);
         }

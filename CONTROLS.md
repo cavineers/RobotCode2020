@@ -8,13 +8,13 @@
 
 **Right Joystick** => Left & Right drive
 
-**Left stick button** => High gear
+**Left stick button** => Low gear
 
-**Right stick button** => Low gear
+**Right stick button** => High gear
 
-**Left bumper** => Control Panel Manual Left
+**Left bumper** => Climber up
 
-**Right bumper** => Control Panel Manual Right
+**Right bumper** => Climber down
 
 **X Button** => Toggle Intake on/off
 
@@ -28,9 +28,9 @@
 
 **Right Menu** => Home everything
 
-**Left Trigger** => Climber Up 
+**Left Trigger** => VariableControl Panel Left 
  
-**Right Trigger** => Climber Down
+**Right Trigger** => Variable Control Panel Right
 
 **Top D-Pad** =>
 
