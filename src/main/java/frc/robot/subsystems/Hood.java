@@ -59,9 +59,14 @@ public class Hood extends PIDSubsystem {
         // getController().setD(0.0);
 
         //$ 4:1 Gearbox
-        getController().setP(0.001);
-        getController().setI(0.0);
-        getController().setD(0.001);
+        // getController().setP(0.001);
+        // getController().setI(0.0);
+        // getController().setD(0.001);
+
+        //$ Other maths stuffs
+        getController().setP(0.00017);
+        getController().setI(0.0003);
+        getController().setD(0.000015);
 
         // Setpoint
         setSetpoint(this.currentSetpoint);

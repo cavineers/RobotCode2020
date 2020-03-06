@@ -21,11 +21,6 @@ public class Shooter extends SubsystemBase {
     // Fly wheel encoder
     private CANEncoder encoder = shootMotor.getEncoder();
 
-    // Set initial PID values
-    public double kP = Constants.Shooter.PIDp;
-    public double kI = Constants.Shooter.PIDi;
-    public double kD = Constants.Shooter.PIDd;
-    
     // Shooter Mode
     public enum ShooterMode {
         ENABLED,
@@ -52,9 +47,6 @@ public class Shooter extends SubsystemBase {
         this.shootMotor.setSmartCurrentLimit(Constants.Shooter.CurrentLimit);
 
         // Add PID values to controller
-        pidController.setP(kP);
-        pidController.setI(kI);
-        pidController.setD(kD);
         pidController.setIZone(0.0);
         pidController.setOutputRange(-1, 1);
     }
@@ -82,16 +74,36 @@ public class Shooter extends SubsystemBase {
     }
 
     /**
+     * Is the speed at the setpoint
+     * @return at setpoint
+     */
+    public boolean closeEnough() {
+        return (Math.abs(this.speed-Math.abs(this.encoder.getVelocity()))<50);
+    }
+
+    /**
      * Shooter periodic
      */
     @Override
     public void periodic() {
-        pidController.setReference(-speed, ControlType.kVelocity);
+        pidController.setReference(-this.speed, ControlType.kVelocity);
 
-        pidController.setFF(Math.abs(speed*0.000000045));
+        if (this.currentMode == ShooterMode.ENABLED && this.speed != 0) {
+            pidController.setP(Constants.Shooter.PIDp);
+            pidController.setI(Constants.Shooter.PIDi);
+            pidController.setD(Constants.Shooter.PIDd);
+            pidController.setFF(Math.abs(0.000182));
+        } else {
+            pidController.setP(0);
+            pidController.setP(0);
+            pidController.setP(0);
+            pidController.setFF(0);
+        }
+
+        // System.out.println(this.encoder.getVelocity());
 
         // Add the setpoint and actual to smart dashboard
-        SmartDashboard.putNumber("SetPoint", speed);
-        SmartDashboard.putNumber("Actual", encoder.getVelocity());
+        SmartDashboard.putNumber("SetPoint", this.speed);
+        SmartDashboard.putNumber("Actual", this.encoder.getVelocity());
     }
 }

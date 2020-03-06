@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
-import frc.robot.Robot;
 
 
 public class Drum extends PIDSubsystem {
@@ -18,7 +17,7 @@ public class Drum extends PIDSubsystem {
     public WPI_TalonSRX motor = new WPI_TalonSRX(Constants.Drum.MotorID);
 
     // Current setpoint
-    private int currentSetpoint;
+    public int currentSetpoint;
 
     private DigitalInput limitSwitch = new DigitalInput(Constants.Drum.LimitSwitch);
 
@@ -52,7 +51,7 @@ public class Drum extends PIDSubsystem {
      * turnToAngle
      * @param angle angle to turn to (in degrees)
      */
-    public void rotateNext() {
+    public void moveToNext() {
         this.enable();
         this.currentSetpoint = this.currentSetpoint + (-((int)((409600/360)*(360/5))));
         setSetpoint(this.currentSetpoint);

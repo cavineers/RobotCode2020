@@ -67,6 +67,7 @@ public class TurnTable extends SubsystemBase {
      * Enable the PID loop
      */
     public void enable() {
+        this.ll.setLightMode(Limelight.LEDMode.ON);
         this.setState(TurnTableState.ON);
     }
 
@@ -74,6 +75,7 @@ public class TurnTable extends SubsystemBase {
      * Disable the PID loop
      */
     public void disable() {
+        this.ll.setLightMode(Limelight.LEDMode.OFF);
         this.setState(TurnTableState.OFF);
     }
 

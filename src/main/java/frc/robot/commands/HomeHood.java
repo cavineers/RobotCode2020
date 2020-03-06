@@ -27,6 +27,8 @@ public class HomeHood extends CommandBase {
         System.out.println("homed");
         this.hood.hoodMotor.set(0);
         this.hood.hoodMotor.setSelectedSensorPosition(0);
+        this.hood.turnToAngle(0);
+        this.hood.enable();
     }
 
     @Override

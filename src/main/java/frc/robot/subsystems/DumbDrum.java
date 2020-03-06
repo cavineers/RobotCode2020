@@ -17,6 +17,9 @@ public class DumbDrum extends SubsystemBase {
     // Stage
     private int stage = 0;
 
+    // Ball count
+    private int ballCount = 0;
+
     /**
      * Constructor
      */
@@ -38,6 +41,36 @@ public class DumbDrum extends SubsystemBase {
      */
     public boolean isLimitPressed() {
         return !this.limitSwitch.get();
+    }
+
+    /**
+     * Is the drum currently spinning
+     * @return is spinning
+     */
+    public boolean isTurning() {
+        return !(this.stage == 0);
+    }
+
+    /**
+     * Add another ball to the count
+     */
+    public void addBall() {
+        this.ballCount++;
+    }
+
+    /**
+     * Reset the ball count
+     */
+    public void resetBall() {
+        this.ballCount = 0;
+    }
+
+    /**
+     * Get the current ball count
+     * @return current balls
+     */
+    public int getBallCount() {
+        return this.ballCount;
     }
 
     /**

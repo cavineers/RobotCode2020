@@ -64,7 +64,7 @@ public final class Constants {
     // Shooter
     public static class Shooter {
         public static int ShootID = CANIds.ShooterMotor;
-        public static double PIDp = 4.5;
+        public static double PIDp = 0.0005;
         public static double PIDi = 0.0;
         public static double PIDd = 0.0;
         public static double PIDf = 0.00002;
@@ -81,9 +81,9 @@ public final class Constants {
         public static int DrumLocationOffset = 10;
         public static int LimitSwitch = 2;
         public static double PositionOffset =  100.0;
-        public static double kP = 0.001;
-        public static double kI = 0.0;
-        public static double kD = 0.0001;
+        public static double kP = 0.000004;
+        public static double kI = 0.00001;
+        public static double kD = 0.0;
         public static double tolerance = 0.0;
         public static double speed = 0.8;
     }
@@ -130,7 +130,7 @@ public final class Constants {
         public static double MaxCurrentDraw = 25; // in amps
         public static double MaxDrawTime = 1.0; // in seconds
         public static double ReverseTime = 2.0; // in seconds
-        public static double BallDetectionVoltage = 1800;
+        public static double BallDetectionVoltage = 9;
     }
 
     // Feeder

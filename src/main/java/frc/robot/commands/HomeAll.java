@@ -14,7 +14,9 @@ public class HomeAll extends CommandBase {
     @Override
     public void initialize() {
         System.out.println("Started Homing");
-        new HomeHood(this.rc.hood);
+        this.rc.hood.disable();
+        new HomeHood(this.rc.hood).schedule();
+        new HomeDrum(this.rc.drum).schedule();
     }
 
     @Override

@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
 import frc.robot.commands.HomeAll;
-import frc.robot.commands.HomeDrum;
 import frc.robot.commands.ShiftGear;
 import frc.robot.commands.ToggleControlPanel;
 import frc.robot.commands.ToggleIntake;
@@ -13,6 +12,7 @@ import frc.robot.commands.shoot.Shoot;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.CompressorController;
+import frc.robot.subsystems.CompressorController.CompressorMode;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Drum;
@@ -60,6 +60,7 @@ public class RobotContainer {
     public Shooter shooter = new Shooter();
     public Climber climber = new Climber();
     public Feeder feeder = new Feeder();
+    // public DumbDrum drum = new DumbDrum();
     public Drum drum = new Drum();
     public Hood hood = new Hood();
     public TurnTable turnTable = new TurnTable(this.limelight);
@@ -68,9 +69,9 @@ public class RobotContainer {
      * RobotContainer
      */
     public RobotContainer() {
-        // //^ Turn of the compressor during just motor testing
-        // this.compressor.setClosedLoop(false);
-        // this.compressor.setMode(CompressorMode.DISABLED);
+        //^ Turn of the compressor during just motor testing
+        this.compressor.setClosedLoop(false);
+        this.compressor.setMode(CompressorMode.DISABLED);
 
         // Config the controller
         configureButtonBindings();
@@ -117,7 +118,7 @@ public class RobotContainer {
         // left_menu.whenPressed(new HomeDrum(this.drum));
 
         //^ Hood
-        left_menu.whenPressed(new HomeDrum(this.drum));
+        // left_menu.whenPressed(new HomeDrum(this.drum));
         // y_button.whenPressed(new HoodToAngle(this.hood, 20*(4096/360)));
 
         //^ TurnTable
@@ -199,6 +200,15 @@ public class RobotContainer {
             }
         }
 
+        if (this.l_bump.get()) {
+            this.climber.climberMotor.set(1);
+        } else
+        if (this.r_bump.get()) {
+            this.climber.climberMotor.set(-1);
+        } else {
+            this.climber.climberMotor.set(0);
+        }
+
         if (lastDpad != joy.getPOV()) {
             switch (joy.getPOV()) {
             case 0:
@@ -207,9 +217,10 @@ public class RobotContainer {
                 // System.out.println("In Control Panel mode");
                 // this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
                 // this.turnTable.setState(TurnTable.TurnTableState.ON);
-                this.hood.enable();
+                // this.hood.enable();
                 // this.hood.turnToAngle(Hood.HoodAngle.HIGH);
-                this.hood.turnToAngle(20);
+                // this.hood.turnToAngle(20);
+                this.shooter.enable();
                 break;
             case 90:
                 // Right
@@ -218,7 +229,9 @@ public class RobotContainer {
                 // this.compressor.setClosedLoop(true);
                 // this.hood.enable();
                 // this.hood.turnToAngle(Hood.HoodAngle.MEDIUM);
-                this.hood.disable();
+                // this.hood.disable();
+                this.drum.enable();
+                this.drum.moveToNext();
                 break;
             case 180:
                 // Bottom
@@ -230,14 +243,15 @@ public class RobotContainer {
                 // this.turnTable.disable();
                 // this.hood.enable();
                 // this.hood.turnToAngle(Hood.HoodAngle.LOW);
-                this.turnTable.disable();
+                // this.turnTable.disable();
+                this.shooter.disable();
                 break;
             case 270:
                 // Left
                 // currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;
                 // System.out.println("In Auto Shoot mode");
                 // this.compressor.setClosedLoop(false);
-                this.turnTable.enable();
+                // this.turnTable.enable();
                 break;
             default:
                 // System.out.println("Nothing is pressed, hopefully");

@@ -34,9 +34,11 @@ public class Intake extends SubsystemBase {
     // Turn back on
     private boolean turnBackOn = false;
 
-    private double offAt = 0;
+    private int onStage = 0;
 
-    private double delay = 0;
+    private double turnDelay = 0;
+
+    private double onDelay = 0;
 
     // IR Sensor
     private AnalogInput ir = new AnalogInput(Constants.Drum.IRSensor);
@@ -86,40 +88,61 @@ public class Intake extends SubsystemBase {
         return this.currentState;
     }
 
+    public double getIRVal() {
+        return ((27.726)*(Math.pow(this.ir.getVoltage(), -1.2045)));
+    }
+
     /**
      * Intake periodic
      */
     @Override
     public void periodic() {
         if (Timer.getFPGATimestamp()-this.lastTime>0.75) {
-            System.out.println("IR:" + this.ir.getValue());
+            System.out.println("IR:" + this.getIRVal());
             this.lastTime = Timer.getFPGATimestamp();
         }
 
-        if (this.turnBackOn) {
-            if (!this.rc.drum.isTurning()) {
-                // this.setState(IntakeState.ON);
-                System.out.println("Intake wants to turn back on");
-                this.turnBackOn = false;
-            } else {
-                this.setState(IntakeState.OFF);
-            }
-        }
+        // if (this.turnBackOn) {
+        //     switch (this.onStage) {
+        //         case 1:
+        //             if (this.rc.drum.isTurning()) {
+        //                 this.onStage++;
+        //             } else {
+        //                 this.setState(IntakeState.OFF);
+        //             }
+        //             break;
+        //         case 2:
+        //             if (!this.rc.drum.isTurning()) {
+        //                 this.onStage++;
+        //                 this.onDelay = Timer.getFPGATimestamp();
+        //             } else {
+        //                 this.setState(IntakeState.OFF);
+        //             }
+        //         case 3:
+        //             if (Timer.getFPGATimestamp()-this.onDelay > 5.0) {
+        //                 // this.setState(IntakeState.ON);
+        //                 this.onStage = 0;
+        //                 this.onDelay = 0;
+        //             }
+        //         default:
+        //             break;
+        //     }
+        // }
 
-        if (this.ir.getValue() >= Constants.Intake.BallDetectionVoltage && this.currentState == IntakeState.ON) {
+        if (this.getIRVal() <= Constants.Intake.BallDetectionVoltage && this.currentState == IntakeState.ON) {
             System.out.println("off");
             this.setState(IntakeState.OFF);
             this.rc.drum.addBall();
             if (this.rc.drum.getBallCount() != 5) {
-                this.delay = Timer.getFPGATimestamp();
-                //this.offAt = Timer.getFPGATimestamp();
+                this.turnDelay = Timer.getFPGATimestamp();
                 this.turnBackOn = true;
+                this.onStage++;
             }
         }
 
-        if (Timer.getFPGATimestamp()-this.delay > 2.0 && this.delay != 0) {
-            this.rc.drum.rotateNext();
-            this.delay = 0;
+        if (Timer.getFPGATimestamp()-this.turnDelay > 2.0 && this.turnDelay != 0) {
+            this.rc.drum.moveToNext();
+            this.turnDelay = 0;
         }
     }
 }

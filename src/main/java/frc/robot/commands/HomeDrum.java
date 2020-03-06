@@ -19,6 +19,7 @@ public class HomeDrum extends CommandBase {
 
     @Override
     public void execute() {
+        this.drum.motor.disable();
         this.drum.motor.set(-0.2);
     }
 
@@ -26,8 +27,8 @@ public class HomeDrum extends CommandBase {
     public void end(boolean interrupted) {
         System.out.println("Homed");
         this.drum.motor.set(0.0);
-        this.drum.motor.setSelectedSensorPosition(-15000);
-        this.drum.makeSetpoint(0) ;
+        this.drum.motor.setSelectedSensorPosition(0);
+        this.drum.makeSetpoint(0);
         this.drum.enable();
     }
 

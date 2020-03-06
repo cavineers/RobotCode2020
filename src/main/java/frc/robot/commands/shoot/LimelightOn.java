@@ -12,7 +12,7 @@ public class LimelightOn extends CommandBase {
 
     @Override
     public void initialize() {
-        this.ll.setLightMode(Limelight.LEDMode.ON);
+        this.ll.setLightMode(Limelight.LEDMode.OFF);
     }
 
     @Override

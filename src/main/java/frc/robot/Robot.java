@@ -35,19 +35,17 @@ public class Robot extends TimedRobot {
 
         SmartDashboard.putNumber("shooter_speed", 4000);
 
+        SmartDashboard.putNumber("hood_angle", 0);
+
         // == DEFAULTS ==
 
         // Hood to low position
         // this.robotContainer.hood.turnToAngle(Hood.HoodAngle.LOW);
         this.robotContainer.hood.enable();
 
-        // Drum to zero
-        this.robotContainer.drum.enable();
-        this.robotContainer.drum.motor.setSelectedSensorPosition(0);
-
         // Shooter
-        this.robotContainer.shooter.enable();
-        this.robotContainer.shooter.setSpeed(0);
+        // this.robotContainer.shooter.enable();
+        // this.robotContainer.shooter.setSpeed(0);
 
         // Turntable
         this.robotContainer.turnTable.disable();
@@ -66,7 +64,6 @@ public class Robot extends TimedRobot {
         }
         this.robotContainer.hood.hoodPeriodic();
         this.robotContainer.limelight.periodic();
-        this.robotContainer.drum.DrumPeriodic();
 
         this.robotContainer.shooter.setSpeed(SmartDashboard.getNumber("shooter_speed", 0));
     }
@@ -79,6 +76,13 @@ public class Robot extends TimedRobot {
         // if (m_autonomousCommand != null) {
         // m_autonomousCommand.schedule();
         // }
+
+        this.robotContainer.drum.enable();
+        this.robotContainer.hood.enable();
+        this.robotContainer.drum.motor.setSelectedSensorPosition(0);
+        this.robotContainer.drum.getController().setSetpoint(0);
+        this.robotContainer.drum.setSetpoint(0);
+        this.robotContainer.drum.currentSetpoint = 0;
     }
 
     @Override
@@ -90,6 +94,14 @@ public class Robot extends TimedRobot {
         // m_autonomousCommand.cancel();
         // }
 
+        // Home drum
+        this.robotContainer.drum.enable();
+        this.robotContainer.hood.enable();
+        this.robotContainer.drum.motor.setSelectedSensorPosition(0);
+        this.robotContainer.drum.getController().setSetpoint(0);
+        this.robotContainer.drum.setSetpoint(0);
+        this.robotContainer.drum.currentSetpoint = 0;
+
         new TeleopDrive(this.robotContainer.drivetrain, this.robotContainer.joy);
         // new TeleopClimb(this.robotContainer.climber, this.robotContainer.joy);
     }
@@ -100,7 +112,7 @@ public class Robot extends TimedRobot {
         this.robotContainer.updateController();
 
         //! THIS IS FOR ML TRAINING
-        // this.robotContainer.hood.turnToAngle(SmartDashboard.getNumber("hood_angle", 0));
+        this.robotContainer.hood.turnToAngle(SmartDashboard.getNumber("hood_angle", 0));
         // this.robotContainer.shooter.setSpeed(SmartDashboard.getNumber("shooter_speed", 0));
         SmartDashboard.putNumber("tx", this.robotContainer.limelight.getHorizontalOffset());
         SmartDashboard.putNumber("ty", this.robotContainer.limelight.getVerticalOffset());
@@ -109,7 +121,13 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledInit() {
-        this.robotContainer.limelight.setLightMode(Limelight.LEDMode.ON);
+        this.robotContainer.limelight.setLightMode(Limelight.LEDMode.OFF);
+        this.robotContainer.drum.disable();
+        this.robotContainer.hood.disable();
+        this.robotContainer.shooter.disable();
+        // this.robotContainer.drum.setSetpoint(0);
+        // this.robotContainer.drum.getController().setSetpoint(0);
+        // this.robotContainer.drum.currentSetpoint = 0;
     }
 
     @Override
