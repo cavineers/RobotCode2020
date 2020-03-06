@@ -23,13 +23,12 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.TurnTable;
 
 public class RobotContainer {
-    //* Controller
+    //* Driver Controller
     public Joystick joy = new Joystick(0);
     public JoystickButton a_button = new JoystickButton(joy, 1);
     public JoystickButton b_button = new JoystickButton(joy, 2);
     public JoystickButton x_button = new JoystickButton(joy, 3);
     public JoystickButton y_button = new JoystickButton(joy, 4);
-
     public JoystickButton l_bump = new JoystickButton(joy, 5);
     public JoystickButton r_bump = new JoystickButton(joy, 6);
     public JoystickButton left_menu = new JoystickButton(joy, 7);
@@ -40,6 +39,23 @@ public class RobotContainer {
     public int lastDpad = -1;
     public boolean lastRightTrig = false;
     public boolean lastLeftTrig = false;
+
+    //* Manual Controller
+    public Joystick manual_joy = new Joystick(1);
+    public JoystickButton manual_a_button = new JoystickButton(manual_joy, 1);
+    public JoystickButton manual_b_button = new JoystickButton(manual_joy, 2);
+    public JoystickButton manual_x_button = new JoystickButton(manual_joy, 3);
+    public JoystickButton manual_y_button = new JoystickButton(manual_joy, 4);
+    public JoystickButton manual_l_bump = new JoystickButton(manual_joy, 5);
+    public JoystickButton manual_r_bump = new JoystickButton(manual_joy, 6);
+    public JoystickButton manual_left_menu = new JoystickButton(manual_joy, 7);
+    public JoystickButton manual_right_menu = new JoystickButton(manual_joy, 8);
+    public JoystickButton manual_left_stick = new JoystickButton(manual_joy, 9);
+    public JoystickButton manual_right_stick = new JoystickButton(manual_joy, 10); 
+
+    public int manual_lastDpad = -1;
+    public boolean manual_lastRightTrig = false;
+    public boolean manual_lastLeftTrig = false;
 
     public enum CONTROLLER_MODE {
         AUTO_SHOOT, CONTROL_P, CLIMB, NEUTRAL
@@ -145,61 +161,11 @@ public class RobotContainer {
     }
 
     /**
-     * isRightTriggerPressed
-     * @return if it's pressed
-     */
-    private boolean isRightTriggerPressed() {
-        final double rightTrig = this.getJoystick().getRawAxis(3);
-        return rightTrig > 0.9;
-    }
-
-    /**
-     * isLeftTriggerPressed
-     * @return if it's pressed
-     */
-    private boolean isLeftTriggerPressed() {
-        final double leftTrig = this.getJoystick().getRawAxis(2);
-        return leftTrig > 0.9;
-    }
-
-    /**
      * updateController
      * Periodic to update controller
      */
     public void updateController() {
-        // new TurnTableToTarget(this.turnTable, this.limelight.getHorizontalOffset());
-        if (lastRightTrig != isRightTriggerPressed()) {
-            // the right trigger changed state
-            lastRightTrig = isRightTriggerPressed();
-            if (lastRightTrig && currentTriggerSetting == CONTROLLER_MODE.CONTROL_P) {
-                // the right trigger is pressed and we are in Control Panel mode
-
-            } else if (lastRightTrig && currentTriggerSetting == CONTROLLER_MODE.CLIMB) {
-                // the right trigger is pressed and we are in Climb mode
-            } else if (lastRightTrig && currentTriggerSetting == CONTROLLER_MODE.NEUTRAL) {
-                // the right trigger is pressed and we are in Neutral
-
-            } else if (lastRightTrig && currentTriggerSetting == CONTROLLER_MODE.AUTO_SHOOT) {
-                // the right trigger is pressed and we are in Auto Shoot mode
-
-            }
-
-        }
-
-        if (lastLeftTrig != isLeftTriggerPressed()) {
-            // the left trigger changed state
-            lastLeftTrig = isLeftTriggerPressed();
-            if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.CONTROL_P) {
-                // the left trigger is pressed and we are in Control Panel mode
-            } else if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.CLIMB) {
-                // the left trigger is pressed and we are in Climb mode
-            } else if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.NEUTRAL) {
-                // the left trigger is pressed and we are in Neutral mode
-            } else if (lastLeftTrig && currentTriggerSetting == CONTROLLER_MODE.AUTO_SHOOT) {
-                // the left trigger is pressed and we are in Auto Shoot mode
-            }
-        }
-
+        //^ Climber Code
         if (this.l_bump.get()) {
             this.climber.climberMotor.set(-1);
         } else
@@ -209,6 +175,15 @@ public class RobotContainer {
             this.climber.climberMotor.set(0);
         }
 
+        //^ CP Code
+        // 3 right, 2 left
+        if (this.joy.getRawAxis(2) > 0.05) {
+            this.controlPanel.controlMotor.set(-this.joy.getRawAxis(2));
+        } else
+        if (this.joy.getRawAxis(3) > 0.05) {
+            this.controlPanel.controlMotor.set(this.joy.getRawAxis(3));
+        }
+   
         if (lastDpad != joy.getPOV()) {
             switch (joy.getPOV()) {
             case 0:
@@ -259,6 +234,38 @@ public class RobotContainer {
             }
         }
         lastDpad = joy.getPOV();
+
+        /**
+         * turn turntable left/right
+         * hood up/down
+         * shooter speed
+         */
+
+        if (manual_lastDpad != manual_joy.getPOV()) {
+            switch (manual_joy.getPOV()) {
+                case 0:
+                    if (this.shooter.getCurrentMode() == Shooter.ShooterMode.DISABLED) {
+                        this.shooter.enable();
+                    } else {
+                        this.shooter.disable();
+                    }
+                    break;
+                case 90:
+                    if (this.hood.isEnabled()) {
+                        this.shooter.disable();
+                    } else {
+                        this.shooter.enable();
+                    }
+                    break;
+                case 180:
+                    break;
+                case 270:
+                    
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     /**

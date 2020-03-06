@@ -12,7 +12,7 @@ import frc.robot.Constants;
 public class ControlPanel extends SubsystemBase {
     // Control Panel Solenoid
     private DoubleSolenoid controlSolenoid = new DoubleSolenoid(Constants.ControlPanel.PCMChannel1, Constants.ControlPanel.PCMChannel2);
-    private WPI_TalonSRX controlMotor = new WPI_TalonSRX(Constants.ControlPanel.MotorID);
+    public WPI_TalonSRX controlMotor = new WPI_TalonSRX(Constants.ControlPanel.MotorID);
     
     private double lastTime = 0.0;
 

@@ -65,6 +65,10 @@ public class Shooter extends SubsystemBase {
         this.currentMode = ShooterMode.DISABLED;
     }
 
+    public ShooterMode getCurrentMode() {
+        return this.currentMode;
+    }
+
     /**
      * Set the shooter speed
      * @param speed wanted speed
