@@ -97,13 +97,13 @@ public class Robot extends TimedRobot {
         // Home drum
         this.robotContainer.drum.enable();
         this.robotContainer.hood.enable();
+        //TODO: If driver station is connected through fms, ignore the following line
         this.robotContainer.drum.motor.setSelectedSensorPosition(0);
         this.robotContainer.drum.getController().setSetpoint(0);
         this.robotContainer.drum.setSetpoint(0);
         this.robotContainer.drum.currentSetpoint = 0;
 
         new TeleopDrive(this.robotContainer.drivetrain, this.robotContainer.joy);
-        // new TeleopClimb(this.robotContainer.climber, this.robotContainer.joy);
     }
 
     @Override
