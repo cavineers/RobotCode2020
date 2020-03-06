@@ -69,9 +69,9 @@ public class RobotContainer {
      * RobotContainer
      */
     public RobotContainer() {
-        //^ Turn of the compressor during just motor testing
-        this.compressor.setClosedLoop(false);
-        this.compressor.setMode(CompressorMode.DISABLED);
+        // //^ Turn of the compressor during just motor testing
+        // this.compressor.setClosedLoop(false);
+        // this.compressor.setMode(CompressorMode.DISABLED);
 
         // Config the controller
         configureButtonBindings();
@@ -220,7 +220,7 @@ public class RobotContainer {
                 // this.hood.enable();
                 // this.hood.turnToAngle(Hood.HoodAngle.HIGH);
                 // this.hood.turnToAngle(20);
-                this.shooter.enable();
+                // this.shooter.enable();
                 break;
             case 90:
                 // Right
@@ -230,8 +230,8 @@ public class RobotContainer {
                 // this.hood.enable();
                 // this.hood.turnToAngle(Hood.HoodAngle.MEDIUM);
                 // this.hood.disable();
-                this.drum.enable();
-                this.drum.moveToNext();
+                // this.drum.enable();
+                // this.drum.moveToNext();
                 break;
             case 180:
                 // Bottom
@@ -244,7 +244,7 @@ public class RobotContainer {
                 // this.hood.enable();
                 // this.hood.turnToAngle(Hood.HoodAngle.LOW);
                 // this.turnTable.disable();
-                this.shooter.disable();
+                // this.shooter.disable();
                 break;
             case 270:
                 // Left

@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
 import frc.lib.Limelight;
-import frc.robot.commands.TeleopClimb;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.subsystems.Hood;
 

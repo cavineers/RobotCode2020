@@ -23,11 +23,11 @@ public class Dashboard {
         // .withSize(3, 2);
 
         // // Setup differential drive
-        // Shuffleboard.getTab("Dashboard")
-        // .add("DriveTrain", this.rc.drivetrain.getDifferentialDrive())
-        // .withWidget(BuiltInWidgets.kDifferentialDrive)
-        // .withPosition(6, 1)
-        // .withSize(3, 2);
+        Shuffleboard.getTab("Dashboard")
+        .add("DriveTrain", this.rc.drivetrain.getDifferentialDrive())
+        .withWidget(BuiltInWidgets.kDifferentialDrive)
+        .withPosition(6, 1)
+        .withSize(3, 2);
 
         // // Setup compressor
         // Shuffleboard.getTab("Dashboard")
@@ -37,11 +37,11 @@ public class Dashboard {
         // .withSize(1, 1);
 
         // // Add limelight
-        // Shuffleboard.getTab("Dashboard")
-        // .add("Camera", "http://limelight.local:5800")
-        // .withWidget(BuiltInWidgets.kCameraStream)
-        // .withPosition(4, 2)
-        // .withSize(3, 3);
+        Shuffleboard.getTab("Dashboard")
+        .add("Camera", "http://10.45.41.6:8101")
+        .withWidget(BuiltInWidgets.kCameraStream)
+        .withPosition(4, 2)
+        .withSize(3, 3);
 
         Shuffleboard.getTab("Dashboard")
         .add("FMS", "network_table:///FMSInfo")

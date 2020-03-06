@@ -126,6 +126,10 @@ public class DriveTrain extends SubsystemBase {
         return this.currentDriveGear;
     }
 
+    public DifferentialDrive getDifferentialDrive() {
+        return this.differentialDrive;
+    }
+
     /**
      * DriveTrain periodic
      */
