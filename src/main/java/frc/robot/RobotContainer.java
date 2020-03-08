@@ -90,6 +90,7 @@ public class RobotContainer {
     public Drum drum = new Drum();
     public Hood hood = new Hood();
     public TurnTable turnTable = new TurnTable(this.limelight);
+    public DankDash dank = new DankDash();
 
     /**
      * RobotContainer
@@ -101,6 +102,11 @@ public class RobotContainer {
 
         // Config the controller
         configureButtonBindings();
+
+        this.dank.setProfileLocation("Kronk");
+        this.dank.setProfileName("Kronk");
+        this.dank.export();
+        this.dank.addListener();
     }
 
     /**

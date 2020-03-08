@@ -67,6 +67,7 @@ public class Robot extends TimedRobot {
         this.robotContainer.limelight.periodic();
         this.robotContainer.drum.DrumPeriodic();
         this.robotContainer.shooter.setSpeed(SmartDashboard.getNumber("shooter_speed", 0));
+        this.robotContainer.dank.dankPeriodic();
     }
 
     @Override
