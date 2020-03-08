@@ -34,6 +34,6 @@ public class Autonomous extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return (Timer.getFPGATimestamp()-this.startTime > 0.75);
+        return (Timer.getFPGATimestamp()-this.startTime > 0.9);
     }
 }
