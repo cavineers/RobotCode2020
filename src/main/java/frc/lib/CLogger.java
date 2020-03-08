@@ -85,7 +85,7 @@ public class CLogger {
      * @param value Value to log
      * @param type What type of log is this
      */
-    public void log(Object value, cLogType type) {
+    public void log(String value, cLogType type) {
         switch (type) {
             case MajorError:
                 if (sl_majorErrors) {
@@ -124,7 +124,7 @@ public class CLogger {
      * A catch for an undefined log type
      * @param value Value to log
      */
-    public void log(Object value) {
+    public void log(String value) {
         log(value, cLogType.Undefined);
     }
 
@@ -133,7 +133,7 @@ public class CLogger {
      * @param value The value to log
      * @param type The type of value to log
      */
-    public void logln(Object value, cLogType type) {
+    public void logln(String value, cLogType type) {
         switch (type) {
             case MajorError:
                 if (sl_majorErrors) {
@@ -172,7 +172,24 @@ public class CLogger {
      * A catch for an undefined logType for logln
      * @param value The value to log
      */
-    public void logln(Object value) {
+    public void logln(String value) {
+        logln(value, cLogType.Undefined);
+    }
+
+    /**
+     * Logging a double
+     * @param value
+     * @param type
+     */
+    public void logln(Double value, cLogType type) {
+        this.logln(value.toString());
+    }
+
+    /**
+     * A catch for an undefined LogType
+     * @param value
+     */
+    public void logln(Double value) {
         logln(value, cLogType.Undefined);
     }
 
@@ -188,7 +205,7 @@ public class CLogger {
      * Bypasses the logging manager and does a println
      * @param value The value to log
      */
-    public void logBypassln(Object value) {
+    public void logBypassln(String value) {
         System.out.println(value);
     }
 

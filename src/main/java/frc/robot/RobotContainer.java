@@ -1,57 +1,343 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.lib.Limelight;
+import frc.robot.commands.AddToHood;
+import frc.robot.commands.HomeAll;
+import frc.robot.commands.RemoveFromHood;
+import frc.robot.commands.ShiftGear;
+import frc.robot.commands.ToggleControlPanel;
+import frc.robot.commands.ToggleIntake;
+import frc.robot.commands.shoot.LowShooter;
+import frc.robot.commands.shoot.Shoot;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ColorSensor;
+import frc.robot.subsystems.CompressorController;
+import frc.robot.subsystems.ControlPanel;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Drum;
+import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.TurnTable;
 
-/**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
- */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+    //* Driver Controller
+    public Joystick joy = new Joystick(0);
+    public JoystickButton a_button = new JoystickButton(joy, 1);
+    public JoystickButton b_button = new JoystickButton(joy, 2);
+    public JoystickButton x_button = new JoystickButton(joy, 3);
+    public JoystickButton y_button = new JoystickButton(joy, 4);
+    public JoystickButton l_bump = new JoystickButton(joy, 5);
+    public JoystickButton r_bump = new JoystickButton(joy, 6);
+    public JoystickButton left_menu = new JoystickButton(joy, 7);
+    public JoystickButton right_menu = new JoystickButton(joy, 8);
+    public JoystickButton left_stick = new JoystickButton(joy, 9);
+    public JoystickButton right_stick = new JoystickButton(joy, 10);
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+    public int lastDpad = -1;
+    public boolean lastRightTrig = false;
+    public boolean lastLeftTrig = false;
 
+    //* Manual Controller
+    public Joystick manual_joy = new Joystick(1);
+    public JoystickButton manual_a_button = new JoystickButton(manual_joy, 1);
+    public JoystickButton manual_b_button = new JoystickButton(manual_joy, 2);
+    public JoystickButton manual_x_button = new JoystickButton(manual_joy, 3);
+    public JoystickButton manual_y_button = new JoystickButton(manual_joy, 4);
+    public JoystickButton manual_l_bump = new JoystickButton(manual_joy, 5);
+    public JoystickButton manual_r_bump = new JoystickButton(manual_joy, 6);
+    public JoystickButton manual_left_menu = new JoystickButton(manual_joy, 7);
+    public JoystickButton manual_right_menu = new JoystickButton(manual_joy, 8);
+    public JoystickButton manual_left_stick = new JoystickButton(manual_joy, 9);
+    public JoystickButton manual_right_stick = new JoystickButton(manual_joy, 10); 
 
+    public int manual_lastDpad = -1;
+    public boolean manual_lastRightTrig = false;
+    public boolean manual_lastLeftTrig = false;
 
-  /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
-  }
+    public enum CONTROLLER_MODE {
+        AUTO_SHOOT, CONTROL_P, CLIMB, NEUTRAL
+    }
 
-  /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {
-  }
+    public CONTROLLER_MODE currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
 
+    private boolean manualShooter = false;
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
-  }
+    private boolean turntableManual = false;
+
+    private boolean drumManual = false;
+
+    //* Subsystems
+    public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
+    public CompressorController compressor = new CompressorController(false);
+    // public ColorSensor colorSensor = new ColorSensor(this.colorSensorNano);
+    // public Arduino colorSensorNano = new Arduino(SerialPort.Port.kUSB1);
+    public DriveTrain drivetrain = new DriveTrain(this.getJoystick());
+    public ControlPanel controlPanel = new ControlPanel();
+    public Dashboard dashboard = new Dashboard(this);
+    public Limelight limelight = new Limelight();
+    public Intake intake = new Intake(this);
+    public Shooter shooter = new Shooter();
+    public Climber climber = new Climber();
+    public Feeder feeder = new Feeder();
+    // public DumbDrum drum = new DumbDrum();
+    public Drum drum = new Drum();
+    public Hood hood = new Hood();
+    public TurnTable turnTable = new TurnTable(this.limelight);
+
+    /**
+     * RobotContainer
+     */
+    public RobotContainer() {
+        // //^ Turn of the compressor during just motor testing
+        // this.compressor.setClosedLoop(false);
+        // this.compressor.setMode(CompressorMode.DISABLED);
+
+        // Config the controller
+        configureButtonBindings();
+    }
+
+    /**
+     * configureButtonBindings
+     */
+    private void configureButtonBindings() {
+        //! TESTING BUTTON CONFIGS
+
+        //^ Elevator
+        // y_button.whenPressed(new ExtendElevator(this.climber));
+        // b_button.whenPressed(new RetractElevator(this.climber));
+        // a_button.whenPressed(new StopElevator(this.climber));
+
+        // ^ Control Panel
+        // b_button.whenPressed(new StartSpinning(this.controlPanel));
+        // x_button.whenPressed(new StopSpinning(this.controlPanel));
+        // y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
+        // x_button.whenPressed(new RetractControlPanel(this.controlPanel));
+
+        //^ Vision
+        // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
+        // a_button.whenPressed(new TurnTableToTarget(this.turnTable, 90));
+        // a_button.whenPressed(new TurnTableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
+        // b_button.whenPressed(new StopTurnTable(this.turnTable));
+
+        //^ Shooty Things
+        // a_button.whenPressed(new Shoot(this.limelight, this.shooter));
+        // a_button.whenPressed(new ShooterOn(this.shooter));
+        // b_button.whenPressed(new ShooterOff(this.shooter));
+
+        //^ Intake
+        // a_button.whenPressed(new IntakeOn(this.intake));
+        // b_button.whenPressed(new IntakeOff(this.intake));
+
+        //^ Feeder
+        // r_bump.whenPressed(new FeederOn(this.feeder));
+        // l_bump.whenPressed(new FeederOff(this.feeder));
+        
+        //^ Drum
+        // x_button.whenPressed(new DrumRotateNext(this.drum));
+        // left_menu.whenPressed(new HomeDrum(this.drum));
+
+        //^ Hood
+        // left_menu.whenPressed(new HomeDrum(this.drum));
+        // y_button.whenPressed(new HoodToAngle(this.hood, 20*(4096/360)));
+
+        //^ TurnTable
+        // b_button.whenPressed(new TurnTableToTarget(this.turnTable, this.limelight));
+        // x_button.whenPressed(new ToggleTurnTable(this.turnTable));
+
+        //! ACTUAL FINAL BUTTON CONFIGS
+
+        //^ DriveTrain (Shifting)
+        left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
+        right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
+
+        //^ Intake
+        x_button.whenPressed(new ToggleIntake(this.intake));
+
+        //^ Control Panel
+        y_button.whenPressed(new ToggleControlPanel(this.controlPanel));
+
+        //^ Shooting
+        a_button.whenPressed(new Shoot(this));
+
+        b_button.whenPressed(new LowShooter(this));
+
+        //^ Homing
+        right_menu.whenPressed(new HomeAll(this));
+
+        //! 2nd driver buttons
+        manual_l_bump.whenPressed(new RemoveFromHood());
+        manual_r_bump.whenPressed(new AddToHood());
+    }
+
+    /**
+     * updateController
+     * Periodic to update controller
+     */
+    public void updateController() {
+        //^ Climber Code
+        if (this.l_bump.get()) {
+            this.climber.climberMotor.set(-1);
+        } else
+        if (this.r_bump.get()) {
+            this.climber.climberMotor.set(1);
+        } else {
+            this.climber.climberMotor.set(0);
+        }
+
+        //^ CP Code
+        if (this.joy.getRawAxis(2) > 0.1) {
+            this.controlPanel.controlMotor.set(-this.joy.getRawAxis(2));
+        } else
+        if (this.joy.getRawAxis(3) > 0.1) {
+            this.controlPanel.controlMotor.set(this.joy.getRawAxis(3));
+        } else {
+            this.controlPanel.controlMotor.set(0);
+        }
+
+        //^ Shooter Code
+        if (this.manualShooter) {
+            if (this.manual_joy.getRawAxis(3) > 0.1) {
+                SmartDashboard.putNumber("shooter_speed", this.manual_joy.getRawAxis(3)*5500);
+            } else {
+                SmartDashboard.putNumber("shooter_speed", 0);
+            }
+        }
+        
+   
+        if (lastDpad != joy.getPOV()) {
+            switch (joy.getPOV()) {
+            case 0:
+                break;
+            case 90:
+                this.drum.moveToNext();
+                this.drum.addBall();
+                break;
+            case 180:
+                if (this.intake.getState() != Intake.IntakeState.OFF) {
+                    this.intake.setState(Intake.IntakeState.OFF);
+                } else {
+                    this.intake.setState(Intake.IntakeState.OOF);
+                }
+                break;
+            case 270:
+                this.drum.moveBack();
+                this.drum.removeBall();
+                break;
+            default:
+                break;
+            }
+        }
+        lastDpad = joy.getPOV();
+
+        //^ Manual user
+
+        if (manual_lastDpad != manual_joy.getPOV()) {
+            switch (manual_joy.getPOV()) {
+                case 0:
+                    if (this.shooter.getCurrentMode() == Shooter.ShooterMode.DISABLED) {
+                        this.shooter.enable();
+                        this.manualShooter = true;
+                    } else {
+                        this.shooter.disable();
+                        this.manualShooter = false;
+                    }
+                    break;
+                case 90:
+                    if (this.turnTable.getCurrentMode() == TurnTable.TurnTableState.OFF) {
+                        this.turntableManual = false;
+                        this.turnTable.enable();
+                        this.limelight.setLightMode(Limelight.LEDMode.ON);
+                    } else {
+                        this.turntableManual = true;
+                        this.turnTable.disable();
+                        this.limelight.setLightMode(Limelight.LEDMode.OFF);
+                    }
+                    break;
+                case 180:
+                    if (this.hood.isEnabled()) {
+                        this.hood.disable();
+                    } else {
+                        this.hood.enable();
+                    }
+                    break;
+                case 270:
+                    if (this.drum.isEnabled()) {
+                        this.drum.disable();
+                        this.drumManual = true;
+                    } else {
+                        this.drum.enable();
+                        this.drumManual = false;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        manual_lastDpad = manual_joy.getPOV();
+
+        if (this.turntableManual) {
+            this.turnTable.tableMotor.set(this.manual_joy.getRawAxis(4));
+        }
+
+        if (this.drumManual) {
+            this.drum.motor.set(this.manual_joy.getRawAxis(0));
+        }
+    }
+
+    /**
+     * getJoystick
+     * @return returns the joystick
+     */
+    public Joystick getJoystick() {
+        return joy;
+    }
+
+    /**
+     * get the current power draw of pdp port x
+     * @param port pdp port
+     * @return the current draw (in amps)
+     */
+    public double getCurrentDrawOfPort(int port) {
+        // return this.PDP.getCurrent(port);
+        return 0.0;
+    }
+
+    /**
+     * Get the wanted control panel color
+     * @return get color given by FMS
+     */
+    public ColorSensor.ControlPanelColor getControlPanelColor() {
+        String msg = DriverStation.getInstance().getGameSpecificMessage();
+        if (msg.length()>0) {
+            switch (msg) {
+                case "R":
+                case "r":
+                    return ColorSensor.ControlPanelColor.RED;
+                case "G":
+                case "g":
+                    return ColorSensor.ControlPanelColor.GREEN;
+                case "B":
+                case "b":
+                    return ColorSensor.ControlPanelColor.BLUE;
+                case "Y":
+                case "y":
+                    return ColorSensor.ControlPanelColor.YELLOW;
+                default:
+                    return ColorSensor.ControlPanelColor.UNKNOWN;
+            }
+        } else {
+            return ColorSensor.ControlPanelColor.UNKNOWN;
+        }
+    }
+
+    public boolean isDrumManual() {
+        return this.drumManual;
+    }
 }

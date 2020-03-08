@@ -7,8 +7,8 @@
 3. Drive (Neo)
 4. Drive (Neo)
 5. Winch
-6. Flywheel
-7. Turntable
+6. Flywheel (neo)
+7. TurnTable
 8. Intake
 
 ## 20 amps
