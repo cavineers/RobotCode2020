@@ -84,7 +84,7 @@ public class TurnTable extends SubsystemBase {
      */
     public void disable() {
         this.ll.setLightMode(Limelight.LEDMode.OFF);
-        this.setState(TurnTableState.OFF);
+        this.setState(TurnTableState.NATURAL);
     }
 
     public TurnTableState getCurrentMode() {

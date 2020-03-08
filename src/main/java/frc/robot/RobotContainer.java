@@ -250,7 +250,7 @@ public class RobotContainer {
                     }
                     break;
                 case 90:
-                    if (this.turnTable.getCurrentMode() == TurnTable.TurnTableState.OFF) {
+                    if (this.turnTable.getCurrentMode() != TurnTable.TurnTableState.ON) {
                         this.turntableManual = false;
                         this.turnTable.enable();
                         this.limelight.setLightMode(Limelight.LEDMode.ON);
