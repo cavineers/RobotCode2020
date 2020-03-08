@@ -14,6 +14,26 @@ public class Arduino extends SubsystemBase {
         serialPort = new SerialPort(9600, port);
     }
 
+    
+    /**
+     * Enables LED on ColorSensor - 
+     * Don't trigger more than once.
+     */
+    public void enableLED() {
+        String State = "ON";
+        serialPort.writeString(State);
+    }
+
+    /**
+     * Disables LED on ColorSensor - 
+     * Don't trigger more than once.
+     */
+    public void disableLED() {
+        String State = "OFF";
+        serialPort.writeString(State);
+        serialPort.reset();
+    }
+
     /**
      * Read serial data from the arduino
      * @return the serial string
@@ -28,7 +48,25 @@ public class Arduino extends SubsystemBase {
         // Return the final string
         return word;
     }
+    public String getColor(){
+        // Read the string
+        String word = serialPort.readString();
 
+        // Reset the serial input
+        serialPort.reset();
+
+        // Return the final string
+        return word;
+    }
+    public boolean detectsColor(){
+        String word = serialPort.readString();
+        serialPort.reset();
+        if(word == "r" || word == "g" || word == "y" || word == "b" ){
+            return true;
+        } else {
+            return false;
+        }
+    }
     /**
      * Arduino periodic
      */

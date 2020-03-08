@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj.SerialPort;
 import frc.lib.Limelight;
 import frc.robot.commands.AddToHood;
 import frc.robot.commands.HomeAll;
@@ -25,6 +26,7 @@ import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.TurnTable;
+import frc.robot.subsystems.Arduino;
 
 public class RobotContainer {
     //* Driver Controller
@@ -76,8 +78,8 @@ public class RobotContainer {
     //* Subsystems
     public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
     public CompressorController compressor = new CompressorController(false);
-    // public ColorSensor colorSensor = new ColorSensor(this.colorSensorNano);
-    // public Arduino colorSensorNano = new Arduino(SerialPort.Port.kUSB1);
+    public ColorSensor colorSensor = new ColorSensor(this.colorSensorNano);
+    public Arduino colorSensorNano = new Arduino(SerialPort.Port.kUSB1);
     public DriveTrain drivetrain = new DriveTrain(this.getJoystick());
     public ControlPanel controlPanel = new ControlPanel();
     public Dashboard dashboard = new Dashboard(this);
@@ -167,7 +169,7 @@ public class RobotContainer {
         x_button.whenPressed(new ToggleIntake(this.intake));
 
         //^ Control Panel
-        y_button.whenPressed(new ToggleControlPanel(this.controlPanel));
+        y_button.whenPressed(new ToggleControlPanel(this.controlPanel, this.colorSensorNano, this.colorSensor));
 
         //^ Shooting
         a_button.whenPressed(new Shoot(this));
