@@ -85,6 +85,7 @@ public class Robot extends TimedRobot {
         this.robotContainer.drum.setSetpoint(0);
         this.robotContainer.drum.currentSetpoint = 0;
         this.homeDrum = false;
+        this.robotContainer.turnTable.tableMotor.setSelectedSensorPosition(0);
 
         // Autonomous command
         new Autonomous(this.robotContainer).schedule();

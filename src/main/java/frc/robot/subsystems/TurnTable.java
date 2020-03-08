@@ -19,7 +19,8 @@ public class TurnTable extends SubsystemBase {
     // TurnTable state
     public enum TurnTableState {
         ON,
-        OFF
+        OFF,
+        NATURAL
     }
 
     // Current state
@@ -101,15 +102,10 @@ public class TurnTable extends SubsystemBase {
         }
         
         if (this.currentState == TurnTableState.ON) {
-            if (this.tableMotor.getSelectedSensorPosition() > 100 || this.tableMotor.getSelectedSensorPosition() < -100) {
-                this.atHardStop = true;
-            } else {
-                this.atHardStop = false;
-                double output = this.pidController.calculate(-this.ll.getHorizontalOffset(), 0);
-                this.tableMotor.pidWrite(output);
-            }
-        } else {
-            this.tableMotor.pidWrite(0);
+            this.tableMotor.pidWrite(this.pidController.calculate(-this.ll.getHorizontalOffset(), 0.0));
+        } else
+        if (this.currentState == TurnTableState.NATURAL) {
+            this.tableMotor.pidWrite(this.pidController.calculate(this.tableMotor.getSelectedSensorPosition(), 0.0));
         }
     }
 }
