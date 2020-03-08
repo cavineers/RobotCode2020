@@ -1,12 +1,12 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.CLogger;
 import frc.lib.Limelight;
+import frc.robot.commands.Autonomous;
 import frc.robot.commands.TeleopDrive;
 
 public class Robot extends TimedRobot {
@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
         logger = new CLogger(CLogger.cLoggerMode.TESTING);
         // logger = new CLogger(CLogger.cLoggerMode.DEVELOPMENT);
 
-        SmartDashboard.putNumber("shooter_speed", 4000);
+        SmartDashboard.putNumber("shooter_speed", 5500);
 
         SmartDashboard.putNumber("hood_angle", 0);
 
@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
         }
         this.robotContainer.hood.hoodPeriodic();
         this.robotContainer.limelight.periodic();
-
+        this.robotContainer.drum.DrumPeriodic();
         this.robotContainer.shooter.setSpeed(SmartDashboard.getNumber("shooter_speed", 0));
     }
 
@@ -85,6 +85,10 @@ public class Robot extends TimedRobot {
         this.robotContainer.drum.setSetpoint(0);
         this.robotContainer.drum.currentSetpoint = 0;
         this.homeDrum = false;
+
+        // Autonomous command
+        new Autonomous(this.robotContainer).schedule();
+        // new Shoot(this.robotContainer).schedule();
     }
 
     @Override
@@ -108,7 +112,7 @@ public class Robot extends TimedRobot {
             this.homeDrum = true;
         }
         
-        new TeleopDrive(this.robotContainer.drivetrain, this.robotContainer.joy);
+        new TeleopDrive(this.robotContainer.drivetrain, this.robotContainer.joy).schedule();
     }
 
     @Override
@@ -122,6 +126,9 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("tx", this.robotContainer.limelight.getHorizontalOffset());
         SmartDashboard.putNumber("ty", this.robotContainer.limelight.getVerticalOffset());
         SmartDashboard.putNumber("td", this.robotContainer.limelight.getDistance());
+
+
+        // this.robotContainer.feeder.setState(FeederState.ENABLED);
     }
 
     @Override

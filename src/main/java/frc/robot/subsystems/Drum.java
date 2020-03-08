@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
@@ -25,6 +26,8 @@ public class Drum extends PIDSubsystem {
     private int ballCount = 0;
 
     private boolean turning = false;
+
+    private double lastBall = 0;
 
     /**
      * Drum constructor
@@ -54,6 +57,13 @@ public class Drum extends PIDSubsystem {
         getController().setSetpoint(this.currentSetpoint);
     }
 
+    public void moveBack() {
+        this.enable();
+        this.currentSetpoint = this.currentSetpoint - (-((int)((409600/360)*(360/5))));
+        setSetpoint(this.currentSetpoint);
+        getController().setSetpoint(this.currentSetpoint);
+    }
+
     public void makeSetpoint(int sp) {
         this.currentSetpoint = sp;
         setSetpoint(this.currentSetpoint);
@@ -65,11 +75,16 @@ public class Drum extends PIDSubsystem {
     }
 
     public void removeBall() {
-        this.ballCount--;
-    }
+        if (this.ballCount != 0) {
+            this.ballCount--;
 
+        }
+    }
     public void addBall() {
-        this.ballCount++;
+        if (Timer.getFPGATimestamp()-this.lastBall > 1.5) {
+            this.ballCount++;
+            this.lastBall = Timer.getFPGATimestamp();
+        }
     }
 
     /**
@@ -78,9 +93,13 @@ public class Drum extends PIDSubsystem {
     @Override
     public void useOutput(double output, double setpoint) {
         // Debugging logs
-        // System.out.println("CurrentPos: " + getMeasurement());
-        // System.out.println("Wanted: " + this.currentSetpoint);
-        // System.out.println("OUTPUT: " +  output);
+        System.out.println("CurrentPos: " + getMeasurement());
+        System.out.println("Wanted: " + this.currentSetpoint);
+        System.out.println("OUTPUT: " +  output);
+
+        SmartDashboard.putNumber("drum_wants", this.currentSetpoint);
+        SmartDashboard.putNumber("drum_got", getMeasurement());
+        SmartDashboard.putNumber("drum_out", output);
 
         // Output
         // if (!this.isHoming) {
@@ -113,6 +132,7 @@ public class Drum extends PIDSubsystem {
             // System.out.println(this.motor.getSelectedSensorPosition());
             this.lastTime = Timer.getFPGATimestamp();
         }
+        SmartDashboard.putNumber("ball_count", this.ballCount);
     }
 
     public boolean isLimitPressed() {

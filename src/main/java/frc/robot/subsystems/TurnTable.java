@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.Limelight;
@@ -29,6 +30,12 @@ public class TurnTable extends SubsystemBase {
 
     // Homing switch
     private DigitalInput limitSwitch = new DigitalInput(Constants.TurnTable.LimitSwitch);
+
+    // At hard stop for dashboard
+    public boolean atHardStop = false;
+
+    // Last time for debug
+    private double lastTime = 0;
 
     /**
      * Constructor
@@ -79,15 +86,28 @@ public class TurnTable extends SubsystemBase {
         this.setState(TurnTableState.OFF);
     }
 
+    public TurnTableState getCurrentMode() {
+        return this.currentState;
+    }
+
     /**
      * Periodic
      */
     @Override
     public void periodic() {
+        if (Timer.getFPGATimestamp()-this.lastTime > 0.5) {
+            // System.out.println(this.tableMotor.getSelectedSensorPosition());
+            this.lastTime = Timer.getFPGATimestamp();
+        }
+        
         if (this.currentState == TurnTableState.ON) {
-            double output = this.pidController.calculate(-this.ll.getHorizontalOffset(), 0);
-            // System.out.println(output);
-            this.tableMotor.pidWrite(output);
+            if (this.tableMotor.getSelectedSensorPosition() > 100 || this.tableMotor.getSelectedSensorPosition() < -100) {
+                this.atHardStop = true;
+            } else {
+                this.atHardStop = false;
+                double output = this.pidController.calculate(-this.ll.getHorizontalOffset(), 0);
+                this.tableMotor.pidWrite(output);
+            }
         } else {
             this.tableMotor.pidWrite(0);
         }

@@ -7,7 +7,7 @@ import frc.lib.Limelight;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Feeder;
 
-public class Shoot extends CommandBase {
+public class LowShooter extends CommandBase {
     private RobotContainer rc;
 
     private double startTime = 0;
@@ -16,35 +16,23 @@ public class Shoot extends CommandBase {
 
     private boolean finished = false;
 
-    public Shoot(RobotContainer rc) {
+    public LowShooter(RobotContainer rc) {
         this.rc = rc;
     }
 
     @Override
     public void initialize() {
-        // new LimelightOn(this.rc.limelight).andThen(
-        //     new PerfectTurnTable(this.rc.turnTable, this.rc.limelight).andThen(
-        //         new ShooterOn(this.rc.shooter)
-        //     )
-        // );
         System.out.println("Started Shooter");
         this.rc.shooter.enable();
         this.startTime = Timer.getFPGATimestamp();
-        this.stage = 0;
-        this.rc.limelight.setLightMode(Limelight.LEDMode.ON);
-        this.rc.turnTable.enable();
-        SmartDashboard.putNumber("shooter_speed", 5500);
-        SmartDashboard.putNumber("hood_angle", 20);
+        this.stage = 1;
+        SmartDashboard.putNumber("shooter_speed", 4000);
+        SmartDashboard.putNumber("hood_angle", 30);
     }
 
     @Override
     public void execute() {
         switch (stage) {
-            case 0:
-                if (this.rc.limelight.getHorizontalOffset() < 2.0) {
-                    this.stage = 1;
-                }
-                break;
             case 1:
                 if (this.rc.shooter.closeEnough()) {
                     this.stage = 2;
@@ -54,35 +42,40 @@ public class Shoot extends CommandBase {
                 }
                 break;
             case 2:
-                if (Timer.getFPGATimestamp()-this.startTime > 0.0) {
+                this.rc.feeder.setState(Feeder.FeederState.ENABLED);
+                if (Timer.getFPGATimestamp()-this.startTime > 4.0) {
                     this.rc.drum.moveToNext();
                     this.stage = 3;
                     log();
                 }
                 break;
             case 3:
-                if (Timer.getFPGATimestamp()-this.startTime > 2.0) {
+                this.rc.feeder.setState(Feeder.FeederState.ENABLED);
+                if (Timer.getFPGATimestamp()-this.startTime > 6.0) {
                     this.rc.drum.moveToNext();
                     this.stage = 4;
                     log();
                 }
                 break;
             case 4:
-                if (Timer.getFPGATimestamp()-this.startTime > 4.0) {
+                this.rc.feeder.setState(Feeder.FeederState.ENABLED);
+                if (Timer.getFPGATimestamp()-this.startTime > 8.0) {
                     this.rc.drum.moveToNext();
                     this.stage = 5;
                     log();
                 }
                 break;
             case 5:
-                if (Timer.getFPGATimestamp()-this.startTime > 6.0) {
+                this.rc.feeder.setState(Feeder.FeederState.ENABLED);
+                if (Timer.getFPGATimestamp()-this.startTime > 10.0) {
                     this.rc.drum.moveToNext();
                     this.stage = 6;
                     log();
                 }
                 break;
             case 6:
-                if (Timer.getFPGATimestamp()-this.startTime > 8.0) {
+                this.rc.feeder.setState(Feeder.FeederState.ENABLED);
+                if (Timer.getFPGATimestamp()-this.startTime > 12.0) {
                     this.rc.drum.moveToNext();
                     this.stage = 7;
                     log();
@@ -102,7 +95,6 @@ public class Shoot extends CommandBase {
         this.rc.shooter.disable();
         this.rc.feeder.setState(Feeder.FeederState.DISABLED);
         this.rc.limelight.setLightMode(Limelight.LEDMode.OFF);
-        this.rc.turnTable.disable();
     }
 
     @Override

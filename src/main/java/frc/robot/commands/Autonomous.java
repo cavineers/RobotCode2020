@@ -17,11 +17,13 @@ public class Autonomous extends CommandBase {
     @Override
     public void initialize() {
         this.startTime = Timer.getFPGATimestamp();
+        this.rc.turnTable.enable();
+        this.rc.drum.enable();
     }
 
     @Override
     public void execute() { 
-        this.rc.drivetrain.drive(-0.2, 0);
+        this.rc.drivetrain.drive(-0.3, 0);
     }
 
     @Override
@@ -32,6 +34,6 @@ public class Autonomous extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return (Timer.getFPGATimestamp()-this.startTime > 3);
+        return (Timer.getFPGATimestamp()-this.startTime > 0.9);
     }
 }

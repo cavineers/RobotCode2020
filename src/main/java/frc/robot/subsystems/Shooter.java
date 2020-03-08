@@ -49,6 +49,11 @@ public class Shooter extends SubsystemBase {
         // Add PID values to controller
         pidController.setIZone(0.0);
         pidController.setOutputRange(-1, 1);
+
+        SmartDashboard.putNumber("shooter_p", Constants.Shooter.PIDp);
+        SmartDashboard.putNumber("shooter_i", Constants.Shooter.PIDi);
+        SmartDashboard.putNumber("shooter_d", Constants.Shooter.PIDd);
+        SmartDashboard.putNumber("shooter_f", Math.abs(0.000182));
     }
 
     /**
@@ -82,7 +87,7 @@ public class Shooter extends SubsystemBase {
      * @return at setpoint
      */
     public boolean closeEnough() {
-        return (Math.abs(this.speed-Math.abs(this.encoder.getVelocity()))<50);
+        return (Math.abs(this.speed-Math.abs(this.encoder.getVelocity()))<120);
     }
 
     /**
@@ -93,10 +98,14 @@ public class Shooter extends SubsystemBase {
         pidController.setReference(-this.speed, ControlType.kVelocity);
 
         if (this.currentMode == ShooterMode.ENABLED && this.speed != 0) {
-            pidController.setP(Constants.Shooter.PIDp);
-            pidController.setI(Constants.Shooter.PIDi);
-            pidController.setD(Constants.Shooter.PIDd);
-            pidController.setFF(Math.abs(0.000182));
+            // pidController.setP(Constants.Shooter.PIDp);
+            // pidController.setI(Constants.Shooter.PIDi);
+            // pidController.setD(Constants.Shooter.PIDd);
+            // pidController.setFF(Math.abs(0.000182));
+            pidController.setP(SmartDashboard.getNumber("shooter_p", 0));
+            pidController.setI(SmartDashboard.getNumber("shooter_i", 0));
+            pidController.setD(SmartDashboard.getNumber("shooter_d", 0));
+            pidController.setFF(Math.abs(SmartDashboard.getNumber("shooter_f", 0)));
         } else {
             pidController.setP(0);
             pidController.setP(0);

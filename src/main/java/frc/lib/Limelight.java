@@ -43,6 +43,9 @@ public class Limelight {
 
     public void setLightMode(LEDMode mode) {
         this.currentLedMode = mode;
+    }
+
+    private void internal(LEDMode mode) {
         switch (mode) {
             case ON:
                 this.llTable.getEntry("ledMode").setNumber(3);
@@ -77,6 +80,6 @@ public class Limelight {
     }
 
     public void periodic() {
-        this.setLightMode(this.currentLedMode);
+        this.internal(this.currentLedMode);
     }
 }

@@ -126,11 +126,11 @@ public final class Constants {
     public static class Intake {
         public static int MotorID = CANIds.IntakeMotor;
         public static double InSpeed = 1; // percent output
-        public static double OutSpeed = -1; // percent output
+        public static double OutSpeed = -0.12; // percent output
         public static double MaxCurrentDraw = 25; // in amps
         public static double MaxDrawTime = 1.0; // in seconds
         public static double ReverseTime = 2.0; // in seconds
-        public static double BallDetectionVoltage = 9;
+        public static double BallDetectionVoltage = 2;
     }
 
     // Feeder

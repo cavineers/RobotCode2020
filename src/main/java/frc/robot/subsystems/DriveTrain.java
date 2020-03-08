@@ -57,7 +57,7 @@ public class DriveTrain extends SubsystemBase {
 
         // Set default mode
         // CANSparkMax.IdleMode idleMode = CANSparkMax.IdleMode.kCoast;
-        CANSparkMax.IdleMode idleMode = CANSparkMax.IdleMode.kBrake;
+        CANSparkMax.IdleMode idleMode = CANSparkMax.IdleMode.kCoast;
         this.left1.setIdleMode(idleMode);
         this.left2.setIdleMode(idleMode);
         this.right1.setIdleMode(idleMode);
@@ -71,7 +71,7 @@ public class DriveTrain extends SubsystemBase {
         this.setDriveGear(DriveGear.LOW_GEAR);
 
         // Set default command
-        setDefaultCommand(new TeleopDrive(this, joy));
+        // setDefaultCommand(new TeleopDrive(this, joy));
     }
 
     /**

@@ -6,18 +6,18 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.commands.HomeAll;
-import frc.robot.commands.HomeHood;
 
 public class Intake extends SubsystemBase {
     // Intake state
     public enum IntakeState {
         ON,
         OFF,
-        REVERSED
+        REVERSED,
+        OOF
     }
     
     // Motor
@@ -42,6 +42,8 @@ public class Intake extends SubsystemBase {
 
     // IR Sensor
     private AnalogInput ir = new AnalogInput(Constants.Drum.IRSensor);
+
+    private double time;
 
     // Constructor
     public Intake(RobotContainer rc) {
@@ -75,6 +77,9 @@ public class Intake extends SubsystemBase {
             case REVERSED:
                 // Reversed
                 this.motor.set(ControlMode.PercentOutput, Constants.Intake.OutSpeed);
+                break;
+            case OOF:
+                this.motor.set(-1);
                 break;
         }
     }
@@ -129,20 +134,41 @@ public class Intake extends SubsystemBase {
         //     }
         // }
 
-        if (this.getIRVal() <= Constants.Intake.BallDetectionVoltage && this.currentState == IntakeState.ON) {
-            System.out.println("off");
-            this.setState(IntakeState.OFF);
+        // if (this.getIRVal() <= Constants.Intake.BallDetectionVoltage && this.currentState == IntakeState.ON) {
+        //     System.out.println("off");
+        //     this.setState(IntakeState.OFF);
+        //     this.rc.drum.addBall();
+        //     if (this.rc.drum.getBallCount() != 5) {
+        //         this.turnDelay = Timer.getFPGATimestamp();
+        //         this.turnBackOn = true;
+        //         this.onStage++;
+        //     }
+        // }
+
+        if (Timer.getFPGATimestamp()-this.turnDelay > 2.0 && this.turnDelay != 0) {
+            this.rc.drum.moveToNext();
+            this.turnDelay = 0;
+            this.time = 0;
+        }
+
+        // System.out.println(this.rc.PDP.getCurrent(Constants.PDPPorts.IntakeMotor));
+
+        if (this.rc.PDP.getCurrent(Constants.PDPPorts.IntakeMotor) > 18) {
+            this.rc.drum.enable();
+            this.setState(IntakeState.REVERSED);
+            this.time = Timer.getFPGATimestamp();
             this.rc.drum.addBall();
-            if (this.rc.drum.getBallCount() != 5) {
+            this.turnDelay = 0;
+            if (this.rc.drum.getBallCount() < 5 && !this.rc.isDrumManual()) {
                 this.turnDelay = Timer.getFPGATimestamp();
                 this.turnBackOn = true;
                 this.onStage++;
             }
         }
 
-        if (Timer.getFPGATimestamp()-this.turnDelay > 2.0 && this.turnDelay != 0) {
-            this.rc.drum.moveToNext();
-            this.turnDelay = 0;
+        if (time != 0 && Timer.getFPGATimestamp()-this.time > 1) {
+            this.setState(IntakeState.OFF);
+            this.time = 0;
         }
     }
 }

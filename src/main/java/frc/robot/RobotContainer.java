@@ -2,17 +2,21 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.lib.Limelight;
+import frc.robot.commands.AddToHood;
 import frc.robot.commands.HomeAll;
+import frc.robot.commands.RemoveFromHood;
 import frc.robot.commands.ShiftGear;
 import frc.robot.commands.ToggleControlPanel;
 import frc.robot.commands.ToggleIntake;
+import frc.robot.commands.shoot.LowShooter;
 import frc.robot.commands.shoot.Shoot;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.CompressorController;
-import frc.robot.subsystems.CompressorController.CompressorMode;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Drum;
@@ -63,8 +67,14 @@ public class RobotContainer {
 
     public CONTROLLER_MODE currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
 
+    private boolean manualShooter = false;
+
+    private boolean turntableManual = false;
+
+    private boolean drumManual = false;
+
     //* Subsystems
-    // public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
+    public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
     public CompressorController compressor = new CompressorController(false);
     // public ColorSensor colorSensor = new ColorSensor(this.colorSensorNano);
     // public Arduino colorSensorNano = new Arduino(SerialPort.Port.kUSB1);
@@ -156,8 +166,14 @@ public class RobotContainer {
         //^ Shooting
         a_button.whenPressed(new Shoot(this));
 
+        b_button.whenPressed(new LowShooter(this));
+
         //^ Homing
         right_menu.whenPressed(new HomeAll(this));
+
+        //! 2nd driver buttons
+        manual_l_bump.whenPressed(new RemoveFromHood());
+        manual_r_bump.whenPressed(new AddToHood());
     }
 
     /**
@@ -176,95 +192,102 @@ public class RobotContainer {
         }
 
         //^ CP Code
-        // 3 right, 2 left
-        if (this.joy.getRawAxis(2) > 0.05) {
+        if (this.joy.getRawAxis(2) > 0.1) {
             this.controlPanel.controlMotor.set(-this.joy.getRawAxis(2));
         } else
-        if (this.joy.getRawAxis(3) > 0.05) {
+        if (this.joy.getRawAxis(3) > 0.1) {
             this.controlPanel.controlMotor.set(this.joy.getRawAxis(3));
+        } else {
+            this.controlPanel.controlMotor.set(0);
         }
+
+        //^ Shooter Code
+        if (this.manualShooter) {
+            if (this.manual_joy.getRawAxis(3) > 0.1) {
+                SmartDashboard.putNumber("shooter_speed", this.manual_joy.getRawAxis(3)*5500);
+            } else {
+                SmartDashboard.putNumber("shooter_speed", 0);
+            }
+        }
+        
    
         if (lastDpad != joy.getPOV()) {
             switch (joy.getPOV()) {
             case 0:
-                // Top
-                // currentTriggerSetting = CONTROLLER_MODE.CONTROL_P;
-                // System.out.println("In Control Panel mode");
-                // this.compressor.setMode(CompressorController.CompressorMode.ENABLED);
-                // this.turnTable.setState(TurnTable.TurnTableState.ON);
-                // this.hood.enable();
-                // this.hood.turnToAngle(Hood.HoodAngle.HIGH);
-                // this.hood.turnToAngle(20);
-                // this.shooter.enable();
                 break;
             case 90:
-                // Right
-                // currentTriggerSetting = CONTROLLER_MODE.CLIMB;
-                // System.out.println("In Climb mode");
-                // this.compressor.setClosedLoop(true);
-                // this.hood.enable();
-                // this.hood.turnToAngle(Hood.HoodAngle.MEDIUM);
-                // this.hood.disable();
-                // this.drum.enable();
-                // this.drum.moveToNext();
+                this.drum.moveToNext();
+                this.drum.addBall();
                 break;
             case 180:
-                // Bottom
-                // currentTriggerSetting = CONTROLLER_MODE.NEUTRAL;
-                // System.out.println("In Neutral mode");
-                // this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
-                // this.hood.disable();
-                // this.turnTable.setState(TurnTable.TurnTableState.OFF);
-                // this.turnTable.disable();
-                // this.hood.enable();
-                // this.hood.turnToAngle(Hood.HoodAngle.LOW);
-                // this.turnTable.disable();
-                // this.shooter.disable();
+                if (this.intake.getState() != Intake.IntakeState.OFF) {
+                    this.intake.setState(Intake.IntakeState.OFF);
+                } else {
+                    this.intake.setState(Intake.IntakeState.OOF);
+                }
                 break;
             case 270:
-                // Left
-                // currentTriggerSetting = CONTROLLER_MODE.AUTO_SHOOT;
-                // System.out.println("In Auto Shoot mode");
-                // this.compressor.setClosedLoop(false);
-                // this.turnTable.enable();
+                this.drum.moveBack();
+                this.drum.removeBall();
                 break;
             default:
-                // System.out.println("Nothing is pressed, hopefully");
                 break;
             }
         }
         lastDpad = joy.getPOV();
 
-        /**
-         * turn turntable left/right
-         * hood up/down
-         * shooter speed
-         */
+        //^ Manual user
 
         if (manual_lastDpad != manual_joy.getPOV()) {
             switch (manual_joy.getPOV()) {
                 case 0:
                     if (this.shooter.getCurrentMode() == Shooter.ShooterMode.DISABLED) {
                         this.shooter.enable();
+                        this.manualShooter = true;
                     } else {
                         this.shooter.disable();
+                        this.manualShooter = false;
                     }
                     break;
                 case 90:
-                    if (this.hood.isEnabled()) {
-                        this.shooter.disable();
+                    if (this.turnTable.getCurrentMode() == TurnTable.TurnTableState.OFF) {
+                        this.turntableManual = false;
+                        this.turnTable.enable();
+                        this.limelight.setLightMode(Limelight.LEDMode.ON);
                     } else {
-                        this.shooter.enable();
+                        this.turntableManual = true;
+                        this.turnTable.disable();
+                        this.limelight.setLightMode(Limelight.LEDMode.OFF);
                     }
                     break;
                 case 180:
+                    if (this.hood.isEnabled()) {
+                        this.hood.disable();
+                    } else {
+                        this.hood.enable();
+                    }
                     break;
                 case 270:
-                    
+                    if (this.drum.isEnabled()) {
+                        this.drum.disable();
+                        this.drumManual = true;
+                    } else {
+                        this.drum.enable();
+                        this.drumManual = false;
+                    }
                     break;
                 default:
                     break;
             }
+        }
+        manual_lastDpad = manual_joy.getPOV();
+
+        if (this.turntableManual) {
+            this.turnTable.tableMotor.set(this.manual_joy.getRawAxis(4));
+        }
+
+        if (this.drumManual) {
+            this.drum.motor.set(this.manual_joy.getRawAxis(0));
         }
     }
 
@@ -312,5 +335,9 @@ public class RobotContainer {
         } else {
             return ColorSensor.ControlPanelColor.UNKNOWN;
         }
+    }
+
+    public boolean isDrumManual() {
+        return this.drumManual;
     }
 }
