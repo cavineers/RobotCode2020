@@ -12,6 +12,8 @@ int DataG = 0;
 int DataB = 0;
 int Counter = 0;
 int frequency = 0;
+String IncomingState;
+String CurrentState;
 
 // Current color
 String CurrentColor = "Unknown";
@@ -29,10 +31,17 @@ void setup() {
     // Setting frequency-scaling to 20%
     digitalWrite(S0,HIGH);
     digitalWrite(S1,LOW);
-    digitalWrite(LED, HIGH);
+    digitalWrite(LED,LOW);
     Serial.begin(9600);
 }
 void loop() {
+    IncomingState = Serial.readString();
+    Serial.println(IncomingState);
+    if(IncomingState.equals("ON")){
+        CurrentState = "ON";
+    while(CurrentState.equals("ON")){
+    // ==LED==
+    digitalWrite(LED,HIGH);    
     // ==RED==
 
     // Config the red filter
@@ -44,7 +53,7 @@ void loop() {
     DataR = frequency;
     
     // Wait
-    delay(1);
+    delay(1); //0.001 seconds
 
     // ==GREEN==
 
@@ -57,7 +66,7 @@ void loop() {
     DataG = frequency;
 
     // Wait
-    delay(1);
+    delay(1); //0.001 seconds
 
     // ==BLUE==
 
@@ -70,7 +79,7 @@ void loop() {
     DataB = frequency;
 
     // Wait
-    delay(1);
+    delay(1); //0.001 seconds
 
     // ==PRINT==
     //^ only for debug
@@ -111,5 +120,13 @@ void loop() {
     }
 
     // Wait
-    delay(1);
+    delay(1); //0.001 seconds
+
+    IncomingState = Serial.readString();
+    if(IncomingState == "OFF"){
+    digitalWrite(LED,LOW);
+    CurrentState = "OFF";
+        }
+    }
+}
 }
