@@ -67,6 +67,7 @@ public class Robot extends TimedRobot {
         this.robotContainer.limelight.periodic();
         this.robotContainer.drum.DrumPeriodic();
         this.robotContainer.shooter.setSpeed(SmartDashboard.getNumber("shooter_speed", 0));
+        this.robotContainer.dank.dankPeriodic();
     }
 
     @Override
@@ -85,6 +86,7 @@ public class Robot extends TimedRobot {
         this.robotContainer.drum.setSetpoint(0);
         this.robotContainer.drum.currentSetpoint = 0;
         this.homeDrum = false;
+        this.robotContainer.turnTable.tableMotor.setSelectedSensorPosition(0);
 
         // Autonomous command
         new Autonomous(this.robotContainer).schedule();

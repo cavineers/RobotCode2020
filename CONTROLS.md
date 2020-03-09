@@ -12,30 +12,30 @@
 
 **Right stick button** => High gear
 
-**Left bumper** => Climber up
+**Left bumper** => Climber down
 
-**Right bumper** => Climber down
+**Right bumper** => Climber up
 
 **X Button** => Toggle Intake on/off
 
 **Y Button** => Toggle Control Panel piston
 
-**B Button** =>
+**B Button** => Shoot low goal
 
-**A Button** => Auto align & Shoot
+**A Button** => Auto align & shoot high goal
 
 **Left Menu** =>
 
-**Right Menu** => Home everything
+**Right Menu** => Home hood
 
-**Left Trigger** => VariableControl Panel Left 
+**Left Trigger** => Variable Control Panel Left 
  
 **Right Trigger** => Variable Control Panel Right
 
 **Top D-Pad** =>
 
-**Right D-Pad** =>
+**Right D-Pad** => Advance drum
 
-**Left D-Pad** =>
+**Left D-Pad** => Un-advance drum
 
-**Bottom D-Pad** =>
+**Bottom D-Pad** => Toggle the intake's oof mode

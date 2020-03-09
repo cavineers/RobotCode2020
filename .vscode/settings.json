@@ -12,7 +12,6 @@
         "**/.settings": true,
         "**/.factorypath": true
     },
-    "cSpell.userWords": ["wpilib", "spalding"],
     "explorer.confirmDelete": false,
     "explorer.confirmDragAndDrop": false,
     "editor.formatOnSave": false,
@@ -67,7 +66,18 @@
             "backgroundColor": "transparent"
         }
     ],
-    "cSpell.words": ["AHRS", "CANPID", "Deadzone", "Dpad", "setpoint", "teleop", "yeet"],
+    "cSpell.words": [
+        "AHRS",
+        "CANPID",
+        "Deadzone",
+        "Dpad",
+        "Kronk",
+        "setpoint",
+        "teleop",
+        "yeet",
+        "wpilib",
+        "spalding"
+    ],
     "java.home": "C:\\Users\\Public\\wpilib\\2020\\jdk",
     "wpilib.autoSaveOnDeploy": true
 }
