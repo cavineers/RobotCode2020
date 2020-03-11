@@ -18,9 +18,9 @@ public class TurnTable extends SubsystemBase {
 
     // TurnTable state
     public enum TurnTableState {
-        ON,
+        TARGETING,
         OFF,
-        NATURAL
+        NEUTRAL
     }
 
     // Current state
@@ -44,6 +44,12 @@ public class TurnTable extends SubsystemBase {
      */
     public TurnTable(Limelight ll) {
         this.ll = ll;
+
+        // Configure the turntable soft stops
+        this.tableMotor.configForwardSoftLimitThreshold(Constants.TurnTable.maxRight);
+        this.tableMotor.configReverseSoftLimitThreshold(Constants.TurnTable.maxLeft);
+        this.tableMotor.configForwardSoftLimitEnable(true);
+        this.tableMotor.configReverseSoftLimitEnable(true);
     }
 
     /**
@@ -51,7 +57,6 @@ public class TurnTable extends SubsystemBase {
      * @param state ON/OFF state
      */
     public void setState(TurnTableState state) {
-        System.out.println(state);
         this.currentState = state;
     }
 
@@ -72,26 +77,6 @@ public class TurnTable extends SubsystemBase {
     }
 
     /**
-     * Enable the PID loop
-     */
-    public void enable() {
-        this.ll.setLightMode(Limelight.LEDMode.ON);
-        this.setState(TurnTableState.ON);
-    }
-
-    /**
-     * Disable the PID loop
-     */
-    public void disable() {
-        this.ll.setLightMode(Limelight.LEDMode.OFF);
-        this.setState(TurnTableState.NATURAL);
-    }
-
-    public TurnTableState getCurrentMode() {
-        return this.currentState;
-    }
-
-    /**
      * Periodic
      */
     @Override
@@ -101,10 +86,12 @@ public class TurnTable extends SubsystemBase {
             this.lastTime = Timer.getFPGATimestamp();
         }
         
-        if (this.currentState == TurnTableState.ON) {
+        if (this.currentState == TurnTableState.TARGETING) {
+            // Turn the turntable to meet a 0 horizontal degree offset from target
             this.tableMotor.pidWrite(this.pidController.calculate(-this.ll.getHorizontalOffset(), 0.0));
         } else
-        if (this.currentState == TurnTableState.NATURAL) {
+        if (this.currentState == TurnTableState.NEUTRAL) {
+            // Turn the turntable to encoder position 0 (the original match starting position)
             this.tableMotor.pidWrite(this.pidController.calculate(this.tableMotor.getSelectedSensorPosition(), 0.0));
         }
     }

@@ -4,44 +4,42 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 public class Intake extends SubsystemBase {
-    // Intake state
-    public enum IntakeState {
+    // Intake motor state
+    public enum IntakeMotorState {
         ON,
         OFF,
         REVERSED,
         OOF
     }
+
+    // Intake piston state
+    public enum IntakePistonState {
+        EXTENDED,
+        RETRACTED
+    }
     
     // Motor
     private WPI_TalonSRX motor = new WPI_TalonSRX(Constants.Intake.MotorID);
 
-    // Current state
-    private IntakeState currentState;
+    // Solenoid
+    private DoubleSolenoid sol = new DoubleSolenoid(Constants.Intake.Piston1, Constants.Intake.Piston2);
+
+    // Current states
+    private IntakeMotorState currentMotorState;
+
+    private IntakePistonState currentPistonState;
 
     // Robot Container
     private RobotContainer rc;
 
     private double lastTime = 0.0;
-
-    // Turn back on
-    private boolean turnBackOn = false;
-
-    private int onStage = 0;
-
-    private double turnDelay = 0;
-
-    private double onDelay = 0;
-
-    // IR Sensor
-    private AnalogInput ir = new AnalogInput(Constants.Drum.IRSensor);
 
     private double time;
 
@@ -50,20 +48,23 @@ public class Intake extends SubsystemBase {
         // local robot container
         this.rc = rc;
         
-        // Default to off
-        this.setState(IntakeState.OFF);
-
+        // Config motor
         this.motor.setNeutralMode(NeutralMode.Brake);
+
+        // Default to off and retracted
+        this.setMotorState(IntakeMotorState.OFF);
+        this.setPistonState(IntakePistonState.RETRACTED);
+
     }
 
     /**
      * set the desired intake state
      * @param state wanted intake state
      */
-    public void setState(IntakeState state) {
-        // System.out.println("intake");
+    public void setMotorState(IntakeMotorState state) {
         // set the current state
-        this.currentState = state;
+        this.currentMotorState = state;
+
         // set motor state
         switch (state) {
             case ON:
@@ -88,14 +89,37 @@ public class Intake extends SubsystemBase {
      * get the current intake state
      * @return intake state
      */
-    public IntakeState getState() {
+    public IntakeMotorState getMotorState() {
         // return the current motor state
-        return this.currentState;
+        return this.currentMotorState;
     }
 
-    public double getIRVal() {
-        return ((27.726)*(Math.pow(this.ir.getVoltage(), -1.2045)));
+    /**
+     * Set the wanted piston state
+     * @param state extended/reversed
+     */
+    public void setPistonState(IntakePistonState state) {
+        switch (state) {
+            case EXTENDED:
+                this.sol.set(DoubleSolenoid.Value.kForward);
+                break;
+            case RETRACTED:
+                this.sol.set(DoubleSolenoid.Value.kReverse);
+                this.setMotorState(IntakeMotorState.OFF);
+                break;
+            default:
+                break;
+        }
     }
+
+    /**
+     * Get the current piston state
+     * @return extended/reversed
+     */
+    public IntakePistonState getPistonState() {
+        return this.currentPistonState;
+    }
+
 
     /**
      * Intake periodic
@@ -107,67 +131,16 @@ public class Intake extends SubsystemBase {
             this.lastTime = Timer.getFPGATimestamp();
         }
 
-        // if (this.turnBackOn) {
-        //     switch (this.onStage) {
-        //         case 1:
-        //             if (this.rc.drum.isTurning()) {
-        //                 this.onStage++;
-        //             } else {
-        //                 this.setState(IntakeState.OFF);
-        //             }
-        //             break;
-        //         case 2:
-        //             if (!this.rc.drum.isTurning()) {
-        //                 this.onStage++;
-        //                 this.onDelay = Timer.getFPGATimestamp();
-        //             } else {
-        //                 this.setState(IntakeState.OFF);
-        //             }
-        //         case 3:
-        //             if (Timer.getFPGATimestamp()-this.onDelay > 5.0) {
-        //                 // this.setState(IntakeState.ON);
-        //                 this.onStage = 0;
-        //                 this.onDelay = 0;
-        //             }
-        //         default:
-        //             break;
-        //     }
-        // }
-
-        // if (this.getIRVal() <= Constants.Intake.BallDetectionVoltage && this.currentState == IntakeState.ON) {
-        //     System.out.println("off");
-        //     this.setState(IntakeState.OFF);
-        //     this.rc.drum.addBall();
-        //     if (this.rc.drum.getBallCount() != 5) {
-        //         this.turnDelay = Timer.getFPGATimestamp();
-        //         this.turnBackOn = true;
-        //         this.onStage++;
-        //     }
-        // }
-
-        if (Timer.getFPGATimestamp()-this.turnDelay > 2.0 && this.turnDelay != 0) {
-            this.rc.drum.moveToNext();
-            this.turnDelay = 0;
-            this.time = 0;
-        }
-
-        // System.out.println(this.rc.PDP.getCurrent(Constants.PDPPorts.IntakeMotor));
-
+        // Current limiting
         if (this.rc.PDP.getCurrent(Constants.PDPPorts.IntakeMotor) > 18) {
-            this.rc.drum.enable();
-            this.setState(IntakeState.REVERSED);
+            this.setMotorState(IntakeMotorState.REVERSED);
             this.time = Timer.getFPGATimestamp();
             this.rc.drum.addBall();
-            this.turnDelay = 0;
-            if (this.rc.drum.getBallCount() < 5 && !this.rc.isDrumManual()) {
-                this.turnDelay = Timer.getFPGATimestamp();
-                this.turnBackOn = true;
-                this.onStage++;
-            }
         }
 
-        if (time != 0 && Timer.getFPGATimestamp()-this.time > 1) {
-            this.setState(IntakeState.OFF);
+        // Turn off after reverse
+        if (this.time != 0 && Timer.getFPGATimestamp()-this.time > 1) {
+            this.setMotorState(IntakeMotorState.OFF);
             this.time = 0;
         }
     }

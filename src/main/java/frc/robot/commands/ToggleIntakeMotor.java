@@ -2,12 +2,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Intake.IntakeState;
 
-public class ToggleIntake extends CommandBase {
+public class ToggleIntakeMotor extends CommandBase {
     private Intake intake;
 
-    public ToggleIntake(Intake intake) {
+    public ToggleIntakeMotor(Intake intake) {
         addRequirements(intake);
         this.intake = intake;
     }
@@ -15,12 +14,10 @@ public class ToggleIntake extends CommandBase {
     @Override
     public void initialize() {
         System.out.println("Intake Toggle");
-        if (this.intake.getState() == Intake.IntakeState.OFF) {
-            System.out.println("On");
-            this.intake.setState(IntakeState.ON);
+        if (this.intake.getMotorState() == Intake.IntakeMotorState.OFF) {
+            this.intake.setMotorState(Intake.IntakeMotorState.ON);
         } else {
-            this.intake.setState(IntakeState.OFF);
-            System.out.println("Off");
+            this.intake.setMotorState(Intake.IntakeMotorState.OFF);
         }
     }
 
