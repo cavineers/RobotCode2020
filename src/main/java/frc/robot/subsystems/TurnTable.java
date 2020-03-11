@@ -14,13 +14,13 @@ public class TurnTable extends SubsystemBase {
     public WPI_TalonSRX tableMotor = new WPI_TalonSRX(Constants.TurnTable.MotorID); 
 
     // PID Controller
-    private PIDController pidController = new PIDController(Constants.TurnTable.kP, Constants.TurnTable.kI, Constants.TurnTable.kD);
+    private PIDController pidController = new PIDController(Constants.TurnTable.NEUTRAL_kP, Constants.TurnTable.NEUTRAL_kI, Constants.TurnTable.NEUTRAL_kD);
 
     // TurnTable state
     public enum TurnTableState {
-        ON,
+        TARGETING,
         OFF,
-        NATURAL
+        NEUTRAL
     }
 
     // Current state
@@ -51,8 +51,26 @@ public class TurnTable extends SubsystemBase {
      * @param state ON/OFF state
      */
     public void setState(TurnTableState state) {
-        System.out.println(state);
         this.currentState = state;
+        switch (state) {
+            case TARGETING:
+                this.pidController.setP(Constants.TurnTable.ON_kP);
+                this.pidController.setI(Constants.TurnTable.ON_kI);
+                this.pidController.setD(Constants.TurnTable.ON_kD);
+                break;
+            case NEUTRAL:
+                this.pidController.setP(Constants.TurnTable.NEUTRAL_kP);
+                this.pidController.setI(Constants.TurnTable.NEUTRAL_kI);
+                this.pidController.setD(Constants.TurnTable.NEUTRAL_kD);
+                break;
+            case OFF:
+                this.pidController.setP(0);
+                this.pidController.setI(0);
+                this.pidController.setD(0);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -72,26 +90,6 @@ public class TurnTable extends SubsystemBase {
     }
 
     /**
-     * Enable the PID loop
-     */
-    public void enable() {
-        this.ll.setLightMode(Limelight.LEDMode.ON);
-        this.setState(TurnTableState.ON);
-    }
-
-    /**
-     * Disable the PID loop
-     */
-    public void disable() {
-        this.ll.setLightMode(Limelight.LEDMode.OFF);
-        this.setState(TurnTableState.NATURAL);
-    }
-
-    public TurnTableState getCurrentMode() {
-        return this.currentState;
-    }
-
-    /**
      * Periodic
      */
     @Override
@@ -101,10 +99,10 @@ public class TurnTable extends SubsystemBase {
             this.lastTime = Timer.getFPGATimestamp();
         }
         
-        if (this.currentState == TurnTableState.ON) {
+        if (this.currentState == TurnTableState.TARGETING) {
             this.tableMotor.pidWrite(this.pidController.calculate(-this.ll.getHorizontalOffset(), 0.0));
         } else
-        if (this.currentState == TurnTableState.NATURAL) {
+        if (this.currentState == TurnTableState.NEUTRAL) {
             this.tableMotor.pidWrite(this.pidController.calculate(this.tableMotor.getSelectedSensorPosition(), 0.0));
         }
     }

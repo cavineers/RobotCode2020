@@ -6,8 +6,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.Limelight;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.TurnTable;
 
-public class Shoot extends CommandBase {
+public class HighShooter extends CommandBase {
     private RobotContainer rc;
 
     private double startTime = 0;
@@ -16,7 +17,7 @@ public class Shoot extends CommandBase {
 
     private boolean finished = false;
 
-    public Shoot(RobotContainer rc) {
+    public HighShooter(RobotContainer rc) {
         this.rc = rc;
     }
 
@@ -32,7 +33,7 @@ public class Shoot extends CommandBase {
         this.startTime = Timer.getFPGATimestamp();
         this.stage = 0;
         this.rc.limelight.setLightMode(Limelight.LEDMode.ON);
-        this.rc.turnTable.enable();
+        this.rc.turnTable.setState(TurnTable.TurnTableState.TARGETING);
         SmartDashboard.putNumber("shooter_speed", 5500);
         SmartDashboard.putNumber("hood_angle", 20);
     }
@@ -102,7 +103,7 @@ public class Shoot extends CommandBase {
         this.rc.shooter.disable();
         this.rc.feeder.setState(Feeder.FeederState.DISABLED);
         this.rc.limelight.setLightMode(Limelight.LEDMode.OFF);
-        this.rc.turnTable.disable();
+        this.rc.turnTable.setState(TurnTable.TurnTableState.NEUTRAL);
     }
 
     @Override
@@ -111,6 +112,6 @@ public class Shoot extends CommandBase {
     }
 
     public void log() {
-        System.out.println(this.rc.limelight.getHorizontalOffset()+","+this.rc.limelight.getVerticalOffset()+","+this.rc.limelight.getDistance());
+        System.out.println(this.rc.limelight.getHorizontalOffset() + "," + this.rc.limelight.getVerticalOffset() + "," + this.rc.limelight.getDistance());
     }
 }

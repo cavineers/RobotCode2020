@@ -15,7 +15,9 @@ public class HomeHood extends CommandBase {
     }
 
     @Override
-    public void initialize() {}
+    public void initialize() {
+        this.hood.disable();
+    }
 
     @Override
     public void execute() {

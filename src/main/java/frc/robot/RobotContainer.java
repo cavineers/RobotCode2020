@@ -11,9 +11,10 @@ import frc.robot.commands.HomeAll;
 import frc.robot.commands.RemoveFromHood;
 import frc.robot.commands.ShiftGear;
 import frc.robot.commands.ToggleControlPanel;
-import frc.robot.commands.ToggleIntake;
+import frc.robot.commands.ToggleIntakeMotor;
+import frc.robot.commands.ToggleIntakePistons;
 import frc.robot.commands.shoot.LowShooter;
-import frc.robot.commands.shoot.Shoot;
+import frc.robot.commands.shoot.HighShooter;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.CompressorController;
@@ -69,10 +70,6 @@ public class RobotContainer {
 
     private boolean manualShooter = false;
 
-    private boolean turntableManual = false;
-
-    private boolean drumManual = false;
-
     //* Subsystems
     public PowerDistributionPanel PDP = new PowerDistributionPanel(Constants.CANIds.PowerDistributionPanel);
     public CompressorController compressor = new CompressorController(false);
@@ -96,67 +93,17 @@ public class RobotContainer {
      * RobotContainer
      */
     public RobotContainer() {
-        // //^ Turn of the compressor during just motor testing
-        // this.compressor.setClosedLoop(false);
-        // this.compressor.setMode(CompressorMode.DISABLED);
-
         // Config the controller
         configureButtonBindings();
 
-        this.dank.setProfileLocation("Kronk");
-        this.dank.setProfileName("Kronk");
-        this.dank.export();
-        this.dank.addListener();
+        // Configure DANK 
+        this.dank.setRobotName("Kronk").setProfileName("Kronk").export();
     }
 
     /**
      * configureButtonBindings
      */
     private void configureButtonBindings() {
-        //! TESTING BUTTON CONFIGS
-
-        //^ Elevator
-        // y_button.whenPressed(new ExtendElevator(this.climber));
-        // b_button.whenPressed(new RetractElevator(this.climber));
-        // a_button.whenPressed(new StopElevator(this.climber));
-
-        // ^ Control Panel
-        // b_button.whenPressed(new StartSpinning(this.controlPanel));
-        // x_button.whenPressed(new StopSpinning(this.controlPanel));
-        // y_button.whenPressed(new ExtendControlPanel(this.controlPanel));
-        // x_button.whenPressed(new RetractControlPanel(this.controlPanel));
-
-        //^ Vision
-        // a_button.whenPressed(new AutoAlign(this.drivetrain, this.turnTable, this.limelight));
-        // a_button.whenPressed(new TurnTableToTarget(this.turnTable, 90));
-        // a_button.whenPressed(new TurnTableToTarget(this.turnTable, this.limelight.getHorizontalOffset()));
-        // b_button.whenPressed(new StopTurnTable(this.turnTable));
-
-        //^ Shooty Things
-        // a_button.whenPressed(new Shoot(this.limelight, this.shooter));
-        // a_button.whenPressed(new ShooterOn(this.shooter));
-        // b_button.whenPressed(new ShooterOff(this.shooter));
-
-        //^ Intake
-        // a_button.whenPressed(new IntakeOn(this.intake));
-        // b_button.whenPressed(new IntakeOff(this.intake));
-
-        //^ Feeder
-        // r_bump.whenPressed(new FeederOn(this.feeder));
-        // l_bump.whenPressed(new FeederOff(this.feeder));
-        
-        //^ Drum
-        // x_button.whenPressed(new DrumRotateNext(this.drum));
-        // left_menu.whenPressed(new HomeDrum(this.drum));
-
-        //^ Hood
-        // left_menu.whenPressed(new HomeDrum(this.drum));
-        // y_button.whenPressed(new HoodToAngle(this.hood, 20*(4096/360)));
-
-        //^ TurnTable
-        // b_button.whenPressed(new TurnTableToTarget(this.turnTable, this.limelight));
-        // x_button.whenPressed(new ToggleTurnTable(this.turnTable));
-
         //! ACTUAL FINAL BUTTON CONFIGS
 
         //^ DriveTrain (Shifting)
@@ -164,18 +111,21 @@ public class RobotContainer {
         right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
 
         //^ Intake
-        x_button.whenPressed(new ToggleIntake(this.intake));
+        x_button.whenPressed(new ToggleIntakeMotor(this.intake));
 
         //^ Control Panel
         y_button.whenPressed(new ToggleControlPanel(this.controlPanel));
 
         //^ Shooting
-        a_button.whenPressed(new Shoot(this));
+        a_button.whenPressed(new HighShooter(this));
 
         b_button.whenPressed(new LowShooter(this));
 
         //^ Homing
         right_menu.whenPressed(new HomeAll(this));
+
+        //^ Toggle intake pistons
+        left_menu.whenPressed(new ToggleIntakePistons(this.intake));
 
         //! 2nd driver buttons
         manual_l_bump.whenPressed(new RemoveFromHood());
@@ -206,17 +156,8 @@ public class RobotContainer {
         } else {
             this.controlPanel.controlMotor.set(0);
         }
-
-        //^ Shooter Code
-        if (this.manualShooter) {
-            if (this.manual_joy.getRawAxis(3) > 0.1) {
-                SmartDashboard.putNumber("shooter_speed", this.manual_joy.getRawAxis(3)*5500);
-            } else {
-                SmartDashboard.putNumber("shooter_speed", 0);
-            }
-        }
-        
    
+        //^ D-Pad
         if (lastDpad != joy.getPOV()) {
             switch (joy.getPOV()) {
             case 0:
@@ -226,10 +167,10 @@ public class RobotContainer {
                 this.drum.addBall();
                 break;
             case 180:
-                if (this.intake.getState() != Intake.IntakeState.OFF) {
-                    this.intake.setState(Intake.IntakeState.OFF);
+                if (this.intake.getMotorState() != Intake.IntakeMotorState.OFF) {
+                    this.intake.setMotorState(Intake.IntakeMotorState.OFF);
                 } else {
-                    this.intake.setState(Intake.IntakeState.OOF);
+                    this.intake.setMotorState(Intake.IntakeMotorState.OOF);
                 }
                 break;
             case 270:
@@ -243,7 +184,6 @@ public class RobotContainer {
         lastDpad = joy.getPOV();
 
         //^ Manual user
-
         if (manual_lastDpad != manual_joy.getPOV()) {
             switch (manual_joy.getPOV()) {
                 case 0:
@@ -256,14 +196,10 @@ public class RobotContainer {
                     }
                     break;
                 case 90:
-                    if (this.turnTable.getCurrentMode() != TurnTable.TurnTableState.ON) {
-                        this.turntableManual = false;
-                        this.turnTable.enable();
-                        this.limelight.setLightMode(Limelight.LEDMode.ON);
+                    if (this.turnTable.getState() == TurnTable.TurnTableState.TARGETING) {
+                        this.turnTable.setState(TurnTable.TurnTableState.NEUTRAL);
                     } else {
-                        this.turntableManual = true;
-                        this.turnTable.disable();
-                        this.limelight.setLightMode(Limelight.LEDMode.OFF);
+                        this.turnTable.setState(TurnTable.TurnTableState.TARGETING);
                     }
                     break;
                 case 180:
@@ -276,10 +212,8 @@ public class RobotContainer {
                 case 270:
                     if (this.drum.isEnabled()) {
                         this.drum.disable();
-                        this.drumManual = true;
                     } else {
                         this.drum.enable();
-                        this.drumManual = false;
                     }
                     break;
                 default:
@@ -288,11 +222,16 @@ public class RobotContainer {
         }
         manual_lastDpad = manual_joy.getPOV();
 
-        if (this.turntableManual) {
-            this.turnTable.tableMotor.set(this.manual_joy.getRawAxis(4));
+        //^ Manual Shooter Code
+        if (this.manualShooter) {
+            if (this.manual_joy.getRawAxis(3) > 0.1) {
+                SmartDashboard.putNumber("shooter_speed", this.manual_joy.getRawAxis(3)*5500);
+            } else {
+                SmartDashboard.putNumber("shooter_speed", 0);
+            }
         }
 
-        if (this.drumManual) {
+        if (!this.drum.isEnabled()) {
             this.drum.motor.set(this.manual_joy.getRawAxis(0));
         }
     }
@@ -341,9 +280,5 @@ public class RobotContainer {
         } else {
             return ColorSensor.ControlPanelColor.UNKNOWN;
         }
-    }
-
-    public boolean isDrumManual() {
-        return this.drumManual;
     }
 }

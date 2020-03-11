@@ -3,7 +3,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.commands.shoot.Shoot;
+import frc.robot.commands.shoot.HighShooter;
+import frc.robot.subsystems.TurnTable;
 
 public class Autonomous extends CommandBase {
     private RobotContainer rc;
@@ -17,8 +18,7 @@ public class Autonomous extends CommandBase {
     @Override
     public void initialize() {
         this.startTime = Timer.getFPGATimestamp();
-        this.rc.turnTable.enable();
-        this.rc.drum.enable();
+        this.rc.turnTable.setState(TurnTable.TurnTableState.TARGETING);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class Autonomous extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        new Shoot(this.rc).schedule();
+        new HighShooter(this.rc).schedule();
         this.rc.drivetrain.drive(0, 0);
     }
 

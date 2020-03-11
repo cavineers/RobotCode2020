@@ -4,43 +4,45 @@ public final class Constants {
     // CAN network mapping
     public static class CANIds {
         public static int PCM                    = 0;  // Pneumatic Control Module (PCM)
+        public static int DriveTrainMotor1       = 1;  // Left 1 (neo)
+        public static int DriveTrainMotor3       = 2;  // Left 2 (neo)
         public static int DriveTrainMotor2       = 3;  // Right 1 (neo)
         public static int DriveTrainMotor4       = 4;  // Right 2 (neo)
-        public static int DriveTrainMotor3       = 2;  // Left 2 (neo)
-        public static int DriveTrainMotor1       = 1;  // Left 1 (neo)
-        public static int ShooterMotor           = 6;  // The shooter's fly wheel motor
-        public static int ClimberMotor           = 5;  // Climber motor
-        public static int DrumMotor              = 10;  // Intakes drum motor
-        public static int ShooterVerticalPitch   = 8;  // Shooter's vertical pitch
-        public static int FeederMotor            = 11;  // Feeder motor
-        public static int IntakeMotor            = 12; // Intake motor
-        public static int ControlPanelMotor      = 9; // Control Panel rotator
-        public static int TurretRotationMotor    = 7; // Turret rotation motor
+        public static int ClimberMotor           = 5;  // Climber motor (neo)
+        public static int ShooterMotor           = 6;  // The shooter's fly wheel motor (neo)
+        public static int TurretRotationMotor    = 7;  // Turret rotation motor (talon)
+        public static int ShooterVerticalPitch   = 8;  // Shooter's vertical pitch (talon)
+        public static int ControlPanelMotor      = 9;  // Control Panel rotator (talon)
+        public static int DrumMotor              = 10; // Intakes drum motor (talon)
+        public static int FeederMotor            = 11; // Feeder motor (talon)
+        public static int IntakeMotor            = 12; // Intake motor (talon)
         public static int PowerDistributionPanel = 30; // Power Distribution Panel (PDP)
     }
 
     // PCM module mapping
     public static class PCMChannels {
+        public static int ControlPanel1 = 0; // Double
+        public static int ControlPanel2 = 1; // Solenoid
         public static int DriveShift1   = 2;
         public static int DriveShift2   = 3;
-        public static int ControlPanel1 = 0;
-        public static int ControlPanel2 = 1;
+        public static int Intake1       = 6;
+        public static int Intake2       = 7;
     }
 
     // PDP power mapping
     public static class PDPPorts {
-        public static int DriveTrainMotor1 = 12;
-        public static int DriveTrainMotor2 = 13;
-        public static int DriveTrainMotor3 = 3;
-        public static int DriveTrainMotor4 = 1;
-        public static int ShooterMotor = 15;
-        public static int ClimberMotor = 0;
-        public static int DrumMotor = 9;
+        public static int ClimberMotor         = 0;
+        public static int DriveTrainMotor4     = 1;
+        public static int IntakeMotor          = 2;
+        public static int DriveTrainMotor3     = 3;
+        public static int FeederMotor          = 8;
+        public static int DrumMotor            = 9;
+        public static int ControlPanelMotor    = 10;
         public static int ShooterVerticalPitch = 11;
-        public static int FeederMotor = 8;
-        public static int IntakeMotor = 2;
-        public static int ControlPanelMotor = 10;
-        public static int TurretRotationMotor = 14;
+        public static int DriveTrainMotor1     = 12;
+        public static int DriveTrainMotor2     = 13;
+        public static int TurretRotationMotor  = 14;
+        public static int ShooterMotor         = 15;
     }
     
     // VISION
@@ -54,9 +56,12 @@ public final class Constants {
     public static class TurnTable {
         public static int MotorID  = CANIds.TurretRotationMotor;
         public static double speed = 1;
-        public static double kP = 0.01;
-        public static double kI = 0.005;
-        public static double kD = 0.0007;
+        public static double ON_kP = 0.01;
+        public static double ON_kI = 0.005;
+        public static double ON_kD = 0.0007;
+        public static double NEUTRAL_kP = 0.01;
+        public static double NEUTRAL_kI = 0.005;
+        public static double NEUTRAL_kD = 0.0007;
         public static double tolerance = 0;
         public static int LimitSwitch = 1;
     }
@@ -131,6 +136,8 @@ public final class Constants {
         public static double MaxDrawTime = 1.0; // in seconds
         public static double ReverseTime = 2.0; // in seconds
         public static double BallDetectionVoltage = 2;
+        public static int Piston1 = PCMChannels.Intake1;
+        public static int Piston2 = PCMChannels.Intake2;
     }
 
     // Feeder

@@ -51,14 +51,12 @@ public class Drum extends PIDSubsystem {
      * @param angle angle to turn to (in degrees)
      */
     public void moveToNext() {
-        this.enable();
         this.currentSetpoint = this.currentSetpoint + (-((int)((409600/360)*(360/5))));
         setSetpoint(this.currentSetpoint);
         getController().setSetpoint(this.currentSetpoint);
     }
 
     public void moveBack() {
-        this.enable();
         this.currentSetpoint = this.currentSetpoint - (-((int)((409600/360)*(360/5))));
         setSetpoint(this.currentSetpoint);
         getController().setSetpoint(this.currentSetpoint);
@@ -77,6 +75,7 @@ public class Drum extends PIDSubsystem {
     public void removeBall() {
         if (this.ballCount != 0) {
             this.ballCount--;
+            SmartDashboard.putNumber("ball_count", this.ballCount);
 
         }
     }
@@ -84,6 +83,7 @@ public class Drum extends PIDSubsystem {
         if (Timer.getFPGATimestamp()-this.lastBall > 1.5) {
             this.ballCount++;
             this.lastBall = Timer.getFPGATimestamp();
+            SmartDashboard.putNumber("ball_count", this.ballCount);
         }
     }
 
@@ -93,13 +93,13 @@ public class Drum extends PIDSubsystem {
     @Override
     public void useOutput(double output, double setpoint) {
         // Debugging logs
-        System.out.println("CurrentPos: " + getMeasurement());
-        System.out.println("Wanted: " + this.currentSetpoint);
-        System.out.println("OUTPUT: " +  output);
+        // System.out.println("CurrentPos: " + getMeasurement());
+        // System.out.println("Wanted: " + this.currentSetpoint);
+        // System.out.println("OUTPUT: " +  output);
 
-        SmartDashboard.putNumber("drum_wants", this.currentSetpoint);
-        SmartDashboard.putNumber("drum_got", getMeasurement());
-        SmartDashboard.putNumber("drum_out", output);
+        // SmartDashboard.putNumber("drum_wants", this.currentSetpoint);
+        // SmartDashboard.putNumber("drum_got", getMeasurement());
+        // SmartDashboard.putNumber("drum_out", output);
 
         // Output
         // if (!this.isHoming) {
@@ -132,7 +132,6 @@ public class Drum extends PIDSubsystem {
             // System.out.println(this.motor.getSelectedSensorPosition());
             this.lastTime = Timer.getFPGATimestamp();
         }
-        SmartDashboard.putNumber("ball_count", this.ballCount);
     }
 
     public boolean isLimitPressed() {
