@@ -25,8 +25,6 @@ public class Drum extends PIDSubsystem {
 
     private int ballCount = 0;
 
-    private boolean turning = false;
-
     private double lastBall = 0;
 
     /**
@@ -44,11 +42,13 @@ public class Drum extends PIDSubsystem {
 
         // Break Mode
         this.motor.setNeutralMode(NeutralMode.Brake);
+
+        // Set the initial ball count
+        SmartDashboard.putNumber("ball_count", this.ballCount);
     }
 
     /**
-     * turnToAngle
-     * @param angle angle to turn to (in degrees)
+     * Move to the next drum position
      */
     public void moveToNext() {
         this.currentSetpoint = this.currentSetpoint + (-((int)((409600/360)*(360/5))));
@@ -56,22 +56,36 @@ public class Drum extends PIDSubsystem {
         getController().setSetpoint(this.currentSetpoint);
     }
 
+    /**
+     * Move to the previous drum position
+     */
     public void moveBack() {
         this.currentSetpoint = this.currentSetpoint - (-((int)((409600/360)*(360/5))));
         setSetpoint(this.currentSetpoint);
         getController().setSetpoint(this.currentSetpoint);
     }
 
+    /**
+     * Set the drum's setpoint
+     * @param sp Setpoint in encoder pulses
+     */
     public void makeSetpoint(int sp) {
         this.currentSetpoint = sp;
         setSetpoint(this.currentSetpoint);
         getController().setSetpoint(this.currentSetpoint);
     }
 
+    /**
+     * Get the current number of ball's stored
+     * @return ball count
+     */
     public int getBallCount() {
         return this.ballCount;
     }
 
+    /**
+     * Remove a ball from the count
+     */
     public void removeBall() {
         if (this.ballCount != 0) {
             this.ballCount--;
@@ -79,6 +93,10 @@ public class Drum extends PIDSubsystem {
 
         }
     }
+
+    /**
+     * Add a ball to the count
+     */
     public void addBall() {
         if (Timer.getFPGATimestamp()-this.lastBall > 1.5) {
             this.ballCount++;
@@ -105,18 +123,6 @@ public class Drum extends PIDSubsystem {
         // if (!this.isHoming) {
         this.motor.pidWrite(MathUtil.clamp(output,-Constants.Drum.speed,Constants.Drum.speed));
         // }
-
-        boolean lastTurning = this.turning;
-        if (output < 0.1) {
-            this.turning = false;
-        } else {
-            this.turning = true;
-        }
-        // System.out.println(this.turning);
-    }
-
-    public boolean isTurning() {
-        return this.turning;
     }
 
     /**
@@ -127,6 +133,9 @@ public class Drum extends PIDSubsystem {
         return this.motor.getSelectedSensorPosition();
     }
 
+    /**
+     * Periodic
+     */
     public void DrumPeriodic() {
         if (Timer.getFPGATimestamp()-this.lastTime>0.75) {
             // System.out.println(this.motor.getSelectedSensorPosition());
@@ -134,11 +143,11 @@ public class Drum extends PIDSubsystem {
         }
     }
 
+    /**
+     * Is the limit switch pressed
+     * @return true if pressed
+     */
     public boolean isLimitPressed() {
         return !this.limitSwitch.get();
-    }
-
-    public WPI_TalonSRX getMotor() {
-        return this.motor;
     }
 }

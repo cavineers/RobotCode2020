@@ -9,7 +9,6 @@ public class ShiftGear extends InstantCommand {
     
     public ShiftGear(DriveTrain dt, DriveTrain.DriveGear gear) {
         // Add requirements
-        addRequirements(dt);
         this.dt = dt;
         this.gear = gear;
     }

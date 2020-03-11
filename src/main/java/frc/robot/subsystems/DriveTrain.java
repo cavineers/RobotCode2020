@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.TeleopDrive;
 
 public class DriveTrain extends SubsystemBase {
     // Inst motors
@@ -31,7 +30,14 @@ public class DriveTrain extends SubsystemBase {
         LOW_GEAR
     }
 
+    public enum DriveCoastBrake {
+        COAST,
+        BRAKE
+    }
+
     private DriveGear currentDriveGear;
+
+    private DriveCoastBrake currentCoastBrake;
     
     // Gear shifting
     private DoubleSolenoid shiftingSol = new DoubleSolenoid(Constants.DriveTrain.PCMChannel1, Constants.DriveTrain.PCMChannel2);
@@ -56,12 +62,6 @@ public class DriveTrain extends SubsystemBase {
         this.right2.setSmartCurrentLimit(Constants.DriveTrain.CurrentLimit);
 
         // Set default mode
-        // CANSparkMax.IdleMode idleMode = CANSparkMax.IdleMode.kCoast;
-        CANSparkMax.IdleMode idleMode = CANSparkMax.IdleMode.kCoast;
-        this.left1.setIdleMode(idleMode);
-        this.left2.setIdleMode(idleMode);
-        this.right1.setIdleMode(idleMode);
-        this.right2.setIdleMode(idleMode);
 
         // 2nd motors follow the 1st motors
         this.left2.follow(left1);
@@ -70,8 +70,8 @@ public class DriveTrain extends SubsystemBase {
         // Shift to low gear
         this.setDriveGear(DriveGear.LOW_GEAR);
 
-        // Set default command
-        // setDefaultCommand(new TeleopDrive(this, joy));
+        // Set the drivetrain to coast mode
+        this.setCoastBrakeMode(DriveCoastBrake.COAST);
     }
 
     /**
@@ -126,8 +126,33 @@ public class DriveTrain extends SubsystemBase {
         return this.currentDriveGear;
     }
 
+    /**
+     * Get the differential drive
+     * @return differential drive
+     */
     public DifferentialDrive getDifferentialDrive() {
         return this.differentialDrive;
+    }
+
+    /**
+     * Set the brake and coast mode
+     * @param mode coast / brake
+     */
+    public void setCoastBrakeMode(DriveCoastBrake mode) {
+        this.currentCoastBrake = mode;
+        CANSparkMax.IdleMode idleMode = mode == DriveCoastBrake.BRAKE ? CANSparkMax.IdleMode.kBrake : CANSparkMax.IdleMode.kCoast;
+        this.left1.setIdleMode(idleMode);
+        this.left2.setIdleMode(idleMode);
+        this.right1.setIdleMode(idleMode);
+        this.right2.setIdleMode(idleMode);
+    }
+
+    /**
+     * Get the brake and coast mode
+     * @return current mode
+     */
+    public DriveCoastBrake getCoastBrakeMode() {
+        return this.currentCoastBrake;
     }
 
     /**

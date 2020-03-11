@@ -9,12 +9,13 @@ import frc.lib.Limelight;
 import frc.robot.commands.AddToHood;
 import frc.robot.commands.HomeAll;
 import frc.robot.commands.RemoveFromHood;
-import frc.robot.commands.ShiftGear;
+import frc.robot.commands.ToggleCoastBrakeMode;
 import frc.robot.commands.ToggleControlPanel;
+import frc.robot.commands.ToggleGears;
 import frc.robot.commands.ToggleIntakeMotor;
 import frc.robot.commands.ToggleIntakePistons;
-import frc.robot.commands.shoot.LowShooter;
 import frc.robot.commands.shoot.HighShooter;
+import frc.robot.commands.shoot.LowShooter;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.CompressorController;
@@ -93,6 +94,10 @@ public class RobotContainer {
      * RobotContainer
      */
     public RobotContainer() {
+        //! DISABLED COMPRESSOR FOR TESTING
+        this.compressor.setMode(CompressorController.CompressorMode.DISABLED);
+        this.compressor.setClosedLoop(false);
+
         // Config the controller
         configureButtonBindings();
 
@@ -107,8 +112,10 @@ public class RobotContainer {
         //! ACTUAL FINAL BUTTON CONFIGS
 
         //^ DriveTrain (Shifting)
-        left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
-        right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
+        // left_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.LOW_GEAR));
+        // right_stick.whenPressed(new ShiftGear(this.drivetrain, DriveTrain.DriveGear.HIGH_GEAR));
+        left_stick.whenPressed(new ToggleGears(this.drivetrain));
+        right_stick.whenPressed(new ToggleCoastBrakeMode(this.drivetrain));
 
         //^ Intake
         x_button.whenPressed(new ToggleIntakeMotor(this.intake));

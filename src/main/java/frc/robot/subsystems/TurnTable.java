@@ -14,7 +14,7 @@ public class TurnTable extends SubsystemBase {
     public WPI_TalonSRX tableMotor = new WPI_TalonSRX(Constants.TurnTable.MotorID); 
 
     // PID Controller
-    private PIDController pidController = new PIDController(Constants.TurnTable.NEUTRAL_kP, Constants.TurnTable.NEUTRAL_kI, Constants.TurnTable.NEUTRAL_kD);
+    private PIDController pidController = new PIDController(Constants.TurnTable.kP, Constants.TurnTable.kI, Constants.TurnTable.kD);
 
     // TurnTable state
     public enum TurnTableState {
@@ -44,6 +44,12 @@ public class TurnTable extends SubsystemBase {
      */
     public TurnTable(Limelight ll) {
         this.ll = ll;
+
+        // Configure the turntable soft stops
+        this.tableMotor.configForwardSoftLimitThreshold(Constants.TurnTable.maxRight);
+        this.tableMotor.configReverseSoftLimitThreshold(Constants.TurnTable.maxLeft);
+        this.tableMotor.configForwardSoftLimitEnable(true);
+        this.tableMotor.configReverseSoftLimitEnable(true);
     }
 
     /**
@@ -52,25 +58,6 @@ public class TurnTable extends SubsystemBase {
      */
     public void setState(TurnTableState state) {
         this.currentState = state;
-        switch (state) {
-            case TARGETING:
-                this.pidController.setP(Constants.TurnTable.ON_kP);
-                this.pidController.setI(Constants.TurnTable.ON_kI);
-                this.pidController.setD(Constants.TurnTable.ON_kD);
-                break;
-            case NEUTRAL:
-                this.pidController.setP(Constants.TurnTable.NEUTRAL_kP);
-                this.pidController.setI(Constants.TurnTable.NEUTRAL_kI);
-                this.pidController.setD(Constants.TurnTable.NEUTRAL_kD);
-                break;
-            case OFF:
-                this.pidController.setP(0);
-                this.pidController.setI(0);
-                this.pidController.setD(0);
-                break;
-            default:
-                break;
-        }
     }
 
     /**
@@ -100,9 +87,11 @@ public class TurnTable extends SubsystemBase {
         }
         
         if (this.currentState == TurnTableState.TARGETING) {
+            // Turn the turntable to meet a 0 horizontal degree offset from target
             this.tableMotor.pidWrite(this.pidController.calculate(-this.ll.getHorizontalOffset(), 0.0));
         } else
         if (this.currentState == TurnTableState.NEUTRAL) {
+            // Turn the turntable to encoder position 0 (the original match starting position)
             this.tableMotor.pidWrite(this.pidController.calculate(this.tableMotor.getSelectedSensorPosition(), 0.0));
         }
     }

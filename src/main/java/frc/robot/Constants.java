@@ -56,12 +56,17 @@ public final class Constants {
     public static class TurnTable {
         public static int MotorID  = CANIds.TurretRotationMotor;
         public static double speed = 1;
-        public static double ON_kP = 0.01;
-        public static double ON_kI = 0.005;
-        public static double ON_kD = 0.0007;
-        public static double NEUTRAL_kP = 0.01;
-        public static double NEUTRAL_kI = 0.005;
-        public static double NEUTRAL_kD = 0.0007;
+        // public static double ON_kP = 0.01;
+        // public static double ON_kI = 0.005;
+        // public static double ON_kD = 0.0007;
+        // public static double NEUTRAL_kP = 0.01;
+        // public static double NEUTRAL_kI = 0.005;
+        // public static double NEUTRAL_kD = 0.0007;
+        public static double kP = 0.01;
+        public static double kI = 0.005;
+        public static double kD = 0.0007;
+        public static int maxRight = 100; //! Tune
+        public static int maxLeft = 200; //! Tune
         public static double tolerance = 0;
         public static int LimitSwitch = 1;
     }
