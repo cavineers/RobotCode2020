@@ -12,9 +12,9 @@ import frc.robot.Constants;
 
 public class DriveTrain extends SubsystemBase {
     // Inst motors
-    public CANSparkMax left1 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor1, MotorType.kBrushless);
+    public CANSparkMax left1  = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor1, MotorType.kBrushless);
     public CANSparkMax right1 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor2, MotorType.kBrushless);
-    public CANSparkMax left2 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor3, MotorType.kBrushless);
+    public CANSparkMax left2  = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor3, MotorType.kBrushless);
     public CANSparkMax right2 = new CANSparkMax(Constants.DriveTrain.DriveTrainMotor4, MotorType.kBrushless);
 
     // Differential drive
