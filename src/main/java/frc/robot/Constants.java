@@ -21,12 +21,12 @@ public final class Constants {
 
     // PCM module mapping
     public static class PCMChannels {
-        public static int ControlPanel1 = 0; // Double
-        public static int ControlPanel2 = 1; // Solenoid
+        public static int ControlPanel1 = 6;
+        public static int ControlPanel2 = 7;
         public static int DriveShift1   = 2;
         public static int DriveShift2   = 3;
-        public static int Intake1       = 6;
-        public static int Intake2       = 7;
+        public static int Intake1       = 0;
+        public static int Intake2       = 1;
     }
 
     // PDP power mapping

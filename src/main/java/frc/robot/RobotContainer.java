@@ -12,7 +12,7 @@ import frc.robot.commands.RemoveFromHood;
 import frc.robot.commands.ToggleCoastBrakeMode;
 import frc.robot.commands.ToggleControlPanel;
 import frc.robot.commands.ToggleGears;
-import frc.robot.commands.ToggleIntakeMotor;
+import frc.robot.commands.ToggleIntake;
 import frc.robot.commands.ToggleIntakePistons;
 import frc.robot.commands.shoot.HighShooter;
 import frc.robot.commands.shoot.LowShooter;
@@ -118,7 +118,7 @@ public class RobotContainer {
         right_stick.whenPressed(new ToggleCoastBrakeMode(this.drivetrain));
 
         //^ Intake
-        x_button.whenPressed(new ToggleIntakeMotor(this.intake));
+        x_button.whenPressed(new ToggleIntake(this.intake));
 
         //^ Control Panel
         y_button.whenPressed(new ToggleControlPanel(this.controlPanel));

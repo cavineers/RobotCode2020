@@ -26,7 +26,7 @@ public class LowShooter extends CommandBase {
         this.rc.shooter.enable();
         this.startTime = Timer.getFPGATimestamp();
         this.stage = 1;
-        SmartDashboard.putNumber("shooter_speed", 4000);
+        SmartDashboard.putNumber("shooter_speed", 2500);
         SmartDashboard.putNumber("hood_angle", 30);
     }
 
